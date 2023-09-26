@@ -16,6 +16,10 @@
     $op2 = isset($_GET['op2']);
     $op = isset($_GET['op']);
 
+    if (!number($op1)) {
+        # co
+    }
+
     if (empty($errores)) {
         switch ($op) {
             case '+':
@@ -31,11 +35,7 @@
                 $res = $op1 / $op2;
                 break;
         }
-    } else {
-        $errores = [];
     }
-
-
     ?>
     "El resultado es <?= $res ?>;
 
