@@ -15,8 +15,14 @@
         <input type="text" name="op1" id="op1" value="<?= isset($_GET['op1']) ? $_GET['op1'] : "";  ?>"><br>
         <label for="op2">Operador 2</label>
         <input type="text" name="op2" id="op2" value="<?= isset($_GET['op2']) ? $_GET['op2'] : "";  ?>"><br>
-        <label for="op">Operador</label>
-        <input type="text" name="op" id="op" value="<?= isset($_GET['op']) ? $_GET['op'] : "";  ?>"><br>
+        <label for="op">Elija una operación</label>
+        <!-- <input type="text" name="op" id="op" value="<?= isset($_GET['op']) ? $_GET['op'] : "";  ?>"><br> -->
+        <select name="op" id="op">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
         <button>Calcular</button>
     </form>
 
