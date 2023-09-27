@@ -18,10 +18,10 @@
         <label for="op">Elija una operación</label>
         <!-- <input type="text" name="op" id="op" value="<?= isset($_GET['op']) ? $_GET['op'] : "";  ?>"><br> -->
         <select name="op" id="op">
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
+            <option value='+'<?= isset($_GET['op']) && $_GET['op'] == '+' ? 'selected' : ''; ?>>+</option>
+            <option value='-'<?= isset($_GET['op']) && $_GET['op'] == '-' ? 'selected' : ''; ?>>-</option>
+            <option value='*'<?= isset($_GET['op']) && $_GET['op'] == '*' ? 'selected' : ''; ?>>*</option>
+            <option value='/'<?= isset($_GET['op']) && $_GET['op'] == '/' ? 'selected' : ''; ?>>/</option>
         </select>
         <button>Calcular</button>
     </form>
