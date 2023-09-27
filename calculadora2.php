@@ -8,20 +8,22 @@
 </head>
 
 <body>
-    <?php require 'aux_calculadora2.php'; ?>
+    <?php require 'aux_calculadora2.php';
+    $op1 = obtener_get('op1');
+    $op2 = obtener_get('op2');
+    $op = obtener_get('op');
+    ?>
 
     <form action="" method="get">
         <label for="op1">Operador 1</label>
-        <input type="text" name="op1" id="op1" value="<?= isset($_GET['op1']) ? $_GET['op1'] : "";  ?>"><br>
+        <input type="text" name="op1" id="op1" value="<?= $op1; ?>"><br>
         <label for="op2">Operador 2</label>
-        <input type="text" name="op2" id="op2" value="<?= isset($_GET['op2']) ? $_GET['op2'] : "";  ?>"><br>
+        <input type="text" name="op2" id="op2" value="<?= $op2; ?>"><br>
         <label for="op">Elija una operación</label>
-        <!-- <input type="text" name="op" id="op" value="<?= isset($_GET['op']) ? $_GET['op'] : "";  ?>"><br> -->
         <select name="op" id="op">
-            <option value='+'<?= isset($_GET['op']) && $_GET['op'] == '+' ? 'selected' : ''; ?>>+</option>
-            <option value='-'<?= isset($_GET['op']) && $_GET['op'] == '-' ? 'selected' : ''; ?>>-</option>
-            <option value='*'<?= isset($_GET['op']) && $_GET['op'] == '*' ? 'selected' : ''; ?>>*</option>
-            <option value='/'<?= isset($_GET['op']) && $_GET['op'] == '/' ? 'selected' : ''; ?>>/</option>
+            <?php foreach(OPS as $operador): ?>
+            <option value='<?= $operador ?>' <?= selecciona_option($op, $operador) ?>><?= $operador ?></option>
+            <?php endforeach; ?>
         </select>
         <button>Calcular</button>
     </form>
@@ -29,21 +31,19 @@
     <?php
     $errores = [];
 
-    if (isset($_GET['op1'], $_GET['op2'], $_GET['op2'])) {
-        $op1 = $_GET['op1'];
-        $op2 = $_GET['op2'];
-        $op = $_GET['op'];
-        validaOp1($op1, $errores);
-        validaOp2($op2, $errores);
-        validaOperacion($op, $errores);
-        compruebaDivision($op, $op2, $errores);
-    }
-
-    if (isset($op1, $op2, $op) && empty($errores)) {
-        $res = calcular($op1, $op2, $op);
-        mostrarResultado($res);
-    } else {
-        mostrarErrores($errores);
+    if (isset($op1, $op2, $op2)) {
+        valida_op1($op1, $errores);
+        valida_op2($op2, $errores);
+        valida_operacion($op, $errores);
+        comprueba_division($op, $op2, $errores);
+        if (empty($errores)) {
+            $res = calcular($op1, $op2, $op);
+            ?>
+            <p><?= mostrar_Resultado($res); ?></p>
+            <?php
+        } else {
+            mostrar_Errores($errores);
+        }
     }
 
     ?>

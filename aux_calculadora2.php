@@ -1,6 +1,8 @@
 <?php
 
-function validaOp1($op1, &$errores)
+const OPS = ['+', '-', '*', '/'];
+
+function valida_op1($op1, &$errores)
 {
     if (!is_numeric($op1) && $op1 !== '') {
         $errores[] = "El primer operador no es válido";
@@ -11,7 +13,7 @@ function validaOp1($op1, &$errores)
     }
 }
 
-function validaOp2($op2, &$errores)
+function valida_op2($op2, &$errores)
 {
     if (!is_numeric($op2) && $op2 !== '') {
         $errores[] = "El segundo operador no es válido";
@@ -22,9 +24,9 @@ function validaOp2($op2, &$errores)
     }
 }
 
-function validaOperacion($op, &$errores)
+function valida_operacion($op, &$errores)
 {
-    if (!in_array($op, ['+', '-', '*', '/']) && $op !== '') {
+    if (!in_array($op, OPS) && $op !== '') {
         $errores[] = 'La operación no está permitida';
     }
 
@@ -33,9 +35,9 @@ function validaOperacion($op, &$errores)
     }
 }
 
-function compruebaDivision($op, $op2, &$errores)
+function comprueba_division($op, $op2, &$errores)
 {
-    if (isset($op, $op2) && $op == '/' && $op2 == '0') {
+    if ($op == '/' && $op2 == '0') {
         $errores[] = "No se puede dividir entre cero.";
     }
 }
@@ -54,7 +56,7 @@ function calcular($op1, $op2, $op)
     }
 }
 
-function mostrarErrores($errores)
+function mostrar_Errores($errores)
 {
     if (!empty($errores)) { ?>
         <ul>
@@ -67,9 +69,21 @@ function mostrarErrores($errores)
 
     }
 
-    function mostrarResultado($res)
+    function mostrar_Resultado($res)
     {
         ?>
             El <strong>resutlado</strong> es <strong><?= $res ?></strong>
         <?php
+    }
+
+    function obtener_get($argumento)
+    {
+        return isset($_GET[$argumento]) ? trim($_GET[$argumento]) : null;
+    }
+
+    function selecciona_option($op, $option)
+    {
+        if ($op == $option) {
+            return $op == $option ? 'selected' : '';
+        }
     }
