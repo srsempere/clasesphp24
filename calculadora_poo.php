@@ -9,6 +9,7 @@
 <body>
     <?php
         require 'aux_calculadorapoo.php';
+        $errores = [];
     ?>
     <h1>Calculadora</h1>
     <cite>Siguiendo el paradigma de POO.</cite>
