@@ -25,15 +25,18 @@
 
 
 
-    if (isset($op1, $op2, $operacion)) {
-        $validador->valida($op1, $op2, $operacion, $errores);
+    if (isset($op1, $op2, $operador)) {
+        $validador->valida($op1, $op2, $operador, $errores);
         if (empty($errores)) {
             try {
-                $resultado = $calculadora->calcular($op1, $op2, $op);
+                $resultado = $calculadora->calcular($op1, $op2, $operador);
                 $vista->mostrarResultado($resultado);
-            } catch (\Throwable $th) {
-                $vista->mostrarErrores($errores);
+            } catch (\Throwable $th) { ?>
+            <p>Error: <?= htmlspecialchars($th->getMessage()); ?></p>
+            <?php
             }
+        } else {
+            $vista->mostrarErrores($errores);
         }
     }
 
