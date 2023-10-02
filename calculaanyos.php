@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de años</title>
 </head>
+
 <body>
     <?php
     /*
@@ -14,38 +16,37 @@
 
     */
 
-        function obtener($arg)
-        {
-            return isset($_GET[$arg]) ? $_GET[$arg] : null;
-        }
+    function obtener($arg)
+    {
+        return isset($_GET[$arg]) ? $_GET[$arg] : null;
+    }
 
-        function selected($valor, $option)
-        {
-            if ($valor == $option) {
-                return $valor == $option ? 'selected' : '';
-            }
-        }
+    function selected($valor, $option)
+    {
+            return $valor == $option ? 'selected' : '';
+    }
 
-        function numero_mes($meses, $mes)
-        {
-            return array_search($mes, $meses);
-        }
+    function numero_mes($meses, $mes)
+    {
+        return array_search($mes, $meses) + 1;
+    }
 
-        $datetime = new DateTime();
-        $anyo_actual = $datetime->format('Y');
-        const MESES = [1 => 'enero',
-                            'febrero',
-                            'marzo',
-                            'abril',
-                            'mayo',
-                            'junio',
-                            'julio',
-                            'agosto',
-                            'septiembre',
-                            'octubre',
-                            'noviembre',
-                            'diciembre',
-                        ];
+    $datetime = new DateTime();
+    $anyo_actual = $datetime->format('Y');
+    const MESES = [
+        1 => 'enero',
+        'febrero',
+        'marzo',
+        'abril',
+        'mayo',
+        'junio',
+        'julio',
+        'agosto',
+        'septiembre',
+        'octubre',
+        'noviembre',
+        'diciembre',
+    ];
 
 
     $dia =  obtener('dia');
@@ -54,10 +55,11 @@
 
     if ($dia && $mes && $anyo) {
         $num_mes = numero_mes(MESES, $mes);
+        $fecha_nacimiento = DateTime::createFromFormat('d-m-Y', "$dia-$num_mes-$anyo");
         if (checkdate($num_mes, $dia, $anyo)) {
-            echo 'La fecha es válida';
+            $intervalo = $datetime->diff($fecha_nacimiento);
+            $res = $intervalo->y;
         } else {
-            echo 'La fecha NO !! es valida';
         }
     }
 
@@ -65,36 +67,38 @@
 
 
 
-    <center><h1>Calculadora de años.</h1></center>
+    <center>
+        <h1>Calculadora de años.</h1>
+    </center>
     <form action="" method="get">
         <label for="dia">Selecciona tu día de nacimiento:</label>
         <select name="dia" id="dia">
             <?php
-                for ($i=1; $i <31 ; $i++) {
-                    ?>
-                    <option value="<?= $i ?>" <?= selected($dia, $i) ?>><?= $i ?></option>
-                    <?php
-                }
+            for ($i = 1; $i < 31; $i++) {
+            ?>
+                <option value="<?= $i ?>" <?= selected($dia, $i) ?>><?= $i ?></option>
+            <?php
+            }
             ?>
         </select>
         <label for="mes">Selecciona tu mes de nacimiento:</label>
         <select name="mes" id="mes">
             <?php
-                foreach (MESES as $mesfor) {
-                    ?>
-                    <option value="<?= $mesfor ?>" <?= selected($mes, $mesfor) ?>><?= $mesfor ?></option>
-                    <?php
-                }
+            foreach (MESES as $mesfor) {
+            ?>
+                <option value="<?= $mesfor ?>" <?= selected($mes, $mesfor) ?>><?= $mesfor ?></option>
+            <?php
+            }
             ?>
         </select>
         <label for="anyo">Selecciona tu año:</label>
         <select name="anyo" id="anyo">
             <?php
-                for ($i=$anyo_actual; $i > ($anyo_actual - 50 )  ; $i--) {
-                    ?>
-                    <option value="<?= $i ?>" <?= selected($anyo, $i) ?>><?= $i ?></option>
-                    <?php
-                }
+            for ($i = $anyo_actual; $i > ($anyo_actual - 50); $i--) {
+            ?>
+                <option value="<?= $i ?>" <?= selected($anyo, $i) ?>><?= $i ?></option>
+            <?php
+            }
             ?>
         </select>
         <br>
@@ -102,11 +106,7 @@
         <button type="submit">Calcular</button>
     </form>
 
-    <p><?= isset($dia) ? $dia: ''; ?></p>
-    <p><?= isset($mes) ? $mes: ''; ?></p>
-    <p><?= isset($anyo) ? $anyo: ''; ?></p>
-
-
     <p>Tu edad actual es: <?= isset($res) ? $res : ''; ?></p>
 </body>
+
 </html>
