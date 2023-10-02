@@ -26,6 +26,11 @@
             }
         }
 
+        function numero_mes($meses, $mes)
+        {
+            return array_search($mes, $meses);
+        }
+
         $datetime = new DateTime();
         $anyo_actual = $datetime->format('Y');
         const MESES = [1 => 'enero',
@@ -43,12 +48,18 @@
                         ];
 
 
-
-
     $dia =  obtener('dia');
     $mes = obtener('mes');
     $anyo = obtener('anyo');
 
+    if ($dia && $mes && $anyo) {
+        $num_mes = numero_mes(MESES, $mes);
+        if (checkdate($num_mes, $dia, $anyo)) {
+            echo 'La fecha es válida';
+        } else {
+            echo 'La fecha NO !! es valida';
+        }
+    }
 
     ?>
 
@@ -94,5 +105,8 @@
     <p><?= isset($dia) ? $dia: ''; ?></p>
     <p><?= isset($mes) ? $mes: ''; ?></p>
     <p><?= isset($anyo) ? $anyo: ''; ?></p>
+
+
+    <p>Tu edad actual es: <?= isset($res) ? $res : ''; ?></p>
 </body>
 </html>
