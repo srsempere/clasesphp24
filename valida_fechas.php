@@ -45,7 +45,7 @@
     <form action="" method="get">
         <label for="fecha">Introduce la fecha a validar:</label>
         <input type="text" name="fecha" id="fecha" placeholder="dd/mm/aaaa">
-        <button type="submit">Calcular</button>
+        <button type="submit">Validar</button>
     </form>
     <p><?= isset($res) ? $res : ""; ?></p>
 </body>
