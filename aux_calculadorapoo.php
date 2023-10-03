@@ -92,23 +92,24 @@ class VistaCalculadora
 
     public function mostrarResultado(float $res): void
     {
-        ?>
+    ?>
         <p>El <strong>resultado</strong> es <strong><?= $res ?></strong></p>
         <?php
     }
 
     public function mostrarErrores(array $errores): void
     {
-        foreach($errores as $error){ ?>
-        <ul>
-            <li><?= $error; ?></li>
-        </ul>
-        <?php
-    }   }
-
+        foreach ($errores as $error) { ?>
+            <ul>
+                <li><?= $error; ?></li>
+            </ul>
+<?php
+        }
+    }
 }
 
-class Utilidad {
+class Utilidad
+{
     public static function obtenerGet($argumento)
     {
         return isset($_GET[$argumento]) ? trim($_GET[$argumento]) : null;
