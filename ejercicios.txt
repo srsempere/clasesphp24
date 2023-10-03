@@ -1,0 +1,43 @@
+EJERCICIOS DE MANIPULACIÓN DE FECHAS.
+
+- Diferencia Entre Fechas:
+
+    - Calcula la diferencia en días entre dos fechas dadas.
+    - Extiende el ejercicio anterior para calcular la diferencia en años, meses y días.
+
+-   Validación de Fechas:
+
+    - Escribe una función que verifique si una fecha ingresada en una cadena es válida o no.
+
+- Formato de Fecha:
+
+    - Toma una fecha en formato Y-m-d y conviértela a un formato legible, como jS F, Y.
+
+- Comparación de Fechas:
+
+    - Compara dos fechas y determina cuál es la más reciente.
+
+- Fecha Futura y Pasada:
+
+    - Dada una fecha, calcula la fecha que será dentro de 45 días.
+    - Calcula la fecha que fue hace 30 días.
+
+- Nombre del Día:
+
+    - Dada una fecha, determina el nombre del día (lunes, martes, etc.).
+
+- Semana del Año:
+
+    - Determina en qué número de semana del año cae una fecha dada.
+
+- Días Hábiles:
+
+    - Calcula el número de días hábiles entre dos fechas.
+
+- Zona Horaria:
+
+    - Establece la zona horaria predeterminada y muestra la hora y fecha actuales en esa zona horaria.
+
+- Timestamps:
+
+    - Convierte una fecha dada en un timestamp de Unix y viceversa.
