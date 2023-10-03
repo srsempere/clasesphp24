@@ -11,7 +11,7 @@
     <?php
     function obtenerParametros($par)
     {
-        return isset($_GET[$par]) ? $_GET[$par]  : '';
+        return isset($_GET[$par]) ? $_GET[$par]  : null;
     }
 
     function validaFecha($mes, $dia, $anyo)
@@ -20,22 +20,22 @@
     }
 
     $fecha = obtenerParametros('fecha');
-    $fecha_formateada = DateTime::createFromFormat('d/m/Y', $fecha);
-    $dia = $fecha_formateada->format('d');
-    $mes = $fecha_formateada->format('m');
-    $anyo = $fecha_formateada->format('Y');
 
-    var_dump($dia);
-    var_dump($mes);
-    var_dump($anyo);
+    if (isset($fecha)) {
+        list($dia, $mes, $anyo) = explode('/', $fecha);
+    }
+
 
     $res = '';
-    var_dump(validaFecha($mes, $dia, $anyo));
-    if (validaFecha($mes, $dia, $anyo)) {
-        $res = 'La fecha es correcta.';
-    } else {
-        $res = "La fecha NO es correcta.";
+
+    if (isset($mes, $dia, $anyo)) {
+        if (validaFecha($mes, $dia, $anyo)) {
+            $res = 'La fecha es correcta.';
+        } else {
+            $res = "La fecha NO es correcta.";
+        }
     }
+
 
 
     ?>
