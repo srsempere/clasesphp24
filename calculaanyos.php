@@ -14,6 +14,9 @@
         - Se puede calcular la diferencia entre dos fecha usando el método diff de datetime.
         - Se puede modificar objetos de fecha y hora usando el método modify. (para sumar años por ejemplo).
 
+        TODO: Introducir comprobaciones para dia, mes y año y una comprobar fecha.
+        TODO: Puedo crear otra versión en la cual el input sea una lista desplegable, de tal modo que el formato de entrada va a ser otro.
+
     */
 
     function obtener($arg)
@@ -83,7 +86,7 @@
         </select>
         <label for="mes">Selecciona tu mes de nacimiento:</label>
         <select name="mes" id="mes">
-            <?php
+            <?php //TODO: Tener en cuenta esta parte para sacar la clave y mandar una cosa y mostrar en la lista desplegable otra.
             foreach (MESES as $mesfor) {
             ?>
                 <option value="<?= $mesfor ?>" <?= selected($mes, $mesfor) ?>><?= $mesfor ?></option>
