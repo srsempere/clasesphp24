@@ -1,0 +1,36 @@
+Tabla de Libros:
+
+id_libro: Un identificador único para cada libro.
+titulo: El título del libro.
+autor: El autor del libro.
+editorial: La editorial que publicó el libro.
+anyo_publicacion: El año en que se publicó el libro.
+isbn: Número ISBN del libro.
+cantidad: Cantidad de copias disponibles en la biblioteca.
+
+Tabla de Usuarios:
+
+id_usuario: Un identificador único para cada usuario.
+nombre: Nombre completo del usuario.
+email: Email del usuario.
+contraseña: Contraseña del usuario (asegúrate de almacenarla de forma segura, por ejemplo, usando un hash).
+fecha_registro: Fecha en que el usuario se registró en el sistema.
+
+Tabla de Préstamos:
+
+id_prestamo: Un identificador único para cada préstamo.
+id_libro: El identificador del libro que se prestó (clave foránea que referencia a id_libro en la tabla de Libros).
+id_usuario: El identificador del usuario que tomó prestado el libro (clave foránea que referencia a id_usuario en la tabla de Usuarios).
+fecha_prestamo: Fecha en que se prestó el libro.
+fecha_devolucion: Fecha en que se debe devolver el libro.
+fecha_devuelto: Fecha en que el libro fue devuelto (puede ser NULL si el libro aún no ha sido devuelto).
+
+Tabla de Categorías (opcional, pero útil si quieres categorizar los libros):
+
+id_categoria: Un identificador único para cada categoría.
+nombre_categoria: Nombre de la categoría (por ejemplo, "Ciencia Ficción", "Historia", "Matemáticas").
+
+Tabla de Libros_Categorías (para relacionar libros con múltiples categorías):
+
+id_libro: El identificador del libro.
+id_categoria: El identificador de la categoría.
