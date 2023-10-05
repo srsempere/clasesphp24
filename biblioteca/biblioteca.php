@@ -57,15 +57,14 @@
     $sql = 'SELECT * FROM libros';
     $parametros = [];
 
-    if (true) {
-        # code...
+    if ($codigo) {
+        $sql .= ' WHERE codigo = :codigo';
+        $parametros[':codigo'] = $codigo;
     }
 
     $sent = $pdo->prepare($sql);
     $sent->execute($parametros);
     $pdo->commit();
-    // var_dump($sent);
-    // die();
     ?>
 
     <h1>Bienvenido a la biblioteca</h1>
