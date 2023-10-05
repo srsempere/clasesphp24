@@ -49,6 +49,7 @@
     <?php
     $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
     $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
+    $anyo = isset($_GET['anyo']) ? trim($_GET['anyo']) : null;
 
 
     $pdo->beginTransaction();
@@ -62,6 +63,11 @@
         $parametros[':codigo'] = $codigo;
     }
 
+    if ($anyo) {
+        $sql .= ' WHERE anyo_publicacion = :anyo_publicacion';
+        $parametros['anyo_publicacion'] = $anyo;
+    }
+
     $sent = $pdo->prepare($sql);
     $sent->execute($parametros);
     $pdo->commit();
@@ -72,7 +78,13 @@
 <form action="" method="get">
     <label for="codigo">Introduce el código a buscar</label>
     <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : ''; ?>">
-    <button type="submit">Buscar</button>
+    <button type="submit">Buscar por código</button>
+</form>
+<br>
+<form action="" method="get">
+    <label for="codigo">Introduce el año a buscar</label>
+    <input type="text" name="anyo" id="anyo" value="<?= isset($anyo) ? $anyo : ''; ?>">
+    <button type="submit">Buscar por año</button>
 </form>
 <table>
     <thead>

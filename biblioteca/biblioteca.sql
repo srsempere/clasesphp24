@@ -16,7 +16,7 @@ VALUES  (10, 'El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '97
         (20, 'Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 3),
         (30, 'Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 7),
         (40, 'La Ciudad de las Estrellas', 'Irene Cielo', 'Galaxia Editorial', 2022, '9781234567893', 10),
-        (50, 'Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2015, '9781234567894', 6),
+        (50, 'Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2018, '9781234567894', 6),
         (60, 'El Jardín Secreto', 'Rosa Flores', 'Verde Editorial', 1990, '9781234567895', 4),
         (70, 'El Laberinto del Minotauro', 'Héctor Historias', 'Mitos Ediciones', 2005, '9781234567896', 8),
         (80, 'Las Aventuras del Espacio', 'Neil Cosmos', 'Estrellas Editorial', 2021, '9781234567897', 9),
