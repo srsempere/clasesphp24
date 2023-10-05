@@ -48,14 +48,31 @@
 <body>
     <?php
     $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
-    $sent = $pdo->query('SELECT * FROM libros');
     $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
+
+
+    $pdo->beginTransaction();
+    $sent = $pdo->query('LOCK TABLE libros IN SHARE MODE');
+
+    $sql = 'SELECT * FROM libros';
+    $parametros = [];
+
+    if (true) {
+        # code...
+    }
+
+    $sent = $pdo->prepare($sql);
+    $sent->execute($parametros);
+    $pdo->commit();
+    // var_dump($sent);
+    // die();
     ?>
+
     <h1>Bienvenido a la biblioteca</h1>
 </body>
 <form action="" method="get">
     <label for="codigo">Introduce el código a buscar</label>
-    <input type="text" name="codigo" id="codigo" value="<?= $codigo ?>">
+    <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : ''; ?>">
     <button type="submit">Buscar</button>
 </form>
 <table>
@@ -79,7 +96,7 @@
                 <td><?= $fila['anyo_publicacion'] ?></td>
                 <td><?= $fila['isbn'] ?></td>
                 <td><?= $fila['cantidad'] ?></td>
-                <th><a href="eliminar.php">Eliminar</a></th>
+                <th><a href="eliminar.php?codigo=<?= $fila['codigo'] ?>">Eliminar</a></th>
             </tr>
         <?php endforeach; ?>
     </tbody>
