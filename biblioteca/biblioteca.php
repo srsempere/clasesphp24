@@ -68,11 +68,6 @@
             $parametros[':codigo'] = $codigo;
         }
 
-        if ($desde && $hasta) {
-            $condiciones[]= 'anyo_publicacion BETWEEN :desde AND :hasta';
-            $parametros[':desde'] = $desde;
-            $parametros[':hasta'] = $hasta;
-        }
 
         if ($desde) {
             $condiciones[]= 'anyo_publicacion >= :desde';
