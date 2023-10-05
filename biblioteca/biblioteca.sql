@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS libros CASCADE;
 
 CREATE TABLE libros (
     id BIGSERIAL PRIMARY KEY,
+    codigo INTEGER NOT NULL,
     titulo VARCHAR(255) NOT NULL,
     autor VARCHAR(255) NOT NULL,
     editorial VARCHAR(255) NOT NULL,
@@ -10,17 +11,17 @@ CREATE TABLE libros (
     cantidad INTEGER
 );
 
-INSERT INTO libros (titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
-VALUES  ('El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '9781234567890', 5),
-        ('Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 3),
-        ('Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 7),
-        ('La Ciudad de las Estrellas', 'Irene Cielo', 'Galaxia Editorial', 2022, '9781234567893', 10),
-        ('Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2015, '9781234567894', 6),
-        ('El Jardín Secreto', 'Rosa Flores', 'Verde Editorial', 1990, '9781234567895', 4),
-        ('El Laberinto del Minotauro', 'Héctor Historias', 'Mitos Ediciones', 2005, '9781234567896', 8),
-        ('Las Aventuras del Espacio', 'Neil Cosmos', 'Estrellas Editorial', 2021, '9781234567897', 9),
-        ('El Río de los Sueños', 'Ana Noche', 'Luna Llena Ediciones', 2019, '9781234567898', 2),
-        ('Montañas Mágicas', 'Eva Tierra', 'Editorial Roca', 2008, '9781234567899', 5);
+INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
+VALUES  (10, 'El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '9781234567890', 5),
+        (20, 'Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 3),
+        (30, 'Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 7),
+        (40, 'La Ciudad de las Estrellas', 'Irene Cielo', 'Galaxia Editorial', 2022, '9781234567893', 10),
+        (50, 'Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2015, '9781234567894', 6),
+        (60, 'El Jardín Secreto', 'Rosa Flores', 'Verde Editorial', 1990, '9781234567895', 4),
+        (70, 'El Laberinto del Minotauro', 'Héctor Historias', 'Mitos Ediciones', 2005, '9781234567896', 8),
+        (80, 'Las Aventuras del Espacio', 'Neil Cosmos', 'Estrellas Editorial', 2021, '9781234567897', 9),
+        (90, 'El Río de los Sueños', 'Ana Noche', 'Luna Llena Ediciones', 2019, '9781234567898', 2),
+        (100, 'Montañas Mágicas', 'Eva Tierra', 'Editorial Roca', 2008, '9781234567899', 5);
 
 DROP TABLE IF EXISTS usuarios CASCADE;
 

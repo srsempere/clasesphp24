@@ -27,7 +27,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -46,31 +47,42 @@
 
 <body>
     <?php
-        $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
-        $sent = $pdo->query('SELECT * FROM libros');
+    $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
+    $sent = $pdo->query('SELECT * FROM libros');
+    $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
     ?>
     <h1>Bienvenido a la biblioteca</h1>
 </body>
-    <table>
-        <thead>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Editorial</th>
-            <th>Año de publicación</th>
-            <th>ISBN</th>
-            <th>Cantidad</th>
-        </thead>
-        <tbody>
-        <?php foreach ($sent as $fila): ?>
+<form action="" method="get">
+    <label for="codigo">Introduce el código a buscar</label>
+    <input type="text" name="codigo" id="codigo" value="<?= $codigo ?>">
+    <button type="submit">Buscar</button>
+</form>
+<table>
+    <thead>
+        <th>Código</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Editorial</th>
+        <th>Año de publicación</th>
+        <th>ISBN</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+    </thead>
+    <tbody>
+        <?php foreach ($sent as $fila) : ?>
             <tr>
-                <td><?= $fila['titulo'] ?></td>
+            <td><?= $fila['codigo'] ?></td>
+            <td><?= $fila['titulo'] ?></td>
                 <td><?= $fila['autor'] ?></td>
                 <td><?= $fila['editorial'] ?></td>
                 <td><?= $fila['anyo_publicacion'] ?></td>
                 <td><?= $fila['isbn'] ?></td>
                 <td><?= $fila['cantidad'] ?></td>
+                <th><a href="eliminar.php">Eliminar</a></th>
             </tr>
         <?php endforeach; ?>
-        </tbody>
-    </table>
+    </tbody>
+</table>
+
 </html>

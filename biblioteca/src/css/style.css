@@ -1,0 +1,53 @@
+body {
+    background-image: url('/src/images/biblioteca.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif; /* Utiliza una fuente sans-serif */
+    font-size: 2.5em; /* Ajusta el tamaño de la fuente */
+    color: #333; /* Color oscuro para el texto */
+    text-align: center; /* Centra el texto */
+    margin-top: 20px; /* Espacio en la parte superior */
+    margin-bottom: 20px; /* Espacio en la parte inferior */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para un efecto 3D */
+}
+
+.title-container {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+    margin: center;
+    overflow: hidden;
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.title-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(169, 169, 169, 0.7); /* Fondo gris semi-transparente */
+    backdrop-filter: blur(10px); /* Efecto difuso */
+    z-index: -1; /* Sitúa el pseudo-elemento detrás del texto */
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #008CBA; /* Color de fondo azul */
+    text-decoration: none;
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+a:hover {
+    background-color: #005f5f; /* Color de fondo más oscuro al pasar el ratón */
+}
