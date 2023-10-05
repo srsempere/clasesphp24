@@ -11,45 +11,44 @@
     <?php
     require_once 'aux.php';
 
-    // TODO: COMPROBAR POR QUÉ FALLA LA FUNCIÓN PDO.
-    $pdo = new PDO('pgsql:host=localhost;dbname=empresa', 'empresa', 'empresa');
-    // $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
+    $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
+    $codigo = obtener_parametro('codigo', $_GET);
+    $sql = 'SELECT * FROM departamentos';
 
-    $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
-    $cantidad = -1;
+    if ($codigo !== '') { // el usuario ha introducido algún código
 
-    // Comprueba si existe algún registro
-    if ($codigo !== '') {
-        $sent = $pdo->prepare('SELECT COUNT(*) FROM departamentos WHERE codigo = :codigo');
+         // Comprueba si existe algún registro que coincida con el código.
+        $sent = $pdo->prepare('SELECT codigo FROM departamentos WHERE codigo = :codigo LIMIT 1');
         $sent->execute([':codigo' => $codigo]);
         $cantidad = $sent->fetchColumn();
-    }
 
 
-    if ($cantidad == 0  && isset($codigo)) : ?>
-        <h3>No se ha encontrado ese departamento.</h3>
-    <?php
-
-    elseif ($codigo == '') :
-        $sent = $pdo->query('SELECT * FROM departamentos');
-
-
-    else :
-
-        $sql = 'SELECT * FROM departamentos';
-
-
-        $parametros = [];
-        if ($codigo) {
-            $sql .= ' WHERE codigo = :codigo';
-            $parametros[':codigo'] = $codigo;
+        if ($cantidad > 0  && isset($codigo)) {
+            // El registro introducido existe
+            $sql .=  ' WHERE codigo = :codigo';
+            $sent = $pdo->prepare($sql);
+            $sent->execute([':codigo' => $codigo]);
         }
 
-        $sent = $pdo->prepare($sql);
-        $sent->execute($parametros);
 
-    endif;
+        if (!$cantidad && is_null($codigo)) {
+            // Por ejemplo recién cargada la página.
+            $sent = $pdo->query($sql);
+        } else {
+            if (!$cantidad) {
+                ?>
+                <center><h1>El código introducido no existe.</h1></center>
+                <?php
+            }
+        }
+
+    } else { // el usuario pulsa sin meter código o envía código inexistente.
+
+        $sent = $pdo->query($sql);
+    }
+
     ?>
+
     <form action="" method="get">
         <label for="codigo">Código</label>
         <input type="text" name="codigo" id="codigo" value="<?= $codigo ?>">
