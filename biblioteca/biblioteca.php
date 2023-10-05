@@ -49,7 +49,8 @@
     <?php
     $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
     $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
-    $anyo = isset($_GET['anyo']) ? trim($_GET['anyo']) : null;
+    $desde = isset($_GET['desde']) ? trim($_GET['desde']) : null;
+    $hasta = isset($_GET['hasta']) ? trim($_GET['hasta']) : null;
 
 
     $pdo->beginTransaction();
@@ -58,15 +59,36 @@
     $sql = 'SELECT * FROM libros';
     $parametros = [];
 
-    if ($codigo) {
-        $sql .= ' WHERE codigo = :codigo';
-        $parametros[':codigo'] = $codigo;
+    if ($codigo || $desde || $hasta) {
+        $sql .= ' WHERE ';
+        $condiciones = [];
+
+        if ($codigo) {
+            $condiciones[]= 'codigo = :codigo';
+            $parametros[':codigo'] = $codigo;
+        }
+
+        if ($desde && $hasta) {
+            $condiciones[]= 'anyo_publicacion BETWEEN :desde AND :hasta';
+            $parametros[':desde'] = $desde;
+            $parametros[':hasta'] = $hasta;
+        }
+
+        if ($desde) {
+            $condiciones[]= 'anyo_publicacion >= :desde';
+            $parametros[':desde'] = $desde;
+
+        }
+
+        if ($hasta) {
+            $condiciones[]= 'anyo_publicacion <= :hasta';
+            $parametros[':hasta'] = $hasta;
+
+        }
+
+        $sql .= implode(' AND ', $condiciones);
     }
 
-    if ($anyo) {
-        $sql .= ' WHERE anyo_publicacion = :anyo_publicacion';
-        $parametros['anyo_publicacion'] = $anyo;
-    }
 
     $sent = $pdo->prepare($sql);
     $sent->execute($parametros);
@@ -83,7 +105,8 @@
 <br>
 <form action="" method="get">
     <label for="codigo">Introduce el año a buscar</label>
-    <input type="text" name="anyo" id="anyo" value="<?= isset($anyo) ? $anyo : ''; ?>">
+    <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= isset($desde) ? $desde : ''; ?>">
+    <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= isset($hasta) ? $hasta : ''; ?>">
     <button type="submit">Buscar por año</button>
 </form>
 <table>
