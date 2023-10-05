@@ -45,6 +45,10 @@
 </head>
 
 <body>
+    <?php
+        $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
+        $sent = $pdo->query('SELECT * FROM libros');
+    ?>
     <h1>Bienvenido a la biblioteca</h1>
 </body>
     <table>
@@ -57,7 +61,16 @@
             <th>Cantidad</th>
         </thead>
         <tbody>
-        //TODO
+        <?php foreach ($sent as $fila): ?>
+            <tr>
+                <td><?= $fila['titulo'] ?></td>
+                <td><?= $fila['autor'] ?></td>
+                <td><?= $fila['editorial'] ?></td>
+                <td><?= $fila['anyo_publicacion'] ?></td>
+                <td><?= $fila['isbn'] ?></td>
+                <td><?= $fila['cantidad'] ?></td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </html>
