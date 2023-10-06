@@ -126,7 +126,7 @@
                 <td><?= $fila['anyo_publicacion'] ?></td>
                 <td><?= $fila['isbn'] ?></td>
                 <td><?= $fila['cantidad'] ?></td>
-                <th><a href="eliminar.php?id=<?= $fila['id'] ?>">Eliminar</a></th>
+                <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
             </tr>
         <?php endforeach; ?>
     </tbody>
