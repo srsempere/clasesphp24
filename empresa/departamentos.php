@@ -30,11 +30,7 @@
     $sent->execute($parametros);
     $cantidad = $sent->fetchColumn();
 
-    var_dump($cantidad);
-    var_dump($codigo);
-
     if ($cantidad) {
-
         // EL CÓDIGO EXISTE.
         $sql = 'SELECT * FROM departamentos';
         $condiciones = [];
@@ -90,7 +86,7 @@
         </div>
     <?php endif; ?>
     <?php if (isset($code_not_found)) : ?>
-        <div class="code_not_$code_not_found">
+        <div class="code_not_found">
             <?= htmlspecialchars($code_not_found) ?>
         </div>
     <?php endif; ?>
