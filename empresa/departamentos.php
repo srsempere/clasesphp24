@@ -18,14 +18,17 @@
 
     $sql = 'SELECT * FROM departamentos';
     $parametros = [];
+    $condiciones = [];
 
-    if ($codigo) { // Preparada para implementar varios parámentros.
-        $sql .= ' WHERE ';
+    if ($codigo) {
+        $condiciones[]= ' WHERE codigo= :codigo ';
         $parametros[':codigo'] = $codigo;
     }
 
-    $sql .= implode('AND', $parametros);
+    $sql .= implode(' AND ', $condiciones);
+
     $sent = $pdo->prepare($sql);
+
     $sent->execute($parametros);
 
     ?>
