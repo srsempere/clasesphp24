@@ -15,39 +15,18 @@
     $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
     $codigo = obtener_parametro('codigo', $_GET);
     $mensaje = obtener_parametro('mensaje', $_GET);
+
     $sql = 'SELECT * FROM departamentos';
+    $parametros = [];
 
-    if ($codigo !== '') { // el usuario ha introducido algún código
-
-         // Comprueba si existe algún registro que coincida con el código.
-        $sent = $pdo->prepare('SELECT codigo FROM departamentos WHERE codigo = :codigo LIMIT 1');
-        $sent->execute([':codigo' => $codigo]);
-        $cantidad = $sent->fetchColumn();
-
-
-        if ($cantidad > 0  && isset($codigo)) {
-            // El registro introducido existe
-            $sql .=  ' WHERE codigo = :codigo';
-            $sent = $pdo->prepare($sql);
-            $sent->execute([':codigo' => $codigo]);
-        }
-
-
-        if (!$cantidad && is_null($codigo)) {
-            // Por ejemplo recién cargada la página.
-            $sent = $pdo->query($sql);
-        } else {
-            if (!$cantidad) {
-                ?>
-                <center><h1>El código introducido no existe.</h1></center>
-                <?php
-            }
-        }
-
-    } else { // el usuario pulsa sin meter código o envía código inexistente.
-
-        $sent = $pdo->query($sql);
+    if ($codigo) { // Preparada para implementar varios parámentros.
+        $sql .= ' WHERE ';
+        $parametros[':codigo'] = $codigo;
     }
+
+    $sql .= implode('AND', $parametros);
+    $sent = $pdo->prepare($sql);
+    $sent->execute($parametros);
 
     ?>
 
@@ -76,7 +55,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (isset($mensaje)): ?>
+    <?php if (isset($mensaje)) : ?>
         <div class="mensaje">
             <?= htmlspecialchars($mensaje) ?>
         </div>
