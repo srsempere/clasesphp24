@@ -13,6 +13,7 @@
 
     $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
     $codigo = obtener_parametro('codigo', $_GET);
+    $mensaje = obtener_parametro('mensaje', $_GET);
     $sql = 'SELECT * FROM departamentos';
 
     if ($codigo !== '') { // el usuario ha introducido algún código
@@ -69,11 +70,16 @@
                     <td><?= $fila['codigo'] ?></td>
                     <td><?= $fila['denominacion'] ?></td>
                     <td><?= $fila['localidad'] ?></td>
-                    <td><a href="borrar.php?id=<?= $fila['id'] ?>">Borrar</a></td>
+                    <td><a href="borrar.php?id=<?= $fila['id']; ?>& denominacion=<?= $fila['denominacion']; ?>">Borrar</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php if (isset($mensaje)): ?>
+        <div class="mensaje">
+            <?= htmlspecialchars($mensaje) ?>
+        </div>
+    <?php endif; ?>
 </body>
 
 </html>
