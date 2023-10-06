@@ -13,23 +13,49 @@
     require_once 'aux.php';
 
     $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
+    $condiciones = [];
     $codigo = obtener_parametro('codigo', $_GET);
     $mensaje = obtener_parametro('mensaje', $_GET);
 
-    $sql = 'SELECT * FROM departamentos';
+    $sql_cuenta = 'SELECT COUNT(*) FROM departamentos';
     $parametros = [];
-    $condiciones = [];
 
-    if ($codigo) {
-        $condiciones[]= ' WHERE codigo= :codigo ';
+    if (isset($codigo) && $codigo !== '') {
+        $sql_cuenta .= ' WHERE :codigo = codigo';
         $parametros[':codigo'] = $codigo;
     }
 
-    $sql .= implode(' AND ', $condiciones);
-
-    $sent = $pdo->prepare($sql);
+    $sent = $pdo->prepare($sql_cuenta);
 
     $sent->execute($parametros);
+    $cantidad = $sent->fetchColumn();
+
+    var_dump($cantidad);
+    var_dump($codigo);
+
+    if ($cantidad) {
+
+        // EL CÓDIGO EXISTE.
+        $sql = 'SELECT * FROM departamentos';
+        $condiciones = [];
+        $parametros = [];
+
+        if ($codigo) {
+            $condiciones[] = ' WHERE codigo= :codigo ';
+            $parametros[':codigo'] = $codigo;
+        }
+
+        $sql .= implode(' AND ', $condiciones);
+        $sent = $pdo->prepare($sql);
+        $sent->execute($parametros);
+    } else {
+        if (isset($codigo)) {
+            $code_not_found = 'El código especificado no existe';
+        }
+
+    }
+
+
 
     ?>
 
@@ -61,6 +87,11 @@
     <?php if (isset($mensaje)) : ?>
         <div class="mensaje">
             <?= htmlspecialchars($mensaje) ?>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($code_not_found)) : ?>
+        <div class="code_not_$code_not_found">
+            <?= htmlspecialchars($code_not_found) ?>
         </div>
     <?php endif; ?>
 </body>
