@@ -47,10 +47,11 @@
 
 <body>
     <?php
-    $pdo = new PDO('pgsql:host=localhost;dbname=biblioteca', 'biblioteca', 'biblioteca');
-    $codigo = isset($_GET['codigo']) ? trim($_GET['codigo']) : null;
-    $desde = isset($_GET['desde']) ? trim($_GET['desde']) : null;
-    $hasta = isset($_GET['hasta']) ? trim($_GET['hasta']) : null;
+    require_once 'aux.php';
+    $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+    $codigo = obtener_parametro('codigo', $_GET);
+    $desde = obtener_parametro('desde', $_GET);
+    $hasta = obtener_parametro('hasta', $_GET);
 
 
     $pdo->beginTransaction();
