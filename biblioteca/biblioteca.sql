@@ -49,8 +49,8 @@ DROP TABLE IF EXISTS prestamos CASCADE;
 
 CREATE TABLE prestamos (
     id_PRESTAMO BIGSERIAL PRIMARY KEY,
-    id_libro BIGSERIAL REFERENCES libros(id),
-    id_usuario BIGSERIAL REFERENCES usuarios(id),
+    id_libro BIGSERIAL REFERENCES libros(id) ON DELETE CASCADE,
+    id_usuario BIGSERIAL REFERENCES usuarios(id) ON DELETE CASCADE,
     fecha_prestamo TIMESTAMP,
     fecha_devolucion TIMESTAMP,
     fecha_devuelto TIMESTAMP
@@ -90,8 +90,8 @@ VALUES  ('Ciencia Ficción'),
 DROP TABLE IF EXISTS libros_categorias CASCADE;
 
 CREATE TABLE libros_categorias (
-    id_libro BIGINT REFERENCES libros(id),
-    id_categoria BIGINT REFERENCES categorias(id),
+    id_libro BIGINT REFERENCES libros(id) ON DELETE CASCADE,
+    id_categoria BIGINT REFERENCES categorias(id) ON DELETE CASCADE,
     PRIMARY KEY (id_libro, id_categoria)
 );
 
