@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Biblioteca</title>
     <style>
         /* Estilos generales */
@@ -52,6 +53,7 @@
     $codigo = obtener_parametro('codigo', $_GET);
     $desde = obtener_parametro('desde', $_GET);
     $hasta = obtener_parametro('hasta', $_GET);
+    $mensaje = obtener_parametro('mensaje', $_GET);
 
 
     $pdo->beginTransaction();
@@ -131,5 +133,9 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-
+        <?php if($mensaje): ?>
+            <div class="ok_borrado">
+                <p><?= $mensaje ?></p>
+            </div>
+        <?php endif; ?>
 </html>
