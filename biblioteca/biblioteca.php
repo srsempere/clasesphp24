@@ -48,12 +48,15 @@
 
 <body>
     <?php
+    session_start();
     require_once 'aux.php';
     $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
     $codigo = obtener_parametro('codigo', $_GET);
     $desde = obtener_parametro('desde', $_GET);
     $hasta = obtener_parametro('hasta', $_GET);
     $mensaje = obtener_parametro('mensaje', $_GET);
+    $exito_libro = obtener_parametro('exito_libro', $_SESSION);
+    $errores = obtener_parametro('errores', $_SESSION);
 
 
     $pdo->beginTransaction();
@@ -67,21 +70,19 @@
         $condiciones = [];
 
         if ($codigo) {
-            $condiciones[]= 'codigo = :codigo';
+            $condiciones[] = 'codigo = :codigo';
             $parametros[':codigo'] = $codigo;
         }
 
 
         if ($desde) {
-            $condiciones[]= 'anyo_publicacion >= :desde';
+            $condiciones[] = 'anyo_publicacion >= :desde';
             $parametros[':desde'] = $desde;
-
         }
 
         if ($hasta) {
-            $condiciones[]= 'anyo_publicacion <= :hasta';
+            $condiciones[] = 'anyo_publicacion <= :hasta';
             $parametros[':hasta'] = $hasta;
-
         }
 
         $sql .= implode(' AND ', $condiciones);
@@ -94,48 +95,81 @@
     ?>
 
     <h1>Bienvenido a la biblioteca</h1>
+
+    <form action="" method="get">
+        <label for="codigo">Introduce el código a buscar</label>
+        <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : ''; ?>">
+        <button type="submit">Buscar por código</button>
+    </form>
+    <br>
+    <form action="" method="get">
+        <label for="codigo">Introduce el año a buscar</label>
+        <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= isset($desde) ? $desde : ''; ?>">
+        <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= isset($hasta) ? $hasta : ''; ?>">
+        <button type="submit">Buscar por año</button>
+    </form>
+    <table>
+        <thead>
+            <th>Código</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Año de publicación</th>
+            <th>ISBN</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </thead>
+        <tbody>
+            <?php foreach ($sent as $fila) : ?>
+                <tr>
+                    <td><?= $fila['codigo'] ?></td>
+                    <td><?= $fila['titulo'] ?></td>
+                    <td><?= $fila['autor'] ?></td>
+                    <td><?= $fila['editorial'] ?></td>
+                    <td><?= $fila['anyo_publicacion'] ?></td>
+                    <td><?= $fila['isbn'] ?></td>
+                    <td><?= $fila['cantidad'] ?></td>
+                    <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php if ($mensaje) : ?>
+        <div class="ok_borrado">
+            <p><?= $mensaje ?></p>
+        </div>
+    <?php endif; ?>
+    <div class="ir-crealibro">
+        <a href="crea_libro.php">Insertar un nuevo libro</a>
+    </div>
+    <?php
+
+    if (isset($errores)) {
+        if ($errores > 0) {
+            unset($_SESSION['errores']);
+
+
+
+            foreach ($errores as $error) :
+    ?>
+                <div class="error-libro">
+                    <p><?= $error; ?></p>
+                </div>
+    <?php
+            endforeach;
+        }
+    }
+
+    if (isset($exito_libro)) {
+        unset($_SESSION['exito_libro']);
+
+
+    ?>
+    <div class="exito-libro">
+        <p><?= $exito_libro ?></p>
+    </div>
+    <?php
+       }
+    ?>
 </body>
-<form action="" method="get">
-    <label for="codigo">Introduce el código a buscar</label>
-    <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : ''; ?>">
-    <button type="submit">Buscar por código</button>
-</form>
-<br>
-<form action="" method="get">
-    <label for="codigo">Introduce el año a buscar</label>
-    <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= isset($desde) ? $desde : ''; ?>">
-    <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= isset($hasta) ? $hasta : ''; ?>">
-    <button type="submit">Buscar por año</button>
-</form>
-<table>
-    <thead>
-        <th>Código</th>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Editorial</th>
-        <th>Año de publicación</th>
-        <th>ISBN</th>
-        <th>Cantidad</th>
-        <th>Acciones</th>
-    </thead>
-    <tbody>
-        <?php foreach ($sent as $fila) : ?>
-            <tr>
-            <td><?= $fila['codigo'] ?></td>
-            <td><?= $fila['titulo'] ?></td>
-                <td><?= $fila['autor'] ?></td>
-                <td><?= $fila['editorial'] ?></td>
-                <td><?= $fila['anyo_publicacion'] ?></td>
-                <td><?= $fila['isbn'] ?></td>
-                <td><?= $fila['cantidad'] ?></td>
-                <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-        <?php if($mensaje): ?>
-            <div class="ok_borrado">
-                <p><?= $mensaje ?></p>
-            </div>
-        <?php endif; ?>
 </html>
