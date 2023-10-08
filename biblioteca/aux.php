@@ -32,7 +32,7 @@ function sanea($string)
 
 function valida_texto($string)
 {
-    return !empty($string) && ctype_alpha(str_replace(' ', '', $string));
+    return !empty($string) && preg_match('/^[\p{L}\s]+$/u', $string);
 }
 
 function valida_enteros($num)

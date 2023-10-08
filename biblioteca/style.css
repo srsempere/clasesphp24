@@ -84,7 +84,7 @@ h1 {
 }
 
 /* Estilo para mensajes de error */
-.error-libro {
+.error {
     background-color: #ffebee;
     /* fondo rojo claro */
     border: 1px solid #f44336;
@@ -99,7 +99,7 @@ h1 {
 }
 
 /* Estilo para mensajes de éxito */
-.exito-libro {
+.exito {
     background-color: #e8f5e9;
     /* fondo verde claro */
     border: 1px solid #4caf50;

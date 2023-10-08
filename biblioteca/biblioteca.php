@@ -56,6 +56,7 @@
     $hasta = obtener_parametro('hasta', $_GET);
     $mensaje = obtener_parametro('mensaje', $_GET);
     $exito_libro = obtener_parametro('exito_libro', $_SESSION);
+    $exito_categoria = obtener_parametro('exito_categoria', $_SESSION);
     $errores = obtener_parametro('errores', $_SESSION);
 
 
@@ -148,14 +149,14 @@
     <?php
 
     if (isset($errores)) {
-        if ($errores > 0) {
+        if (count($errores) > 0) {
             unset($_SESSION['errores']);
 
 
 
             foreach ($errores as $error) :
     ?>
-                <div class="error-libro">
+                <div class="error">
                     <p><?= $error; ?></p>
                 </div>
     <?php
@@ -168,8 +169,19 @@
 
 
     ?>
-    <div class="exito-libro">
+    <div class="exito">
         <p><?= $exito_libro ?></p>
+    </div>
+    <?php
+       }
+
+       if (isset($exito_categoria)) {
+        unset($_SESSION['exito_categoria']);
+
+
+    ?>
+    <div class="exito">
+        <p><?= $exito_categoria ?></p>
     </div>
     <?php
        }
