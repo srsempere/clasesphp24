@@ -24,10 +24,10 @@ if (!$errores) {
     // Comprobar que la categoría no existe ya.
 
     $sent = $pdo->query('SELECT nombre_categoria FROM categorias');
-    $categorias = $sent->fetchAll(PDO::FETCH_ASSOC); # Array multidimensional.
-    $categorias_unidimensional = array_column($categorias, 'nombre_categoria'); # Array unidimensional.
+    $categorias = $sent->fetchAll(PDO::FETCH_COLUMN);
 
-    if (!in_array($nueva_categoria, $categorias_unidimensional)) {
+
+    if (!in_array($nueva_categoria, $categorias)) {
 
         // Inserción de la nueva categoría en la database.
 

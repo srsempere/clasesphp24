@@ -12,6 +12,9 @@
     <?php
     session_start();
     require_once 'aux.php';
+    $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+    $sent = $pdo->query('SELECT DISTINCT nombre_categoria FROM categorias');
+    $categorias = $sent->fetchAll(PDO::FETCH_COLUMN);
     ?>
     <h1>Inserta un nuevo libro</h1>
     <div class="crea-libro">
@@ -28,6 +31,12 @@
             <input type="text" name="anyo_publicacion" id="anyo_publicacion" placeholder="Introduce el año de publiación">
             <label for="isbn">ISBN</label>
             <input type="text" name="isbn" id="isbn" placeholder="Introduce el isbn">
+            <label for="categoria">Categoría</label>
+            <select name="categoria" id="categoria">
+                <?php foreach($categorias as $categoria): ?>
+                    <option value="<?= $categoria ?>"><?= $categoria ?></option>
+                <?php endforeach; ?>
+            </select>
             <label for="cantidad">Cantidad</label>
             <input type="text" name="cantidad" id="cantidad" placeholder="Introduce la cantidad de libros a añadir">
             <button type="submit">Crear</button>

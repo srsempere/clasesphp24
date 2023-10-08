@@ -100,8 +100,8 @@
                                     FROM categorias
                                     JOIN libros_categorias
                                     ON categorias.id = libros_categorias.id_categoria');
-    $array_categorias = $sent_categorias->fetchAll(PDO::FETCH_NUM); // array multidimensional
-    $array_categorias_uni = array_column($array_categorias, 0); // array unidimensional
+    $array_categorias = $sent_categorias->fetchAll(PDO::FETCH_COLUMN);
+
     $indexa_categoria = 0;
     ?>
 
@@ -140,7 +140,7 @@
                     <td><?= $fila['editorial'] ?></td>
                     <td><?= $fila['anyo_publicacion'] ?></td>
                     <td><?= $fila['isbn'] ?></td>
-                    <td><?= $array_categorias_uni[$indexa_categoria]; $indexa_categoria += 1;?></td>
+                    <td><?= $array_categorias[$indexa_categoria]; $indexa_categoria += 1;?></td>
                     <td><?= $fila['cantidad'] ?></td>
                     <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
                 </tr>
