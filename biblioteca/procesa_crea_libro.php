@@ -2,6 +2,7 @@
 session_start();
 require_once 'aux.php';
 
+$pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
 $codigo = obtener_parametro('codigo', $_POST);
 $titulo = obtener_parametro('titulo', $_POST);
 $autor = obtener_parametro('autor', $_POST);
@@ -63,6 +64,22 @@ if (isset($errores)) {
 }
 
 if (!$errores) {
+
+    $campos = [
+        ':codigo' => $codigo,
+        ':titulo' => $titulo,
+        ':autor' => $autor,
+        ':editorial' => $editorial,
+        ':anyo_publicacion' => $anyo_publicacion,
+        ':isbn' => $isbn,
+        ':cantidad' => $cantidad,
+    ];
+
+    $sent = $pdo->prepare('INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
+                    VALUES (:codigo, :titulo, :autor, :editorial, :anyo_publicacion, :isbn, :cantidad)');
+
+    $sent->execute($campos);
+
     if (!isset($_SESSION['exito_libro'])) {
         $_SESSION['exito_libro'] = 'El libro se ha creado correctamente.';
         header('Location: biblioteca.php');
