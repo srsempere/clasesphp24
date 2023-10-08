@@ -93,6 +93,16 @@
     $sent = $pdo->prepare($sql);
     $sent->execute($parametros);
     $pdo->commit();
+
+    // Obtener categorías
+
+    $sent_categorias = $pdo->query('SELECT categorias.nombre_categoria
+                                    FROM categorias
+                                    JOIN libros_categorias
+                                    ON categorias.id = libros_categorias.id_categoria');
+    $array_categorias = $sent_categorias->fetchAll(PDO::FETCH_NUM); // array multidimensional
+    $array_categorias_uni = array_column($array_categorias, 0); // array unidimensional
+    $indexa_categoria = 0;
     ?>
 
     <h1>Bienvenido a la biblioteca</h1>
@@ -117,6 +127,7 @@
             <th>Editorial</th>
             <th>Año de publicación</th>
             <th>ISBN</th>
+            <th>Categoría</th>
             <th>Cantidad</th>
             <th>Acciones</th>
         </thead>
@@ -129,9 +140,11 @@
                     <td><?= $fila['editorial'] ?></td>
                     <td><?= $fila['anyo_publicacion'] ?></td>
                     <td><?= $fila['isbn'] ?></td>
+                    <td><?= $array_categorias_uni[$indexa_categoria]; $indexa_categoria += 1;?></td>
                     <td><?= $fila['cantidad'] ?></td>
                     <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
                 </tr>
+
             <?php endforeach; ?>
         </tbody>
     </table>
