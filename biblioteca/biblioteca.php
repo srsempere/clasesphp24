@@ -142,6 +142,9 @@
     <div class="ir-crealibro">
         <a href="crea_libro.php">Insertar un nuevo libro</a>
     </div>
+    <div class="ir-creacategoria">
+        <a href="crea_categoria.php">Insertar una nueva categoría</a>
+    </div>
     <?php
 
     if (isset($errores)) {

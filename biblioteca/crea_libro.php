@@ -14,7 +14,7 @@
     require_once 'aux.php';
     ?>
     <h1>Inserta un nuevo libro</h1>
-    <div id="crea-libro">
+    <div class="crea-libro">
         <form action="procesa_crea_libro.php" method="post">
             <label for="codigo">Código</label>
             <input type="text" name="codigo" id="codigo" placeholder="Introduce el código">
