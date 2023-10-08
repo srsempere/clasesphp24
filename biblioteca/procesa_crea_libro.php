@@ -9,6 +9,7 @@ $autor = obtener_parametro('autor', $_POST);
 $editorial = obtener_parametro('editorial', $_POST);
 $anyo_publicacion = obtener_parametro('anyo_publicacion', $_POST);
 $isbn = obtener_parametro('isbn', $_POST);
+$categoria = obtener_parametro('categoria', $_POST);
 $cantidad = obtener_parametro('cantidad', $_POST);
 
 
@@ -76,9 +77,19 @@ if (!$errores) {
     ];
 
     $sent = $pdo->prepare('INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
-                    VALUES (:codigo, :titulo, :autor, :editorial, :anyo_publicacion, :isbn, :cantidad)');
+                    VALUES (:codigo, :titulo, :autor, :editorial, :anyo_publicacion, :isbn, :cantidad)
+                    RETURNING id');
 
     $sent->execute($campos);
+
+    $ultimo_id = $sent->fetchColumn();
+
+    $sent = $pdo->prepare('INSERT INTO libros_categorias (id_libro, id_categoria)
+                            VALUES (:ultimo_id, :categoria)');
+    $sent->execute([
+        ':ultimo_id' => $ultimo_id,
+        ':categoria' => $categoria
+    ]);
 
     if (!isset($_SESSION['exito_libro'])) {
         $_SESSION['exito_libro'] = 'El libro se ha creado correctamente.';

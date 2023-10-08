@@ -15,6 +15,7 @@
     $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
     $sent = $pdo->query('SELECT DISTINCT nombre_categoria FROM categorias');
     $categorias = $sent->fetchAll(PDO::FETCH_COLUMN);
+
     ?>
     <h1>Inserta un nuevo libro</h1>
     <div class="crea-libro">
