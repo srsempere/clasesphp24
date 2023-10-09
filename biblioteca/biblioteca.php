@@ -94,15 +94,30 @@
     $sent->execute($parametros);
     $pdo->commit();
 
-    // Obtener categorías
+    // Obtener libros y sus categorías
 
-    $sent_categorias = $pdo->query('SELECT categorias.nombre_categoria
-                                    FROM categorias
-                                    JOIN libros_categorias
-                                    ON categorias.id = libros_categorias.id_categoria');
-    $array_categorias = $sent_categorias->fetchAll(PDO::FETCH_COLUMN);
+    $sent_categorias = $pdo->query('SELECT
+                                            libros.titulo,
+                                            categorias.nombre_categoria
+                                        FROM
+                                            libros
+                                        JOIN
+                                            libros_categorias
+                                        ON
+                                            libros.id = libros_categorias.id_libro
+                                        JOIN
+                                            categorias
+                                        ON
+                                            libros_categorias.id_categoria = categorias.id;');
 
-    $indexa_categoria = 0;
+    $array_categorias = $sent_categorias->fetchAll(); // Array Multidimensional
+    $array_categorias_unidimensional = [];
+
+    foreach ($array_categorias as $fila)
+    {
+        $array_categorias_unidimensional[$fila['titulo']] = $fila['nombre_categoria'];
+    }
+
     ?>
 
     <h1>Bienvenido a la biblioteca</h1>
@@ -140,7 +155,7 @@
                     <td><?= $fila['editorial'] ?></td>
                     <td><?= $fila['anyo_publicacion'] ?></td>
                     <td><?= $fila['isbn'] ?></td>
-                    <td><?= $array_categorias[$indexa_categoria]; $indexa_categoria += 1;?></td>
+                    <td><?= $array_categorias_unidimensional[$fila['titulo']] ?></td>
                     <td><?= $fila['cantidad'] ?></td>
                     <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
                 </tr>
@@ -172,7 +187,7 @@
                 <div class="error">
                     <p><?= $error; ?></p>
                 </div>
-    <?php
+        <?php
             endforeach;
         }
     }
@@ -181,23 +196,24 @@
         unset($_SESSION['exito_libro']);
 
 
-    ?>
-    <div class="exito">
-        <p><?= $exito_libro ?></p>
-    </div>
+        ?>
+        <div class="exito">
+            <p><?= $exito_libro ?></p>
+        </div>
     <?php
-       }
+    }
 
-       if (isset($exito_categoria)) {
+    if (isset($exito_categoria)) {
         unset($_SESSION['exito_categoria']);
 
 
     ?>
-    <div class="exito">
-        <p><?= $exito_categoria ?></p>
-    </div>
+        <div class="exito">
+            <p><?= $exito_categoria ?></p>
+        </div>
     <?php
-       }
+    }
     ?>
 </body>
+
 </html>

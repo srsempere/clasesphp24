@@ -86,6 +86,11 @@ if (!$errores) {
 
     $sent = $pdo->prepare('INSERT INTO libros_categorias (id_libro, id_categoria)
                             VALUES (:ultimo_id, :categoria)');
+
+    // var_dump($ultimo_id);
+    // var_dump($caterogia);
+    // die();
+
     $sent->execute([
         ':ultimo_id' => $ultimo_id,
         ':categoria' => $categoria

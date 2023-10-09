@@ -96,8 +96,7 @@ CREATE TABLE libros_categorias (
 );
 
 INSERT INTO libros_categorias (id_libro, id_categoria)
-VALUES  (1, 1),  -- El libro con ID 1 pertenece a la categoría con ID 1
-        (1, 2),  -- El libro con ID 1 también pertenece a la categoría con ID 2
+VALUES  (1, 2),  -- El libro con ID 1 también pertenece a la categoría con ID 2
         (2, 1),  -- El libro con ID 2 pertenece a la categoría con ID 1
         (3, 3),  -- El libro con ID 3 pertenece a la categoría con ID 3
         (4, 4),  -- El libro con ID 4 pertenece a la categoría con ID 4
@@ -105,4 +104,5 @@ VALUES  (1, 1),  -- El libro con ID 1 pertenece a la categoría con ID 1
         (6, 2),  -- El libro con ID 6 pertenece a la categoría con ID 2
         (7, 3),  -- El libro con ID 7 pertenece a la categoría con ID 3
         (8, 4),  -- El libro con ID 8 pertenece a la categoría con ID 4
-        (9, 1);  -- El libro con ID 9 pertenece a la categoría con ID 1
+        (9, 1),  -- El libro con ID 9 pertenece a la categoría con ID 1
+        (10,2);
