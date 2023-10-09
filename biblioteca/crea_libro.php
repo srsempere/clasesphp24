@@ -13,13 +13,22 @@
     session_start();
     require_once 'aux.php';
     $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
-    $sent = $pdo->query('SELECT DISTINCT nombre_categoria FROM categorias');
-    $categorias = $sent->fetchAll(PDO::FETCH_COLUMN);
+    $sent = $pdo->query('SELECT DISTINCT * FROM categorias');
+    $categorias = $sent->fetchAll();
+    $categorias_unidimensional = [];
+
+    foreach ($categorias as $fila) {
+        $categorias_unidimensional[$fila['id']] = $fila['nombre_categoria'];
+    }
+
+    // var_dump($categorias_unidimensional);
+    // die();
 
     ?>
     <h1>Inserta un nuevo libro</h1>
     <div class="crea-libro">
         <form action="procesa_crea_libro.php" method="post">
+            <input type="hidden" name="id_categoria" value="">
             <label for="codigo">Código</label>
             <input type="text" name="codigo" id="codigo" placeholder="Introduce el código">
             <label for="titulo">Título</label>
@@ -35,7 +44,7 @@
             <label for="categoria">Categoría</label>
             <select name="categoria" id="categoria">
                 <?php foreach($categorias as $categoria): ?>
-                    <option value="<?= $categoria ?>"><?= $categoria ?></option>
+                    <option value="<?= $categoria[0] ?>"><?= $categoria[1] ?></option>
                 <?php endforeach; ?>
             </select>
             <label for="cantidad">Cantidad</label>

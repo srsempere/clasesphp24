@@ -9,7 +9,7 @@ $autor = obtener_parametro('autor', $_POST);
 $editorial = obtener_parametro('editorial', $_POST);
 $anyo_publicacion = obtener_parametro('anyo_publicacion', $_POST);
 $isbn = obtener_parametro('isbn', $_POST);
-$categoria = obtener_parametro('categoria', $_POST);
+$id_categoria = obtener_parametro('categoria', $_POST);
 $cantidad = obtener_parametro('cantidad', $_POST);
 
 
@@ -76,6 +76,7 @@ if (!$errores) {
         ':cantidad' => $cantidad,
     ];
 
+    // Para sacar el último id.
     $sent = $pdo->prepare('INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
                     VALUES (:codigo, :titulo, :autor, :editorial, :anyo_publicacion, :isbn, :cantidad)
                     RETURNING id');
@@ -84,16 +85,22 @@ if (!$errores) {
 
     $ultimo_id = $sent->fetchColumn();
 
-    $sent = $pdo->prepare('INSERT INTO libros_categorias (id_libro, id_categoria)
-                            VALUES (:ultimo_id, :categoria)');
+    // Extraer el id_categoría
 
-    // var_dump($ultimo_id);
-    // var_dump($caterogia);
-    // die();
+
+
+
+    // Insertar el nuevo libro en la tabla libros_categorias (id_libro, id_categoria)
+    $sent = $pdo->prepare('INSERT INTO libros_categorias (id_libro, id_categoria)
+                            VALUES (:ultimo_id, :id_categoria)');
+
+    var_dump($ultimo_id);
+    var_dump($id_categoria);
+
 
     $sent->execute([
         ':ultimo_id' => $ultimo_id,
-        ':categoria' => $categoria
+        ':id_categoria' => $id_categoria
     ]);
 
     if (!isset($_SESSION['exito_libro'])) {
