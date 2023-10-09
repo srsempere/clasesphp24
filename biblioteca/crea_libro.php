@@ -26,7 +26,7 @@
 
     ?>
     <h1>Inserta un nuevo libro</h1>
-    <div class="crea-libro">
+    <div class="crea-formulario">
         <form action="procesa_crea_libro.php" method="post">
             <input type="hidden" name="id_categoria" value="">
             <label for="codigo">Código</label>

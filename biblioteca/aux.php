@@ -28,6 +28,11 @@ function sanea($string)
     return $string;
 }
 
+function sanea_email($email)
+{
+    return filter_var($email, FILTER_SANITIZE_EMAIL);
+}
+
 // FUNCIONES DE VALIDACIÓN
 
 function valida_texto($string)

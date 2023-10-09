@@ -117,7 +117,7 @@ h1 {
 /*  crea_libro.php */
 
 /* Contenedor del formulario */
-.crea-libro {
+.crea-formulario {
     width: 300px;
     margin: auto;
     padding: 20px;
@@ -128,7 +128,7 @@ h1 {
 }
 
 /* Etiquetas del formulario */
-.crea-libro label {
+.crea-formulario label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
@@ -136,7 +136,7 @@ h1 {
 }
 
 /* Campos de entrada del formulario */
-.crea-libro input {
+.crea-formulario input {
     width: calc(100% - 20px);
     padding: 8px;
     margin-bottom: 10px;
@@ -146,7 +146,7 @@ h1 {
 }
 
 /* Botón de envío del formulario */
-.crea-libro button {
+.crea-formulario button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -156,12 +156,12 @@ h1 {
     font-size: 16px;
 }
 
-.crea-libro button:hover {
+.crea-formulario button:hover {
     background-color: #45a049;
 }
 
 /* Estilo para el elemento select del formulario */
-.crea-libro select {
+.crea-formulario select {
     width: calc(100% - 20px);
     padding: 8px;
     margin-bottom: 10px;
@@ -173,7 +173,7 @@ h1 {
 }
 
 /* Estilo para las opciones dentro del select */
-.crea-libro select option {
+.crea-formulario select option {
     padding: 8px;
     font-family: Arial, sans-serif;
     font-size: 14px;
