@@ -59,7 +59,6 @@
     $exito_categoria = obtener_parametro('exito_categoria', $_SESSION);
     $errores = obtener_parametro('errores', $_SESSION);
 
-
     $pdo->beginTransaction();
     $sent = $pdo->query('LOCK TABLE libros IN SHARE MODE');
 
