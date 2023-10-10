@@ -16,6 +16,7 @@ function añade_error($mensaje)
         $_SESSION['errores'] = [];
     }
     $_SESSION['errores'][] = $mensaje;
+    error_log("Error añadido: $mensaje");
 }
 
 function hay_errores()
@@ -42,6 +43,16 @@ function sanea_email($email)
 }
 
 // FUNCIONES DE VALIDACIÓN
+
+function email_existe($email, ?PDO $pdo = null)
+{
+    if ($pdo === null) {
+        $pdo = conectar();
+    }
+    $sent = $pdo->prepare('SELECT 1 FROM usuarios WHERE email = :email');
+    $sent->execute([':email' => $email]);
+    return $sent->fetchColumn() ? true : false;
+}
 
 function valida_texto($string)
 {
@@ -116,6 +127,11 @@ function valida_email(string $email)
 
     if (!valida_longitud($email, 255)) {
         añade_error('La longitud del email no es correcta.');
+    }
+
+    if (email_existe($email)) {
+        error_log("Email existe: $email");
+        añade_error('El email ya existe');
     }
     return !hay_errores();
 }

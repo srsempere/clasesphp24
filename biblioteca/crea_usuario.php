@@ -15,7 +15,6 @@
     $nombre = obtener_parametro('nombre', $_POST);
     $email = obtener_parametro('email', $_POST);
     $password = obtener_parametro('password', $_POST);
-    $errores = obtener_parametro('errores', $_SESSION);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -38,6 +37,8 @@
             $sent->execute($campos);
         }
     }
+    $errores = obtener_parametro('errores', $_SESSION);
+
     ?>
     <div class="volver"><a href="biblioteca.php">Home</a></div>
     <h1>Creación de usuarios de la biblioteca</h1>
@@ -60,8 +61,8 @@
                 <li><?= $error ?></li>
             </ol>
     <?php
-            unset($_SESSION['errores']);
         }
+        unset($_SESSION['errores']);
     }
     ?>
 </body>
