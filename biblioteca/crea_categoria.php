@@ -32,7 +32,7 @@
         $errores = obtener_parametro('errores', $_SESSION);
 
         if (!$errores) {
-            $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+            $pdo = conectar();
 
             // Comprobar que la categoría no existe ya.
 
@@ -65,11 +65,12 @@
 
 
 
-    $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+    $pdo = conectar();
     $sent = $pdo->query('SELECT nombre_categoria FROM categorias');
     $errores = obtener_parametro('errores', $_SESSION);
 
     ?>
+    <div class="volver"><a href="biblioteca.php">Home</a></div>
     <h1>Creación de nueva categoría</h1>
     <div class="crea-categoria">
         <form action="" method="post">

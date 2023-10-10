@@ -50,7 +50,7 @@
     <?php
     session_start();
     require_once 'aux.php';
-    $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+    $pdo = conectar();
     $codigo = obtener_parametro('codigo', $_GET);
     $desde = obtener_parametro('desde', $_GET);
     $hasta = obtener_parametro('hasta', $_GET);
@@ -112,8 +112,7 @@
     $array_categorias = $sent_categorias->fetchAll(); // Array Multidimensional
     $array_categorias_unidimensional = [];
 
-    foreach ($array_categorias as $fila)
-    {
+    foreach ($array_categorias as $fila) {
         $array_categorias_unidimensional[$fila['titulo']] = $fila['nombre_categoria'];
     }
 
@@ -167,19 +166,20 @@
             <p><?= $mensaje ?></p>
         </div>
     <?php endif; ?>
-    <div class="ir-crealibro">
+    <div class="ir-a">
         <a href="crea_libro.php">Insertar un nuevo libro</a>
     </div>
-    <div class="ir-creacategoria">
+    <div class="ir-a">
         <a href="crea_categoria.php">Insertar una nueva categoría</a>
+    </div>
+    <div class="ir-a">
+        <a href="crea_usuario.php">Crear un nuevo usuario</a>
     </div>
     <?php
 
     if (isset($errores)) {
         if (count($errores) > 0) {
             unset($_SESSION['errores']);
-
-
 
             foreach ($errores as $error) :
     ?>

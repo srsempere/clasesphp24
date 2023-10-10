@@ -17,7 +17,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+        $pdo = conectar();
         $codigo = obtener_parametro('codigo', $_POST);
         $titulo = obtener_parametro('titulo', $_POST);
         $autor = obtener_parametro('autor', $_POST);
@@ -126,7 +126,7 @@
 
 
 
-    $pdo = conectar('pgsql', 'localhost', 'biblioteca', 'biblioteca', 'biblioteca');
+    $pdo = conectar();
     $sent = $pdo->query('SELECT DISTINCT * FROM categorias');
     $categorias = $sent->fetchAll();
     $categorias_unidimensional = [];
@@ -137,6 +137,7 @@
 
 
     ?>
+    <div class="volver"><a href="biblioteca.php">Home</a></div>
     <h1>Inserta un nuevo libro</h1>
     <div class="crea-formulario">
         <form action="" method="post">
