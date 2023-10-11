@@ -176,6 +176,9 @@
     <div class="ir-a">
         <a href="crea_usuario.php">Crear un nuevo usuario</a>
     </div>
+    <div class="ir-a">
+        <a href="crea_prestamo.php">Crear un nuevo préstamo</a>
+    </div>
     <?php
 
     if (isset($errores)) {
