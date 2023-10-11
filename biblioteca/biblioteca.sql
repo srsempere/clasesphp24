@@ -30,7 +30,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    fecha_registro TIMESTAMP
+    fecha_registro TIMESTAMP DEFAULT now()
 );
 
 INSERT INTO usuarios (nombre, email, password_hash, fecha_registro)
