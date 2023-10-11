@@ -36,6 +36,8 @@
                                     VALUES (:nombre, :email, :password_hash)');
             $sent->execute($campos);
         }
+        $_SESSION['exito_usuario'] = 'El usuario se ha creado con éxito';
+        header('Location: biblioteca.php');
     }
     $errores = obtener_parametro('errores', $_SESSION);
 

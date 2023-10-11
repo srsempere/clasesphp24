@@ -57,6 +57,7 @@
     $mensaje = obtener_parametro('mensaje', $_GET);
     $exito_libro = obtener_parametro('exito_libro', $_SESSION);
     $exito_categoria = obtener_parametro('exito_categoria', $_SESSION);
+    $exito_usuario = obtener_parametro('exito_usuario', $_SESSION);
     $errores = obtener_parametro('errores', $_SESSION);
 
     $pdo->beginTransaction();
@@ -212,6 +213,16 @@
         </div>
     <?php
     }
+
+    if (isset($exito_usuario)) {
+        unset($_SESSION['exito_usuario']);
+    ?>
+        <div class="exito">
+            <p><?= $exito_usuario ?></p>
+        </div>
+    <?php
+    }
+
     ?>
 </body>
 
