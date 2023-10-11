@@ -12,6 +12,7 @@ h1 {
 }
 
 
+
 /* biblioteca.php */
 
 .ok_borrado {
@@ -247,4 +248,73 @@ h1 {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+
+/*  crea_prestamo.php */
+
+/* Para las etiquetas de los formularios */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Para los campos de selección de los formularios */
+select {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Para las opciones dentro de los campos de selección */
+select option {
+    padding: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Para los botones de los formularios */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Para los títulos h2 */
+h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Para los parágrafos p */
+p {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Para el contenedor de tu formulario */
+.formulario-contenedor {
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
 }

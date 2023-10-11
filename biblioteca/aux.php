@@ -77,6 +77,11 @@ function es_nulo(string $cadena)
     return $cadena === null;
 }
 
+function existe($cadena)
+{
+    return isset($cadena);
+}
+
 function valida_enteros($num)
 {
     return filter_var($num, FILTER_VALIDATE_INT) !== false;
