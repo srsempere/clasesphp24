@@ -22,10 +22,10 @@
 
        foreach ($libros as $libro) {
         if ($libro['id'] == $id_libro_seleccionado) {
-            $_SESSION['libro_selccionado'] = "Código: {$libro['codigo']} Título: {$libro['titulo']} Autor: {$libro['autor']} Editorial: {$editorial['editorial']} Año: {$anyo_publicacion['anyo_publica']}";
+          $libro_seleccionado = ["Código: {$libro['codigo']}", "Título: {$libro['titulo']}"];
+          break;
         }
        }
-
     }
 
 
@@ -40,6 +40,15 @@
         </select>
         <button type="submit">Seleccionar</button>
     </form>
+    <?php
+        if (isset($libro_seleccionado)) {
+            $libro_seleccionado = implode(' - ', $libro_seleccionado);
+            ?>
+            <h2>Libro seleccionado para el préstamo</h2>
+            <p><?= $libro_seleccionado ?></p>
+            <?php
+        }
+    ?>
 </body>
 
 </html>
