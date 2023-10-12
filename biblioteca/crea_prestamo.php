@@ -31,6 +31,7 @@
             if ($libro['id'] == $_SESSION['id_libro_seleccionado']) {
                 $libro_seleccionado = ["Código: {$libro['codigo']}", "Título: {$libro['titulo']}"];
                 $cantidad_libro_seleccionado = $libro['cantidad'];
+                $_SESSION['cantidad_libro_seleccionado'] = $cantidad_libro_seleccionado;
                 break;
             }
         }
@@ -43,7 +44,10 @@
             }
 
             // COMPROBACIÓN QUE EXISTE STOCK PARA PRESTAR.
-
+            if (isset($_SESSION['cantidad_libro_seleccionado'])) {
+                $cantidad_libro_seleccionado = $_SESSION['cantidad_libro_seleccionado'];
+                error_log("$cantidad_libro_seleccionado");
+            }
 
 
             $id_usuario_prestamo = obtener_parametro('id_usuario', $_POST);
@@ -92,7 +96,7 @@
         <label for="libro">Selecciona el libro que deseas prestar</label>
         <select name="id_libro" id="id_libro">
             <?php foreach ($libros as $libro) : ?>
-                <option value="<?= $libro['id'] ?>"><?= $libro['codigo'] . ' - ' . $libro['titulo']; ?></option>
+                <option value="<?= $libro['id'] ?>" <?= isset($_POST['id_libro']) &&  $libro['id'] == $_POST['id_libro'] ? 'selected' : '' ?>><?= $libro['codigo'] . ' - ' . $libro['titulo']; ?></option>
             <?php endforeach; ?>
         </select>
         <button type="submit">Seleccionar</button>
