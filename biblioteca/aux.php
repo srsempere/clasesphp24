@@ -44,6 +44,12 @@ function sanea_email($email)
 
 // FUNCIONES DE VALIDACIÓN
 
+function valida_entero_positivo(string $num)
+{
+    return ctype_digit($num);
+}
+
+
 function email_existe($email, ?PDO $pdo = null)
 {
     if ($pdo === null) {
@@ -155,4 +161,9 @@ function valida_password(string $password)
         añade_error('La longitud de la contraseña no es correcta.');
     }
     return !hay_errores();
+}
+
+function valida_fecha($dia, $mes, $anyo)
+{
+    return checkdate($mes, $dia, $anyo);
 }

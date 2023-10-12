@@ -21,7 +21,6 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_libro_seleccionado = obtener_parametro('id_libro', $_POST);
-        error_log("Estoy dentro. ID del libro : " .  $id_libro_seleccionado);
 
         foreach ($libros as $libro) {
             if ($libro['id'] == $id_libro_seleccionado) {
@@ -34,9 +33,33 @@
         $inicia_prestamo = obtener_parametro('inicia_prestamo', $_POST);
 
         if (existe($inicia_prestamo)) {
+            $id_usuario_prestamo = obtener_parametro('id', $_POST);
+            $dia = obtener_parametro('dia', $_POST);
+            $mes = obtener_parametro('mes', $_POST);
+            $anyo = obtener_parametro('anyo', $_POST);
+
+            // Saneado
             $inicia_prestamo = sanea($inicia_prestamo);
-            // TODO: Escribir el código que inicia el préstamo.
-            $usuario_prestamo = obtener_parametro('id', $_POST);
+            $id_libro_seleccionado = sanea($id_libro_seleccionado);
+            $id_usuario_prestamo = sanea($id_usuario_prestamo);
+            $dia = sanea($dia);
+            $mes = sanea($mes);
+            $anyo = sanea($anyo);
+
+            // Validacion
+            if (valida_entero_positivo($id_libro_seleccionado) &&
+                valida_entero_positivo($id_usuario_prestamo)   &&
+                valida_fecha($dia,$mes,$anyo)) {
+
+            // TODO: TERMINAR
+            $sent = $pdo->prepare('UPDATE prestamos
+                                    SET id_libro= :id_libro_seleccionado,
+                                        id_usuario= :id_usuario_prestamo
+                                        fecha devolucion= :fecha_devolucion');
+
+            }
+
+
 
         }
 
@@ -77,6 +100,25 @@
                     }
                 }
                 ?>
+            </select>
+            <label for="">Introduce la fecha de devolución</label>
+            <label for="dia">Dia</label>
+            <select name="dia">
+                <?php for ($i=1; $i <= 31 ; $i++): ?>
+                    <option value="<?= $i ?>"><?= $i ?></option>
+                <?php endfor; ?>
+            </select>
+            <label for="mes">Mes</label>
+            <select name="mes">
+                <?php for ($i=1; $i <= 12 ; $i++): ?>
+                    <option value="<?= $i ?>"><?= $i ?></option>
+                <?php endfor; ?>
+            </select>
+            <label for="anyo">Año</label>
+            <select name="anyo">
+                <?php for ($i=2023, $j=50; $j >= 0 ; $j--, $i--): ?>
+                    <option value="<?= $i ?>"><?= $i ?></option>
+                <?php endfor; ?>
             </select>
             <button type="submit">Iniciar solicitud de préstamo</button>
         </form>
