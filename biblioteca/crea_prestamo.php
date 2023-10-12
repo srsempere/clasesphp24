@@ -42,6 +42,10 @@
                 $id_libro_seleccionado = $_SESSION['id_libro_seleccionado'];
             }
 
+            // COMPROBACIÓN QUE EXISTE STOCK PARA PRESTAR.
+
+
+
             $id_usuario_prestamo = obtener_parametro('id_usuario', $_POST);
             $dia = obtener_parametro('dia', $_POST);
             $mes = obtener_parametro('mes', $_POST);
@@ -57,26 +61,33 @@
 
 
             // Validacion
-            if (
-                valida_entero_positivo($id_libro_seleccionado) &&
-                valida_entero_positivo($id_usuario_prestamo)   &&
-                valida_fecha($dia, $mes, $anyo)
-            ) {
+            if (valida_entero_positivo($id_libro_seleccionado) && valida_entero_positivo($id_usuario_prestamo) && valida_fecha($dia, $mes, $anyo)) {
 
-                error_log('Estoy dentro.');
 
-                // TODO: TERMINAR
-                $sent = $pdo->prepare('UPDATE prestamos
-                                    SET id_libro= :id_libro_seleccionado,
-                                        id_usuario= :id_usuario_prestamo
-                                        fecha devolucion= :fecha_devolucion');
+                $fecha = new DateTime("$anyo-$mes-$dia");
+                $fecha = $fecha->format('Y-m-d');
+
+                // Inserta el préstamo en la tabla préstamo
+                $sent = $pdo->prepare('INSERT INTO prestamos (id_libro, id_usuario, fecha_devolucion)
+                                    VALUES (:id_libro_seleccionado, :id_usuario_prestamo, :fecha_devolucion)');
+
+                $sent->execute([
+                    ':id_libro_seleccionado' => $id_libro_seleccionado,
+                    ':id_usuario_prestamo' => $id_usuario_prestamo,
+                    ':fecha_devolucion' => $fecha
+                ]);
+                $_SESSION['exito_prestamo'] = 'El prestamo se ha realizado con éxito';
+                header('Location: biblioteca.php');
             }
         }
     }
 
 
     ?>
+    <div class="volver"><a href="biblioteca.php">Home</a></div>
     <h1>Préstamos de libros</h1>
+
+    <!-- Formulario 1 -->
     <form action="" method="post">
         <label for="libro">Selecciona el libro que deseas prestar</label>
         <select name="id_libro" id="id_libro">
@@ -95,6 +106,7 @@
         <p><?= $libro_seleccionado ?> Cantidad disponible: <?= $cantidad_libro_seleccionado ?></p>
         <h2>Selecciona el usuario del préstamo</h2>
 
+        <!-- Formulario 2 -->
         <form action="" method="post">
             <input type="hidden" name="inicia_prestamo" value="1">
             <label for="usuarios">Selecciona al usuario del préstamo</label>
