@@ -46,41 +46,47 @@
             // COMPROBACIÓN QUE EXISTE STOCK PARA PRESTAR.
             if (isset($_SESSION['cantidad_libro_seleccionado'])) {
                 $cantidad_libro_seleccionado = $_SESSION['cantidad_libro_seleccionado'];
-                error_log("$cantidad_libro_seleccionado");
             }
 
+            if (isset($cantidad_libro_seleccionado) && $cantidad_libro_seleccionado > 0) {
 
-            $id_usuario_prestamo = obtener_parametro('id_usuario', $_POST);
-            $dia = obtener_parametro('dia', $_POST);
-            $mes = obtener_parametro('mes', $_POST);
-            $anyo = obtener_parametro('anyo', $_POST);
+                // Actualización de la cantidad disponible en la base de datos
+                $sent = $pdo->prepare('UPDATE libros
+                                SET cantidad = cantidad -1
+                                WHERE id = :id_libro_seleccionado');
 
-            // Saneado
-            $inicia_prestamo = sanea($inicia_prestamo);
-            $id_libro_seleccionado = sanea($id_libro_seleccionado);
-            $id_usuario_prestamo = sanea($id_usuario_prestamo);
-            $dia = sanea($dia);
-            $mes = sanea($mes);
-            $anyo = sanea($anyo);
+                $sent->execute([':id_libro_seleccionado' => $id_libro_seleccionado]);
+                $id_usuario_prestamo = obtener_parametro('id_usuario', $_POST);
+                $dia = obtener_parametro('dia', $_POST);
+                $mes = obtener_parametro('mes', $_POST);
+                $anyo = obtener_parametro('anyo', $_POST);
 
+                // Saneado
+                $inicia_prestamo = sanea($inicia_prestamo);
+                $id_libro_seleccionado = sanea($id_libro_seleccionado);
+                $id_usuario_prestamo = sanea($id_usuario_prestamo);
+                $dia = sanea($dia);
+                $mes = sanea($mes);
+                $anyo = sanea($anyo);
 
-            // Validacion
-            if (valida_entero_positivo($id_libro_seleccionado) && valida_entero_positivo($id_usuario_prestamo) && valida_fecha($dia, $mes, $anyo)) {
+                // Validacion
+                if (valida_entero_positivo($id_libro_seleccionado) && valida_entero_positivo($id_usuario_prestamo) && valida_fecha($dia, $mes, $anyo)) {
+                    $fecha = new DateTime("$anyo-$mes-$dia");
+                    $fecha = $fecha->format('Y-m-d');
 
-
-                $fecha = new DateTime("$anyo-$mes-$dia");
-                $fecha = $fecha->format('Y-m-d');
-
-                // Inserta el préstamo en la tabla préstamo
-                $sent = $pdo->prepare('INSERT INTO prestamos (id_libro, id_usuario, fecha_devolucion)
+                    // Inserta el préstamo en la tabla préstamo
+                    $sent = $pdo->prepare('INSERT INTO prestamos (id_libro, id_usuario, fecha_devolucion)
                                     VALUES (:id_libro_seleccionado, :id_usuario_prestamo, :fecha_devolucion)');
-
-                $sent->execute([
-                    ':id_libro_seleccionado' => $id_libro_seleccionado,
-                    ':id_usuario_prestamo' => $id_usuario_prestamo,
-                    ':fecha_devolucion' => $fecha
-                ]);
-                $_SESSION['exito_prestamo'] = 'El prestamo se ha realizado con éxito';
+                    $sent->execute([
+                        ':id_libro_seleccionado' => $id_libro_seleccionado,
+                        ':id_usuario_prestamo' => $id_usuario_prestamo,
+                        ':fecha_devolucion' => $fecha
+                    ]);
+                    $_SESSION['exito_prestamo'] = 'El prestamo se ha realizado con éxito';
+                    header('Location: biblioteca.php');
+                }
+            } else {
+                añade_error('Lo sentimos, actualmente no disponemos de stock suficiente para realizar el préstamo.');
                 header('Location: biblioteca.php');
             }
         }

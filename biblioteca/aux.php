@@ -16,7 +16,6 @@ function añade_error($mensaje)
         $_SESSION['errores'] = [];
     }
     $_SESSION['errores'][] = $mensaje;
-    error_log("Error añadido: $mensaje");
 }
 
 function hay_errores()

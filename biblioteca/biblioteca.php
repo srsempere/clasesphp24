@@ -58,12 +58,13 @@
     $exito_libro = obtener_parametro('exito_libro', $_SESSION);
     $exito_categoria = obtener_parametro('exito_categoria', $_SESSION);
     $exito_usuario = obtener_parametro('exito_usuario', $_SESSION);
+    $exito_prestamo = obtener_parametro('exito_prestamo', $_SESSION);
     $errores = obtener_parametro('errores', $_SESSION);
 
     $pdo->beginTransaction();
     $sent = $pdo->query('LOCK TABLE libros IN SHARE MODE');
 
-    $sql = 'SELECT * FROM libros';
+    $sql = 'SELECT * FROM libros ORDER BY codigo';
     $parametros = [];
 
     if ($codigo || $desde || $hasta) {
@@ -108,7 +109,7 @@
                                         JOIN
                                             categorias
                                         ON
-                                            libros_categorias.id_categoria = categorias.id;');
+                                            libros_categorias.id_categoria = categorias.id');
 
     $array_categorias = $sent_categorias->fetchAll(); // Array Multidimensional
     $array_categorias_unidimensional = [];
@@ -226,6 +227,14 @@
     <?php
     }
 
+    if (isset($exito_prestamo)) {
+        unset($_SESSION['exito_prestamo']);
+    ?>
+        <div class="exito">
+            <p><?= $exito_prestamo ?></p>
+        </div>
+    <?php
+    }
     ?>
 </body>
 
