@@ -157,7 +157,10 @@
                     <td><?= $fila['isbn'] ?></td>
                     <td><?= $array_categorias_unidimensional[$fila['titulo']] ?></td>
                     <td><?= $fila['cantidad'] ?></td>
-                    <th><a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a></th>
+                    <th>
+                        <a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a>
+                        <a href="modificar.php">Modificar</a>
+                    </th>
                 </tr>
 
             <?php endforeach; ?>
