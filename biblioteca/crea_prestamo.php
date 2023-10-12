@@ -20,12 +20,15 @@
     $usuarios = $sent->fetchAll(PDO::FETCH_ASSOC);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id_libro_seleccionado = obtener_parametro('id_libro', $_POST);
-        $_SESSION['id_libro_seleccionado'] = $id_libro_seleccionado;
+        if (isset($_POST['id_libro'])) {
+            $id_libro_seleccionado = obtener_parametro('id_libro', $_POST);
+            $_SESSION['id_libro_seleccionado'] = $id_libro_seleccionado;
+        }
+
 
 
         foreach ($libros as $libro) {
-            if ($libro['id'] == $id_libro_seleccionado) {
+            if ($libro['id'] == $_SESSION['id_libro_seleccionado']) {
                 $libro_seleccionado = ["Código: {$libro['codigo']}", "Título: {$libro['titulo']}"];
                 $cantidad_libro_seleccionado = $libro['cantidad'];
                 break;
@@ -35,10 +38,10 @@
         $inicia_prestamo = obtener_parametro('inicia_prestamo', $_POST);
 
         if (existe($inicia_prestamo)) {
-            $id_libro_seleccionado = obtener_parametro('id_libro_seleccionado', $_POST);
+            if (isset($_SESSION['id_libro_seleccionado'])) {
+                $id_libro_seleccionado = $_SESSION['id_libro_seleccionado'];
+            }
 
-            var_dump($id_libro_seleccionado);
-            die();
             $id_usuario_prestamo = obtener_parametro('id_usuario', $_POST);
             $dia = obtener_parametro('dia', $_POST);
             $mes = obtener_parametro('mes', $_POST);
@@ -94,7 +97,6 @@
 
         <form action="" method="post">
             <input type="hidden" name="inicia_prestamo" value="1">
-            <input type="hidden" name="id_libro_seleccionado" value="<?= $id_libro_seleccionado ?>">
             <label for="usuarios">Selecciona al usuario del préstamo</label>
             <select name="id_usuario" id="usuarios">
                 <?php
