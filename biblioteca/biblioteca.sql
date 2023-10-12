@@ -49,10 +49,10 @@ DROP TABLE IF EXISTS prestamos CASCADE;
 
 CREATE TABLE prestamos (
     id_PRESTAMO BIGSERIAL PRIMARY KEY,
-    id_libro BIGSERIAL REFERENCES libros(id) ON DELETE CASCADE,
-    id_usuario BIGSERIAL REFERENCES usuarios(id) ON DELETE CASCADE,
-    fecha_prestamo TIMESTAMP,
-    fecha_devolucion TIMESTAMP,
+    id_libro BIGINT REFERENCES libros(id) ON DELETE CASCADE,
+    id_usuario BIGINT REFERENCES usuarios(id) ON DELETE CASCADE,
+    fecha_prestamo TIMESTAMP DEFAULT now(),
+    fecha_devolucion TIMESTAMP NOT NULL,
     fecha_devuelto TIMESTAMP
 );
 

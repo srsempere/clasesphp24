@@ -36,6 +36,7 @@
         if (existe($inicia_prestamo)) {
             $inicia_prestamo = sanea($inicia_prestamo);
             // TODO: Escribir el código que inicia el préstamo.
+            $usuario_prestamo = obtener_parametro('id', $_POST);
 
         }
 
