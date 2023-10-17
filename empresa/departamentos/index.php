@@ -10,9 +10,9 @@
 
 <body>
     <?php
-    require_once 'aux.php';
+    require_once '../aux.php';
 
-    $pdo = conectar('pgsql', 'localhost', 'empresa', 'empresa', 'empresa');
+    $pdo = conectar();
     $condiciones = [];
     $codigo = obtener_parametro('codigo', $_GET);
     $mensaje = obtener_parametro('mensaje', $_GET);
