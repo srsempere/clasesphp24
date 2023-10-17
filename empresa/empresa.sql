@@ -17,7 +17,7 @@ INSERT INTO departamentos (codigo, denominacion, localidad)
 
 DROP TABLE IF EXISTS empleados CASCADE;
 
-CREATE TABLE empleados(
+CREATE TABLE empleados (
     id BIGSERIAL PRIMARY KEY,
     numero NUMERIC(4) NOT NULL UNIQUE,
     nombre VARCHAR(255) NOT NULL,
