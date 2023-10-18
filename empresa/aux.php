@@ -15,13 +15,6 @@ function add_error(string $msg)
     $_SESSION['errores'][] = $msg;
 }
 
-function add_exit(string $msg)
-{
-    if (!isset($_SESSION['errores'])) {
-        $_SESSION['errores'] = [];
-    }
-    $_SESSION['errores'][] = $msg;
-}
 
 function add_success(string $msg)
 {

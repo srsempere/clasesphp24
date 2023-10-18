@@ -35,8 +35,8 @@
 
         $id_departamento = $_SESSION['id_departamento'];
         $denominacion = $_SESSION['denominacion'];
+        // TODO: Implementar validaciones y saneados.
 
-        //TODO: Comprobar primero si en ese departamento existe algún empleado dado de alta y si es así, indicar al usuario que no se puede borrar dicho departamento.
         // Comprobación si el departamento tiene a algún empleado.
         $sent = $pdo->prepare('SELECT * FROM empleados WHERE departamento_id= :id_departamento');
         $sent->execute(['id_departamento' => $id_departamento]);

@@ -34,7 +34,8 @@ INSERT INTO empleados (numero, nombre, apellidos, salario, fecha_alta,
                        departamento_id)
     VALUES (1000, 'Pepe', 'García', 1800.25, '2022-04-03 00:00:00', 2),
            (2000, 'María', 'Rodríguez', 2200.00, '2021-08-05 00:00:00', 1),
-           (3000, 'Rosa', 'González', NULL, '2020-10-14 00:00:00', 3);
+           (3000, 'Rosa', 'González', NULL, '2020-10-14 00:00:00', 3),
+           (4000, 'Antonio', 'Rodríguez', NULL, '2020-10-14 00:00:00', 1);
 
 DROP INDEX IF EXISTS idx_empleados_departamento_id CASCADE;
 
