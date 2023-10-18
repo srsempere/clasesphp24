@@ -48,7 +48,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-
+    <a href="../departamentos/index.php">Volver a departamentos</a>
     <?php
     if (isset($errores)) {
         unset($_SESSION['errores']);
