@@ -44,6 +44,7 @@
         }
 
         $sql .= implode(' AND ', $condiciones);
+        $sql .= ' ORDER BY codigo ';
         $sent = $pdo->prepare($sql);
         $sent->execute($parametros);
     } else {
@@ -85,7 +86,7 @@
         </tbody>
     </table>
     <br>
-    <a href="insertar.php">Crear departamento</a><br>
+    <a href="crear.php">Crear departamento</a><br>
     <a href="/empleados/index.php">Ir a Empleados</a>
     <?php if (isset($errores)) : unset($_SESSION['errores']) ?>
         <?php foreach ($errores as $error) : ?>
