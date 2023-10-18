@@ -65,7 +65,8 @@
             <label for="localidad">Localidad</label>
             <input type="text" name="localidad" id="localidad" value="<?= $fila['localidad'] ?>"><br>
             <button type="submit">Modificar</button>
-        </form>
+        </form><br>
+        <a href="index.php">Volver a departamentos</a>
     <?php endforeach; ?>
     <?php
     if (isset($errores)) :

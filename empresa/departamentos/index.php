@@ -84,6 +84,8 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <br>
+    <a href="insertar.php">Crear departamento</a><br>
     <a href="/empleados/index.php">Ir a Empleados</a>
     <?php if (isset($errores)) : unset($_SESSION['errores']) ?>
         <?php foreach ($errores as $error) : ?>

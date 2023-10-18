@@ -35,19 +35,32 @@
             <th>Acciones</th>
         </thead>
         <tbody>
+            <?php
+            $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
+            ?>
             <?php foreach ($sent as $empleado) : ?>
                 <tr>
                     <td><?= $empleado['numero'] ?></td>
                     <td><?= $empleado['nombre'] ?></td>
                     <td><?= $empleado['apellidos'] ?></td>
-                    <td><?= $empleado['salario'] ?></td>
+                    <?php
+                        $salario = isset($empleado['salario'])
+                                    ? $fmt->formatCurrency($empleado['salario'], 'EUR')
+                                    : '' ;
+                    ?>
+                    <td><?= $salario ?></td>
                     <td><?= $empleado['fecha_alta'] ?></td>
                     <td><?= $empleado['denominacion'] ?></td>
-                    <td><a href="borrar.php?id=<?= $empleado['id'] ?>">Eliminar</a></td>
+                    <td>
+                        <a href="borrar.php?id=<?= $empleado['id'] ?>">Eliminar</a>
+                        <a href="modificar.php?id=<?= $empleado['id'] ?>">Modificar</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <br>
+    <a href="insertar.php">Insertar nuevo empleado</a><br>
     <a href="../departamentos/index.php">Volver a departamentos</a>
     <?php
     if (isset($errores)) {
