@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Departamentos</title>
 </head>
 
 <body>
     <?php
+    session_start();
     require_once '../aux.php';
 
     $pdo = conectar();
     $condiciones = [];
-    $codigo = obtener_parametro('codigo', $_GET);
-    $mensaje = obtener_parametro('mensaje', $_GET);
+    $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
+    $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : null;
+    $successes = isset($_SESSION['success']) ? $_SESSION['success'] : null;
 
     $sql_cuenta = 'SELECT COUNT(*) FROM departamentos';
     $parametros = [];
@@ -48,7 +50,6 @@
         if (isset($codigo)) {
             $code_not_found = 'El código especificado no existe';
         }
-
     }
 
 
@@ -80,11 +81,21 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (isset($mensaje)) : ?>
-        <div class="mensaje">
-            <?= htmlspecialchars($mensaje) ?>
-        </div>
+    <?php if (isset($errores)) : unset($_SESSION['errores']) ?>
+        <?php foreach ($errores as $error) : ?>
+            <div class="errores">
+                <?= $error ?>
+            </div>
+        <?php endforeach; ?>
     <?php endif; ?>
+    <?php if (isset($successes)) : unset($_SESSION['success']) ?>
+        <?php foreach ($successes as $success) : ?>
+            <div class="success">
+                <?= $success ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
     <?php if (isset($code_not_found)) : ?>
         <div class="code_not_found">
             <?= htmlspecialchars($code_not_found) ?>

@@ -1,9 +1,9 @@
-.mensaje {
+.errores {
     padding: 15px;
     margin: 10px 0;
-    border: 1px solid #28a745; /* Color verde para el borde */
-    background-color: #d4edda; /* Color verde claro para el fondo */
-    color: #155724; /* Color verde oscuro para el texto */
+    border: 1px solid #f80025; /* Color verde para el borde */
+    background-color: #e06767; /* Color verde claro para el fondo */
+    color: #ffffff; /* Color verde oscuro para el texto */
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -19,6 +19,21 @@
     border: 1px solid #f00;
     background-color: #fee;
     color: #900;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.success {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #4ef76a; /* Color verde para el borde */
+    background-color: #83e067; /* Color verde claro para el fondo */
+    color: #ffffff; /* Color verde oscuro para el texto */
     font-size: 16px;
     font-weight: bold;
     text-align: center;

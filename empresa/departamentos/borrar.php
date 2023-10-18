@@ -9,27 +9,56 @@
 
 <body>
     <?php
-    require_once '../aux.php';
+    session_start();
+    require '../aux.php';
 
     $pdo = conectar();
-    $id_departamento = obtener_parametro('id_departamento', $_GET);
-    $denominacion = obtener_parametro('denominacion', $_GET);
+    $id_departamento = isset($_GET['id']) ? trim($_GET['id']) : null;
+    $denominacion = isset($_GET['denominacion']) ? trim($_GET['denominacion']) : null;
+    $_SESSION['id_departamento'] = $id_departamento;
+    $_SESSION['denominacion'] = $denominacion;
 
-    // TODO: Aquí falta comprrobar si existe el id_departamento y si no está, redirigir a index.php
-    // TODO: Comprobar primero si el departamento existe con una consulta SELECT.
+    // Comprobar si existe el id_departamento y si no está, redirigir a index.php
+    $sent = $pdo->prepare('SELECT * FROM departamentos WHERE id= :id_departamento');
+    $sent->execute([':id_departamento' => $id_departamento]);
+
+    if ($sent->rowCount() === 0) {
+        # El departamento no existe. Redirigir a index.
+        add_error('El departamento introducido no existe.');
+        header('Location: index.php');
+        exit();
+    }
+
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        error_log("Entro por POST");
+
+        $id_departamento = $_SESSION['id_departamento'];
+        $denominacion = $_SESSION['denominacion'];
+
         //TODO: Comprobar primero si en ese departamento existe algún empleado dado de alta y si es así, indicar al usuario que no se puede borrar dicho departamento.
         // Comprobación si el departamento tiene a algún empleado.
         $sent = $pdo->prepare('SELECT * FROM empleados WHERE departamento_id= :id_departamento');
         $sent->execute(['id_departamento' => $id_departamento]);
-        $coincidencias = $sent->fetch();
+        $coincidencias = $sent->fetchColumn();
+        $tipo_variable = gettype($coincidencias);
+        error_log("Tipo de la variable coincidencias: $tipo_variable");
+        error_log("Valor de Coincidencias: $coincidencias");
 
-        if (isset($id_departamento)) { // TODO esto habrá que cambiarlos seguro
-            $sent = $pdo->prepare('DELETE FROM departamentos WHERE id_departamento = :id_departamento');
-            $sent->execute([':id_departamento' => $id_departamento]);
+        if (!$coincidencias) {
+            error_log("El valor de coincidencias es falso. Procedo a borrar el departamento.");
+
+            if (isset($id_departamento)) {
+                $sent = $pdo->prepare('DELETE FROM departamentos WHERE id = :id_departamento');
+                $sent->execute([':id_departamento' => $id_departamento]);
+                error_log('He borrado el departamento');
+                add_success('El departamento se ha borrado correctamente');
+                header('Location: index.php');
+            }
+        } else {
+            error_log("Hay empleados en el departamento.");
+            add_error('No se puede borrar el departamento. Hay empleados registrados en él.');
             header('Location: index.php');
-            error_log("Llego aquí");
         }
     }
 

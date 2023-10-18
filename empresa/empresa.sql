@@ -12,7 +12,9 @@ INSERT INTO departamentos (codigo, denominacion, localidad)
            (20, 'Administrativo', 'Jerez'),
            (30, 'Prevención',     'Trebujena'),
            (40, 'Laboratorio',    'Chipiona'),
-           (50, 'Robótica',       'San Fernando');
+           (50, 'Robótica',       'San Fernando'),
+           (60, 'Biología',       'Vejer de la Frontera'),
+           (70, 'Ganadería',      'Oviedo');
 
 
 DROP TABLE IF EXISTS empleados CASCADE;

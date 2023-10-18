@@ -7,7 +7,26 @@ function conectar()
 }
 
 
-function obtener_parametro($par, $array)
+function add_error(string $msg)
 {
-    return isset($array[$par]) ? trim($array[$par]) : null;
+    if (!isset($_SESSION['errores'])) {
+        $_SESSION['errores'] = [];
+    }
+    $_SESSION['errores'][] = $msg;
+}
+
+function add_exit(string $msg)
+{
+    if (!isset($_SESSION['errores'])) {
+        $_SESSION['errores'] = [];
+    }
+    $_SESSION['errores'][] = $msg;
+}
+
+function add_success(string $msg)
+{
+    if (!isset($_SESSION['success'])) {
+        $_SESSION['success'] = [];
+    }
+    $_SESSION['success'][] = $msg;
 }
