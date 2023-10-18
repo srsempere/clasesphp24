@@ -76,7 +76,10 @@
                     <td><?= $fila['codigo'] ?></td>
                     <td><?= $fila['denominacion'] ?></td>
                     <td><?= $fila['localidad'] ?></td>
-                    <td><a href="borrar.php?id=<?= $fila['id']; ?>& denominacion=<?= $fila['denominacion']; ?>">Borrar</a></td>
+                    <td>
+                        <a href="borrar.php?id=<?= $fila['id']; ?>& denominacion=<?= $fila['denominacion']; ?>">Borrar</a>
+                        <a href="modificar.php?id=<?= $fila['id']; ?>">Modificar</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
