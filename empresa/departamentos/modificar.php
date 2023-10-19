@@ -73,11 +73,11 @@
     <?php foreach ($sent as $fila) : ?>
         <form action="" method="post">
             <label for="codigo">Código</label>
-            <input type="text" name="codigo" id="codigo" value="<?= $fila['codigo'] ?>"><br>
+            <input type="text" name="codigo" id="codigo" value="<?= hh($fila['codigo']) ?>"><br>
             <label for="codigo">Denominación</label>
-            <input type="text" name="denominacion" id="denominacion" value="<?= $fila['denominacion'] ?>"><br>
+            <input type="text" name="denominacion" id="denominacion" value="<?= hh($fila['denominacion']) ?>"><br>
             <label for="localidad">Localidad</label>
-            <input type="text" name="localidad" id="localidad" value="<?= $fila['localidad'] ?>"><br>
+            <input type="text" name="localidad" id="localidad" value="<?= hh($fila['localidad']) ?>"><br>
             <button type="submit">Modificar</button>
         </form><br>
         <a href="index.php">Volver a departamentos</a>

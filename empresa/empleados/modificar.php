@@ -72,11 +72,11 @@
         ?>
         <form action="" method="post">
             <label for="numero">Nº de empleado</label>
-            <input type="text" name="numero" id="numero" value="<?= $empleado['numero'] ?>">
+            <input type="text" name="numero" id="numero" value="<?= hh($empleado['numero']) ?>">
             <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre" value="<?= $empleado['nombre'] ?>">
+            <input type="text" name="nombre" id="nombre" value="<?= hh($empleado['nombre']) ?>">
             <label for="apellidos">Apellidos</label>
-            <input type="text" name="apellidos" id="apellidos" value="<?= $empleado['apellidos'] ?>">
+            <input type="text" name="apellidos" id="apellidos" value="<?= hh($empleado['apellidos']) ?>">
             <label for="salario">Salario</label>
             <?php
             $salario = isset($empleado['salario'])
@@ -84,8 +84,8 @@
                 : '';
             ?>
 
-            <input type="text" name="salario_formateado" id="salario_formateado" value="<?= $salario ?>" disabled>
-            <input type="text" name="salario" id="salario" value="<?= $empleado['salario'] ?>">
+            <input type="text" name="salario_formateado" id="salario_formateado" value="<?= hh($salario) ?>" disabled>
+            <input type="text" name="salario" id="salario" value="<?= hh($empleado['salario']) ?>">
             <button type="submit">Modificar</button>
         </form>
     <?php endforeach; ?>

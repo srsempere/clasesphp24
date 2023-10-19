@@ -59,7 +59,7 @@
 
     <form action="" method="get">
         <label for="codigo">Código</label>
-        <input type="text" name="codigo" id="codigo" value="<?= $codigo ?>">
+        <input type="text" name="codigo" id="codigo" value="<?= hh($codigo) ?>">
         <button type="submit">Buscar</button>
     </form>
 
@@ -74,12 +74,12 @@
         <tbody>
             <?php foreach ($sent as $fila) : ?>
                 <tr>
-                    <td><?= $fila['codigo'] ?></td>
-                    <td><?= $fila['denominacion'] ?></td>
-                    <td><?= $fila['localidad'] ?></td>
+                    <td><?= hh($fila['codigo']) ?></td>
+                    <td><?= hh($fila['denominacion']) ?></td>
+                    <td><?= hh($fila['localidad']) ?></td>
                     <td>
-                        <a href="borrar.php?id=<?= $fila['id']; ?>& denominacion=<?= $fila['denominacion']; ?>">Borrar</a>
-                        <a href="modificar.php?id=<?= $fila['id']; ?>">Modificar</a>
+                        <a href="borrar.php?id=<?= hh($fila['id']); ?>& denominacion=<?= hh($fila['denominacion']); ?>">Borrar</a>
+                        <a href="modificar.php?id=<?= hh($fila['id']); ?>">Modificar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -105,7 +105,7 @@
 
     <?php if (isset($code_not_found)) : ?>
         <div class="code_not_found">
-            <?= htmlspecialchars($code_not_found) ?>
+            <?= hh($code_not_found) ?>
         </div>
     <?php endif; ?>
 </body>

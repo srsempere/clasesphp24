@@ -40,20 +40,20 @@
             ?>
             <?php foreach ($sent as $empleado) : ?>
                 <tr>
-                    <td><?= $empleado['numero'] ?></td>
-                    <td><?= $empleado['nombre'] ?></td>
-                    <td><?= $empleado['apellidos'] ?></td>
+                    <td><?= hh($empleado['numero']) ?></td>
+                    <td><?= hh($empleado['nombre']) ?></td>
+                    <td><?= hh($empleado['apellidos']) ?></td>
                     <?php
                         $salario = isset($empleado['salario'])
                                     ? $fmt->formatCurrency($empleado['salario'], 'EUR')
                                     : '' ;
                     ?>
-                    <td><?= $salario ?></td>
-                    <td><?= $empleado['fecha_alta'] ?></td>
-                    <td><?= $empleado['denominacion'] ?></td>
+                    <td><?= hh($salario) ?></td>
+                    <td><?= hh($empleado['fecha_alta']) ?></td>
+                    <td><?= hh($empleado['denominacion']) ?></td>
                     <td>
-                        <a href="borrar.php?id=<?= $empleado['id'] ?>">Eliminar</a>
-                        <a href="modificar.php?id=<?= $empleado['id'] ?>">Modificar</a>
+                        <a href="borrar.php?id=<?= hh($empleado['id']) ?>">Eliminar</a>
+                        <a href="modificar.php?id=<?= hh($empleado['id']) ?>">Modificar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

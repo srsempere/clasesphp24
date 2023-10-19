@@ -41,9 +41,6 @@
         $sent = $pdo->prepare('SELECT * FROM empleados WHERE departamento_id= :id_departamento');
         $sent->execute(['id_departamento' => $id_departamento]);
         $coincidencias = $sent->fetchColumn();
-        $tipo_variable = gettype($coincidencias);
-        error_log("Tipo de la variable coincidencias: $tipo_variable");
-        error_log("Valor de Coincidencias: $coincidencias");
 
         if (!$coincidencias) {
             error_log("El valor de coincidencias es falso. Procedo a borrar el departamento.");
@@ -67,8 +64,8 @@
     } else {
     ?>
         <form action="" method="post">
-            <input type="hidden" name="id_departamento" value="<?= $id_departamento ?>">
-            <label for="">¿Estás seguro que deseas borrar el registro de <?= $denominacion ?>?</label><br><br>
+            <input type="hidden" name="id_departamento" value="<?= hh($id_departamento) ?>">
+            <label for="">¿Estás seguro que deseas borrar el registro de <?= hh($denominacion) ?>?</label><br><br>
             <button type="submit">Sí</button>
             <a href="index.php">No</a>
         </form>

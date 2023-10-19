@@ -48,11 +48,11 @@
     <h1>Crear nuevo departamento</h1>
     <form action="" method="post">
         <label for="codigo">Código del nuevo departamento</label>
-        <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : '' ?>">
+        <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? hh($codigo) : '' ?>">
         <label for="denominacion">Denominación del nuevo departamento</label>
-        <input type="text" name="denominacion" id="denominacion" value="<?= isset($denominacion) ? $denominacion : '' ?>">
+        <input type="text" name="denominacion" id="denominacion" value="<?= isset($denominacion) ? hh($denominacion) : '' ?>">
         <label for="localidad">Localización del nuevo departamento</label>
-        <input type="text" name="localidad" id="localidad" value="<?= isset($localidad) ? $localidad : '' ?>">
+        <input type="text" name="localidad" id="localidad" value="<?= isset($localidad) ? hh($localidad) : '' ?>">
         <button type="submit">Crear departamento</button>
     </form>
     <a href="index.php">Volver a departamentos</a>

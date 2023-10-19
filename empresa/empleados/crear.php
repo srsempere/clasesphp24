@@ -24,7 +24,7 @@
 
         if ($numero && $nombre) {
 
-            comprueba_numero($numero, $pdo);
+            comprueba_numero($numero, $pdo); //TODO: No valida bien.
             // TODO: Crear funciones de comprobación para los demás campos.
             $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
@@ -64,7 +64,7 @@
         <input type="text" name="salario" id="salario" value="">
         <select name="departamento" id="departamento">
             <?php foreach ($departamentos as $departamento) : ?>
-                <option value="<?= $departamento['id'] ?>" <?= isset($departamento_seleccionado) && $departamento_seleccionado == $departamento['id'] ? 'selected' : '' ?>><?= $departamento['denominacion'] ?></option>
+                <option value="<?= hh($departamento['id']) ?>" <?= isset($departamento_seleccionado) && hh($departamento_seleccionado) == $departamento['id'] ? 'selected' : '' ?>><?= hh($departamento['denominacion']) ?></option>
             <?php endforeach; ?>
         </select>
         <button type="submit">Alta empleado</button>
