@@ -60,7 +60,7 @@
         </tbody>
     </table>
     <br>
-    <a href="insertar.php">Insertar nuevo empleado</a><br>
+    <a href="crear.php">Insertar nuevo empleado</a><br>
     <a href="../departamentos/index.php">Volver a departamentos</a>
     <?php
     if (isset($errores)) {

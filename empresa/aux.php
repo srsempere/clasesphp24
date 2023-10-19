@@ -23,3 +23,18 @@ function add_success(string $msg)
     }
     $_SESSION['success'][] = $msg;
 }
+
+function obtener_get($par)
+{
+    return isset($_GET[$par]) ? $_GET[$par] : NULL;
+}
+
+function obtener_post($par)
+{
+    return isset($_POST[$par]) ? $_POST[$par] : NULL;
+}
+
+function ir_index()
+{
+    return header('Location: index.php');
+}
