@@ -18,20 +18,14 @@
     $localidad = isset($_POST['localidad']) ? $_POST['localidad'] : null;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if ($codigo && $denominacion && $localidad) {
-            error_log('Estoy dentro');
-            // TODO: Realizar filtrado.
+        if ($codigo && $denominacion) {
+            comprueba_codigo($codigo,$pdo);
+            comprueba_denominacion($denominacion);
+            comprueba_localidad($localidad);
 
-            // Comprobar si el código insertado existe en la base de datos.
-            $sent = $pdo->prepare('SELECT COUNT(codigo) FROM departamentos WHERE codigo= :codigo');
-            $sent->execute([
-                ':codigo' => $codigo
-            ]);
+            $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
-            $coincidencias = $sent->fetchColumn();
-            error_log("Coincidencias: $coincidencias");
-
-            if ($coincidencias === 0) {
+            if (isset($errores) && !$errores) {
                 // Inserción
                 $sent = $pdo->prepare('INSERT INTO departamentos (codigo, denominacion, localidad)
                                             VALUES (:codigo, :denominacion, :localidad)');
@@ -44,14 +38,8 @@
                 header('Location: index.php');
                 exit();
             } else {
-                add_error('El código introducido ya existe');
-                header('Location: index.php');
-                exit();
+                return ir_index();
             }
-        } else {
-            add_error('El departamento no se ha podido crear,');
-            header('Location: index.php');
-            exit();
         }
     }
 
