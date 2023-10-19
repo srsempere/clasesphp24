@@ -145,6 +145,7 @@ function comprueba_numero($numero, ?PDO $pdo = null, $id = null)
     $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
     if (!$errores) {
         $empleado = buscar_empleado_por_numero($numero, $pdo);
+        # Parte izquierda es para la creación y la derecha es para la modificación (update).
         if (($id == null && $empleado) || ($id != null && $empleado['id'] != $id)) {
             add_error('Ya existe un empleado con ese código');
         }
