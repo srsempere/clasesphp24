@@ -22,15 +22,13 @@
         $departamento_seleccionado = obtener_post('departamento');
 
 
-        if ($numero && $nombre && $apellidos && $salario) {
-            // TODO: Realizar validaciones.
+        if ($numero && $nombre) {
 
-            // Comprobar que no existe ya ese número.
-            $sent = $pdo->prepare('SELECT COUNT(numero) FROM empleados WHERE numero= :numero');
-            $sent->execute([':numero' => $numero]);
-            $coincidencias = $sent->fetchColumn();
+            comprueba_numero($numero, $pdo);
+            // TODO: Crear funciones de comprobación para los demás campos.
+            $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
-            if ($coincidencias === 0) {
+            if (isset($errores) && !$errores) {
 
                 $sent = $pdo->prepare('INSERT INTO empleados (numero, nombre, apellidos, salario, departamento_id)
                                     VALUES (:numero, :nombre, :apellidos, :salario, :departamento_seleccionado)');
@@ -44,7 +42,6 @@
                 add_success('El empleado se ha creado correctamente');
                 return ir_index();
             } else {
-                add_error('El número de empleado introducido ya existe');
                 return ir_index();
             }
         } else {

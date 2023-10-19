@@ -49,6 +49,18 @@ function buscar_departamento_por_codigo($codigo, ?PDO $pdo = null)
     return $sent->fetch();
 }
 
+
+function buscar_empleado_por_numero($numero, ?PDO $pdo = null)
+{
+    if ($pdo == null) {
+        $pdo = conectar();
+    }
+
+    $sent = $pdo->prepare('SELECT * FROM empleados WHERE numero= :numero');
+    $sent->execute([':numero' => $numero]);
+    return $sent->fetch();
+}
+
 // FUNCIONES DE FILTRADO
 
 function comprueba_codigo($codigo, ?PDO $pdo = null, $id = null)
@@ -107,5 +119,24 @@ function comprueba_localidad(&$localidad)
 
     if ($localidad === '') {
         $localidad = null;
+    }
+}
+
+function comprueba_numero($numero, ?PDO $pdo=null, $id = null)
+{
+    if ($numero === null) {
+        add_error('El tipo de datos del campo número no es correcto.');
+    }
+
+    if (mb_strlen($numero) > 4) {
+        add_error('La longitud del número es demasiado grande');
+    }
+
+    $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
+    if (!$errores) {
+        $empleado = buscar_empleado_por_numero($numero, $pdo);
+        if ($id === null || $id != null && $empleado['id'] != $id) {
+            add_error('Ya existe un empleado con ese código');
+        }
     }
 }
