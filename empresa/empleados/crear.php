@@ -22,33 +22,30 @@
         $departamento_seleccionado = obtener_post('departamento');
 
 
-        if ($numero && $nombre) {
+        comprueba_numero($numero, $pdo);
+        comprueba_nombre($nombre);
+        comprueba_apellidos($apellidos);
+        comprueba_salario($salario);
+        $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
-            comprueba_numero($numero, $pdo); //TODO: No valida bien.
-            // TODO: Crear funciones de comprobación para los demás campos.
-            $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
+        if (isset($errores) && !$errores) {
 
-            if (isset($errores) && !$errores) {
-
-                $sent = $pdo->prepare('INSERT INTO empleados (numero, nombre, apellidos, salario, departamento_id)
+            $sent = $pdo->prepare('INSERT INTO empleados (numero, nombre, apellidos, salario, departamento_id)
                                     VALUES (:numero, :nombre, :apellidos, :salario, :departamento_seleccionado)');
-                $sent->execute([
-                    ':numero' => $numero,
-                    ':nombre' => $nombre,
-                    ':apellidos' => $apellidos,
-                    ':salario' => $salario,
-                    ':departamento_seleccionado' => $departamento_seleccionado
-                ]);
-                add_success('El empleado se ha creado correctamente');
-                return ir_index();
-            } else {
-                return ir_index();
-            }
+            $sent->execute([
+                ':numero' => $numero,
+                ':nombre' => $nombre,
+                ':apellidos' => $apellidos,
+                ':salario' => $salario,
+                ':departamento_seleccionado' => $departamento_seleccionado
+            ]);
+            add_success('El empleado se ha creado correctamente');
+            return ir_index();
         } else {
-            add_error('No se ha podido crear el usuario. Revise que los campos estén correctos');
             return ir_index();
         }
     }
+
 
     ?>
     <h1>Crear un nuevo empleado</h1>

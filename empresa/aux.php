@@ -151,3 +151,44 @@ function comprueba_numero($numero, ?PDO $pdo = null, $id = null)
         }
     }
 }
+
+function comprueba_nombre($nombre)
+{
+    if ($nombre === null) {
+        add_error('El tipo de dato del campo nombre no es correcto');
+    }
+
+    if ($nombre === '') {
+        add_error('El campo nombre no puede estar vacío');
+    }
+
+    if (mb_strlen($nombre) > 255) {
+        add_error('El nombre es demasiado largo');
+    }
+}
+
+function comprueba_apellidos(&$apellidos=null)
+{
+    if ($apellidos === '') {
+        $apellidos = null;
+    }
+
+    if (mb_strlen($apellidos) > 255) {
+        add_error('El apellido es demasiado largo');
+    }
+}
+
+function comprueba_salario(&$salario)
+{
+    if ($salario === '') {
+        $salario = null;
+    }
+
+    if (mb_strlen($salario) > 6) {
+        add_error('El salario es demasiado alto. Puede contener como máximo 4 cifras enteras y dos decimales.');
+    }
+
+    if (!ctype_digit($salario)) {
+        add_error('El salario debe estar compuesto únicamente por números');
+    }
+}
