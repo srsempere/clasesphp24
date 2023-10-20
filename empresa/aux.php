@@ -128,8 +128,11 @@ function comprueba_codigo($codigo, ?PDO $pdo = null, $id = null)
 }
 
 
-function comprueba_numero($numero, ?PDO $pdo = null, $id = null)
+function comprueba_numero($numero, ?array $args = [])
 {
+    $pdo = $args['pdo'] ?? null;
+    $id = $args['id'] ?? null;
+
     if ($numero === null) {
         add_error('El tipo de datos del campo número no es correcto.');
     }
@@ -167,7 +170,7 @@ function comprueba_nombre($nombre)
     }
 }
 
-function comprueba_apellidos(&$apellidos=null)
+function comprueba_apellidos(&$apellidos = null)
 {
     if ($apellidos === '') {
         $apellidos = null;

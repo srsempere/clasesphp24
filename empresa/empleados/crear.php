@@ -22,7 +22,7 @@
         $departamento_seleccionado = obtener_post('departamento');
 
 
-        comprueba_numero($numero, $pdo);
+        comprueba_numero($numero);
         comprueba_nombre($nombre);
         comprueba_apellidos($apellidos);
         comprueba_salario($salario);

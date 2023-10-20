@@ -45,22 +45,31 @@
         $salario = isset($_POST['salario']) ? $_POST['salario'] : null;
 
 
-        //TODO: Realizar filtrado.
+        comprueba_numero($numero, ['id' => $id_empleado]);
+        comprueba_nombre($nombre);
+        comprueba_apellidos($apellidos);
+        comprueba_salario($salario);
 
-        $sent = $pdo->prepare('UPDATE empleados
-                                SET numero= :numero, nombre= :nombre, apellidos= :apellidos, salario= :salario
-                                WHERE id = :id_empleado');
-        $sent->execute([
-            ':numero' => $numero,
-            ':nombre' => $nombre,
-            ':apellidos' => $apellidos,
-            ':salario' => $salario,
-            ':id_empleado' => $id_empleado
-        ]);
-        add_success('Registro de empleado actualizado correctamente.');
-        header('Location: index.php');
-        exit();
+        $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
+
+        if (!$errores) {
+            $sent = $pdo->prepare('UPDATE empleados
+                                   SET numero= :numero, nombre= :nombre, apellidos= :apellidos, salario= :salario
+                                   WHERE id = :id_empleado');
+            $sent->execute([
+                ':numero' => $numero,   //TODO: Se tiene que poder modificar también el departamento.
+                ':nombre' => $nombre,
+                ':apellidos' => $apellidos,
+                ':salario' => $salario,
+                ':id_empleado' => $id_empleado
+            ]);
+            add_success('Registro de empleado actualizado correctamente.');
+            ir_index();
+        } else {
+            ir_index();
+        }
     }
+
 
     $sent = $pdo->prepare('SELECT * FROM empleados WHERE id= :id ORDER BY numero');
     $sent->execute([':id' => $id_empleado]);
