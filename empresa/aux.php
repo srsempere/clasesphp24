@@ -171,6 +171,7 @@ function comprueba_apellidos(&$apellidos=null)
 {
     if ($apellidos === '') {
         $apellidos = null;
+        return;
     }
 
     if (mb_strlen($apellidos) > 255) {
@@ -182,13 +183,30 @@ function comprueba_salario(&$salario)
 {
     if ($salario === '') {
         $salario = null;
+        return;
     }
 
-    if (mb_strlen($salario) > 6) {
-        add_error('El salario es demasiado alto. Puede contener como máximo 4 cifras enteras y dos decimales.');
+    // Normalización
+    if (str_contains($salario, ',')) {
+        $salario = str_replace(',', '.', $salario);
     }
 
-    if (!ctype_digit($salario)) {
-        add_error('El salario debe estar compuesto únicamente por números');
+
+
+    if (filter_var($salario, FILTER_VALIDATE_FLOAT) === false) {
+        add_error('El salario solamente puede contener números y un separador decimal');
+        return;
+    }
+
+    $salario = floatval($salario);
+
+    $partes = explode('.', (string)$salario);
+
+    if (isset($partes[1]) && mb_strlen($partes[1]) > 2) {
+        add_error('El salario solamente puede contener dos decimales');
+    }
+
+    if ($salario > 9999.999) {
+        add_error('El salario es demasiado grande. Solamente puede contener cuatro dígitos enteros y dos decimales');
     }
 }
