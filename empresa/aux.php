@@ -213,3 +213,59 @@ function comprueba_salario(&$salario)
         add_error('El salario es demasiado grande. Solamente puede contener cuatro dígitos enteros y dos decimales');
     }
 }
+
+function comprueba_departamento($id, ?PDO $pdo = null)
+{
+    if ($pdo === null) {
+        $pdo = conectar();
+    }
+
+    $departamentos = $pdo->prepare('SELECT COUNT(*) FROM departamentos WHERE id= :id');
+    $departamentos->execute([':id' => $id]);
+    $coincidencias = $departamentos->fetchColumn();
+
+    if ($coincidencias === 0) {
+        add_error('Por favor, selecciona un departamento de la lista desplegable.');
+    }
+}
+
+// CSRF -> TRATADO MEDIANTE USO DE COOKIES
+
+function csrf()
+{
+    if (isset($_COOKIE['_csrf'])) {
+        $csrf = $_COOKIE['_csrf'];
+    } else {
+        $csrf = bin2hex(random_bytes(32));
+        setcookie('_csrf', $csrf);
+    }
+    return $csrf;
+}
+
+function campo_csrf($csrf = null)
+{
+    if ($csrf === null) {
+        $csrf = csrf();
+    }
+    ?>
+    <input type="hidden" name="_csrf" value="<?= $csrf ?>">
+    <?php
+}
+
+function validar_csrf()
+{
+    if (!isset($_POST['_csrf'])) {
+        return false;
+    }
+
+    $csrf = $_POST['_csrf'];
+
+    if (!isset($_COOKIE['_csrf'])) {
+        return false;
+    }
+
+    if ($csrf != $_COOKIE['_csrf']) {
+        return false;
+    }
+    return true;
+}

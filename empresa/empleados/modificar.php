@@ -43,12 +43,13 @@
         $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : null;
         $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : null;
         $salario = isset($_POST['salario']) ? $_POST['salario'] : null;
-
+        $id_departamento = isset($_POST['departamento']) ? $_POST['departamento'] : null;
 
         comprueba_numero($numero, ['id' => $id_empleado]);
         comprueba_nombre($nombre);
         comprueba_apellidos($apellidos);
         comprueba_salario($salario);
+        comprueba_departamento($id_departamento);
 
         $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
@@ -70,7 +71,7 @@
         }
     }
 
-
+    $departamentos = $pdo->query('SELECT * FROM departamentos');
     $sent = $pdo->prepare('SELECT * FROM empleados WHERE id= :id ORDER BY numero');
     $sent->execute([':id' => $id_empleado]);
     ?>
@@ -92,9 +93,13 @@
                 ? $fmt->formatCurrency($empleado['salario'], 'EUR')
                 : '';
             ?>
-
             <input type="text" name="salario_formateado" id="salario_formateado" value="<?= hh($salario) ?>" disabled>
             <input type="text" name="salario" id="salario" value="<?= hh($empleado['salario']) ?>">
+            <select name="id_departamento" id="id_departamento">
+                <?php foreach ($departamentos as $departamento) : ?>
+                    <option value="<?= hh($departamento['id']) ?>"><?= hh($departamento['denominacion']) ?></option>
+                <?php endforeach; ?>
+            </select>
             <button type="submit">Modificar</button>
         </form>
     <?php endforeach; ?>
