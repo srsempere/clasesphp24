@@ -18,6 +18,11 @@
     $localidad = isset($_POST['localidad']) ? $_POST['localidad'] : null;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        if (!validar_csrf()) {
+            return ir_index();
+        }
+
         if ($codigo && $denominacion) {
             comprueba_codigo($codigo,$pdo);
             comprueba_denominacion($denominacion);
@@ -47,6 +52,7 @@
     ?>
     <h1>Crear nuevo departamento</h1>
     <form action="" method="post">
+        <?php campo_csrf() ?>
         <label for="codigo">Código del nuevo departamento</label>
         <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? hh($codigo) : '' ?>">
         <label for="denominacion">Denominación del nuevo departamento</label>

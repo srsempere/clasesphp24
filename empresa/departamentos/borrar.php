@@ -31,11 +31,22 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        error_log("Entro por POST");
-
         $id_departamento = $_SESSION['id_departamento'];
         $denominacion = $_SESSION['denominacion'];
-        // TODO: Implementar validaciones y saneados.
+
+        if (isset($id_departamento)) {
+            $id_departamento = trim($id_departamento);
+            if (!ctype_digit($id_departamento)) {
+                return ir_index();
+            }
+        }
+
+        if (!validar_csrf()) {
+            add_error('La acción no está permitida ya que la petición no proviene del formulario original');
+            return ir_index();
+        }
+
+        // TODO: Implementar validaciones y saneados???
 
         // Comprobación si el departamento tiene a algún empleado.
         $sent = $pdo->prepare('SELECT * FROM empleados WHERE departamento_id= :id_departamento');
@@ -65,6 +76,7 @@
     ?>
         <form action="" method="post">
             <input type="hidden" name="id_departamento" value="<?= hh($id_departamento) ?>">
+            <?php campo_csrf() ?>
             <label for="">¿Estás seguro que deseas borrar el registro de <?= hh($denominacion) ?>?</label><br><br>
             <button type="submit">Sí</button>
             <a href="index.php">No</a>

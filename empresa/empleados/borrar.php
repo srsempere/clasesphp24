@@ -17,9 +17,10 @@
     $id_empleado = isset($_GET['id']) ? $_GET['id'] : null;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        error_log('Entro por Post');
 
-
+        if (!validar_csrf()) {
+            return ir_index();
+        }
 
         // Comprobación de que el usuario existe.
 
@@ -47,6 +48,7 @@
     ?>
     <h1>Eliminar empleado</h1>
     <form action="" method="post">
+        <?php campo_csrf() ?>
         <label for="id">¿Está seguro que desea eliminar el empleado?</label>
         <a href="index.php">NO</a>
         <button type="submit">Sí</button>

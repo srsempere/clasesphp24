@@ -36,6 +36,9 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!validar_csrf()) {
+            return ir_index();
+        }
         $id_empleado = $_SESSION['id_empleado'];
         unset($_SESSION['id_empleado']);
 
@@ -43,7 +46,7 @@
         $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : null;
         $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : null;
         $salario = isset($_POST['salario']) ? $_POST['salario'] : null;
-        $id_departamento = isset($_POST['departamento']) ? $_POST['departamento'] : null;
+        $id_departamento = isset($_POST['id_departamento']) ? $_POST['id_departamento'] : null;
 
         comprueba_numero($numero, ['id' => $id_empleado]);
         comprueba_nombre($nombre);
@@ -55,14 +58,15 @@
 
         if (!$errores) {
             $sent = $pdo->prepare('UPDATE empleados
-                                   SET numero= :numero, nombre= :nombre, apellidos= :apellidos, salario= :salario
+                                   SET numero= :numero, nombre= :nombre, apellidos= :apellidos, salario= :salario, departamento_id= :id_departamento
                                    WHERE id = :id_empleado');
             $sent->execute([
                 ':numero' => $numero,   //TODO: Se tiene que poder modificar también el departamento.
                 ':nombre' => $nombre,
                 ':apellidos' => $apellidos,
                 ':salario' => $salario,
-                ':id_empleado' => $id_empleado
+                ':id_departamento' => $id_departamento,
+                ':id_empleado' => $id_empleado,
             ]);
             add_success('Registro de empleado actualizado correctamente.');
             ir_index();
@@ -81,6 +85,7 @@
         $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
         ?>
         <form action="" method="post">
+            <?php campo_csrf() ?>
             <label for="numero">Nº de empleado</label>
             <input type="text" name="numero" id="numero" value="<?= hh($empleado['numero']) ?>">
             <label for="nombre">Nombre</label>

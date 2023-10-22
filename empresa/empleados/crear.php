@@ -15,6 +15,11 @@
     $departamentos = $pdo->query('SELECT * FROM DEPARTAMENTOS');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        if (!validar_csrf()) {
+            return ir_index();
+        }
+
         $numero = obtener_post('numero');
         $nombre = obtener_post('nombre');
         $apellidos = obtener_post('apellidos');
@@ -51,6 +56,7 @@
     <h1>Crear un nuevo empleado</h1>
 
     <form action="" method="post">
+        <?php campo_csrf() ?>
         <label for="numero">Nº empleado</label>
         <input type="text" name="numero" id="numero" value="">
         <label for="nombre">Nombre</label>

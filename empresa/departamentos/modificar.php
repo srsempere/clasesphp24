@@ -37,6 +37,11 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        if (!validar_csrf()) {
+            return ir_index();
+        }
+
         $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : null;
         $denominacion = isset($_POST['denominacion']) ? $_POST['denominacion'] : null;
         $localidad = isset($_POST['localidad']) ? $_POST['localidad'] : null;
@@ -72,6 +77,7 @@
     <h1>Modificación de departamentos</h1>
     <?php foreach ($sent as $fila) : ?>
         <form action="" method="post">
+            <?= campo_csrf() ?>
             <label for="codigo">Código</label>
             <input type="text" name="codigo" id="codigo" value="<?= hh($fila['codigo']) ?>"><br>
             <label for="codigo">Denominación</label>
