@@ -11,7 +11,7 @@
     <title>Bienvenido</title>
 </head>
 
-<body>
+<body class="index">
     <div class="title-container">
         <h1>Bienvenido a la Biblioteca Online</h1>
     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/style.css">
     <title>Crear usuario</title>
 </head>
 
@@ -47,9 +47,9 @@
     <div class="crea-formulario">
         <form action="" method="post">
             <label for="nombre">Nombre del usuario</label>
-            <input type="text" name="nombre" id="nombre" value="<?= $nombre; ?>">
+            <input type="text" name="nombre" id="nombre" value="<?= hh($nombre); ?>">
             <label for="email">Introduce el email</label>
-            <input type="text" name="email" id="email" value="<?= $email; ?>">
+            <input type="text" name="email" id="email" value="<?= hh($email); ?>">
             <label for="password">Introduce la contraseña</label>
             <input type="password" name="password" id="password" value="">
             <button type="submit">Crear usuario</button>
@@ -60,7 +60,7 @@
         foreach ($errores as $error) {
     ?>
             <ol>
-                <li><?= $error ?></li>
+                <li><?= hh($error) ?></li>
             </ol>
     <?php
         }

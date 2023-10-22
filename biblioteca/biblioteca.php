@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/style.css">
     <title>Biblioteca</title>
     <style>
         /* Estilos generales */
@@ -64,7 +64,7 @@
     $pdo->beginTransaction();
     $sent = $pdo->query('LOCK TABLE libros IN SHARE MODE');
 
-    $sql = 'SELECT * FROM libros ORDER BY codigo';
+    $sql = 'SELECT * FROM libros';
     $parametros = [];
 
     if ($codigo || $desde || $hasta) {
@@ -76,18 +76,25 @@
             $parametros[':codigo'] = $codigo;
         }
 
-
-        if ($desde) {
-            $condiciones[] = 'anyo_publicacion >= :desde';
+        if ($desde && $hasta) {
+            $condiciones[] = 'anyo_publicacion BETWEEN :desde AND :hasta';
             $parametros[':desde'] = $desde;
+            $parametros[':hasta'] = $hasta;
+        } else {
+            if ($desde) {
+                $condiciones[] = 'anyo_publicacion >= :desde';
+                $parametros[':desde'] = $desde;
+            }
+
+            if ($hasta) {
+                $condiciones[] = 'anyo_publicacion <= :hasta';
+                $parametros[':hasta'] = $hasta;
+            }
         }
 
-        if ($hasta) {
-            $condiciones[] = 'anyo_publicacion <= :hasta';
-            $parametros[':hasta'] = $hasta;
-        }
 
         $sql .= implode(' AND ', $condiciones);
+        $sql .= ' ORDER BY codigo';
     }
 
 
@@ -124,14 +131,14 @@
 
     <form action="" method="get">
         <label for="codigo">Introduce el código a buscar</label>
-        <input type="text" name="codigo" id="codigo" value="<?= isset($codigo) ? $codigo : ''; ?>">
+        <input type="text" name="codigo" id="codigo" value="<?= hh($codigo) ?>">
         <button type="submit">Buscar por código</button>
     </form>
     <br>
     <form action="" method="get">
         <label for="codigo">Introduce el año a buscar</label>
-        <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= isset($desde) ? $desde : ''; ?>">
-        <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= isset($hasta) ? $hasta : ''; ?>">
+        <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= hh($desde) ?>">
+        <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= hh($hasta) ?>">
         <button type="submit">Buscar por año</button>
     </form>
     <table>
@@ -149,16 +156,16 @@
         <tbody>
             <?php foreach ($sent as $fila) : ?>
                 <tr>
-                    <td><?= $fila['codigo'] ?></td>
-                    <td><?= $fila['titulo'] ?></td>
-                    <td><?= $fila['autor'] ?></td>
-                    <td><?= $fila['editorial'] ?></td>
-                    <td><?= $fila['anyo_publicacion'] ?></td>
-                    <td><?= $fila['isbn'] ?></td>
-                    <td><?= $array_categorias_unidimensional[$fila['titulo']] ?></td>
-                    <td><?= $fila['cantidad'] ?></td>
+                    <td><?= hh($fila['codigo']) ?></td>
+                    <td><?= hh($fila['titulo']) ?></td>
+                    <td><?= hh($fila['autor']) ?></td>
+                    <td><?= hh($fila['editorial']) ?></td>
+                    <td><?= hh($fila['anyo_publicacion']) ?></td>
+                    <td><?= hh($fila['isbn']) ?></td>
+                    <td><?= hh($array_categorias_unidimensional[$fila['titulo']]) ?></td>
+                    <td><?= hh($fila['cantidad']) ?></td>
                     <th>
-                        <a href="borrar.php?id=<?= $fila['id'] ?>&titulo=<?= $fila['titulo']; ?>">Eliminar</a>
+                        <a href="borrar.php?id=<?= hh($fila['id']) ?>&titulo=<?= hh($fila['titulo']); ?>">Eliminar</a>
                         <a href="modificar.php">Modificar</a>
                     </th>
                 </tr>
@@ -168,7 +175,7 @@
     </table>
     <?php if ($mensaje) : ?>
         <div class="ok_borrado">
-            <p><?= $mensaje ?></p>
+            <p><?= hh($mensaje) ?></p>
         </div>
     <?php endif; ?>
     <div class="ir-a">
@@ -192,7 +199,7 @@
             foreach ($errores as $error) :
     ?>
                 <div class="error">
-                    <p><?= $error; ?></p>
+                    <p><?= hh($error); ?></p>
                 </div>
         <?php
             endforeach;
@@ -205,7 +212,7 @@
 
         ?>
         <div class="exito">
-            <p><?= $exito_libro ?></p>
+            <p><?= hh($exito_libro) ?></p>
         </div>
     <?php
     }
@@ -216,7 +223,7 @@
 
     ?>
         <div class="exito">
-            <p><?= $exito_categoria ?></p>
+            <p><?= hh($exito_categoria) ?></p>
         </div>
     <?php
     }
@@ -225,7 +232,7 @@
         unset($_SESSION['exito_usuario']);
     ?>
         <div class="exito">
-            <p><?= $exito_usuario ?></p>
+            <p><?= hh($exito_usuario) ?></p>
         </div>
     <?php
     }
@@ -234,7 +241,7 @@
         unset($_SESSION['exito_prestamo']);
     ?>
         <div class="exito">
-            <p><?= $exito_prestamo ?></p>
+            <p><?= hh($exito_prestamo) ?></p>
         </div>
     <?php
     }

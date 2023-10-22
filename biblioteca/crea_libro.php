@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/style.css">
     <title>Registra nuevo libro</title>
 </head>
 
@@ -157,7 +157,7 @@
             <label for="categoria">Categoría</label>
             <select name="categoria" id="categoria">
                 <?php foreach ($categorias as $categoria) : ?>
-                    <option value="<?= $categoria[0] ?>"><?= $categoria[1] ?></option>
+                    <option value="<?= hh($categoria[0]) ?>"><?= hh($categoria[1]) ?></option>
                 <?php endforeach; ?>
             </select>
             <label for="cantidad">Cantidad</label>

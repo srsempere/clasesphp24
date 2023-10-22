@@ -166,3 +166,11 @@ function valida_fecha($dia, $mes, $anyo)
 {
     return checkdate($mes, $dia, $anyo);
 }
+
+function hh($cadena)
+{
+    if ($cadena === null) {
+        return null;
+    }
+    return htmlspecialchars($cadena,ENT_QUOTES|ENT_SUBSTITUTE);
+}

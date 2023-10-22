@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/style.css">
     <title>Prestar libro</title>
 </head>
 
@@ -102,7 +102,7 @@
         <label for="libro">Selecciona el libro que deseas prestar</label>
         <select name="id_libro" id="id_libro">
             <?php foreach ($libros as $libro) : ?>
-                <option value="<?= $libro['id'] ?>" <?= isset($_POST['id_libro']) &&  $libro['id'] == $_POST['id_libro'] ? 'selected' : '' ?>><?= $libro['codigo'] . ' - ' . $libro['titulo']; ?></option>
+                <option value="<?= hh($libro['id']) ?>" <?= isset($_POST['id_libro']) &&  hh($libro['id']) == hh($_POST['id_libro']) ? 'selected' : '' ?>><?= hh($libro['codigo']) . ' - ' . hh($libro['titulo']); ?></option>
             <?php endforeach; ?>
         </select>
         <button type="submit">Seleccionar</button>
@@ -113,7 +113,7 @@
         $libro_seleccionado = implode(' - ', $libro_seleccionado);
     ?>
         <h2>Libro seleccionado para el préstamo</h2>
-        <p><?= $libro_seleccionado ?> Cantidad disponible: <?= $cantidad_libro_seleccionado ?></p>
+        <p><?= hh($libro_seleccionado) ?> Cantidad disponible: <?= hh($cantidad_libro_seleccionado) ?></p>
         <h2>Selecciona el usuario del préstamo</h2>
 
         <!-- Formulario 2 -->
@@ -126,7 +126,7 @@
                 if (isset($usuarios)) {
                     foreach ($usuarios as $usuario) {
                 ?>
-                        <option value="<?= $usuario['id'] ?>"><?= $usuario['nombre'] ?></option>
+                        <option value="<?= hh($usuario['id']) ?>"><?= hh($usuario['nombre']) ?></option>
                 <?php
                     }
                 }
