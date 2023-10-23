@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,17 +51,13 @@
 
 <body>
     <?php
-    session_start();
     require_once 'aux.php';
     $pdo = conectar();
     $codigo = obtener_parametro('codigo', $_POST);
     $desde = obtener_parametro('desde', $_POST);
     $hasta = obtener_parametro('hasta', $_POST);
     $mensaje = obtener_parametro('mensaje', $_GET);
-    $exito_libro = isset($_SESSION['exito_libro']) ? $_SESSION['exito_libro'] : null;
-    $exito_categoria = isset($_SESSION['exito_categoria']) ? $_SESSION['exito_categoria'] : null;
-    $exito_usuario = isset($_SESSION['exito_usuario']) ? $_SESSION['exito_usuario'] : null;
-    $exito_prestamo = isset($_SESSION['exito_prestamo']) ? $_SESSION['exito_prestamo'] : null;
+    $exitos = isset($_SESSION['exitos']) ? $_SESSION['exitos'] : null;
 
 
     $pdo->beginTransaction();
@@ -210,50 +209,26 @@
                 <div class="error">
                     <p><?= hh($error); ?></p>
                 </div>
-        <?php
+            <?php
             endforeach;
         }
     }
 
-    if (isset($exito_libro)) {
-        unset($_SESSION['exito_libro']);
-
-
-        ?>
-        <div class="exito">
-            <p><?= hh($exito_libro) ?></p>
-        </div>
+    if (isset($exitos)) {
+        if (count($_SESSION['exitos']) > 0) {
+            unset($_SESSION['exitos']);
+            foreach ($exitos as $exito) {
+            ?>
+                <div class="exitos">
+                    <p><?= hh($exito); ?></p>
+                </div>
     <?php
+            }
+        }
     }
 
-    if (isset($exito_categoria)) {
-        unset($_SESSION['exito_categoria']);
 
 
-    ?>
-        <div class="exito">
-            <p><?= hh($exito_categoria) ?></p>
-        </div>
-    <?php
-    }
-
-    if (isset($exito_usuario)) {
-        unset($_SESSION['exito_usuario']);
-    ?>
-        <div class="exito">
-            <p><?= hh($exito_usuario) ?></p>
-        </div>
-    <?php
-    }
-
-    if (isset($exito_prestamo)) {
-        unset($_SESSION['exito_prestamo']);
-    ?>
-        <div class="exito">
-            <p><?= hh($exito_prestamo) ?></p>
-        </div>
-    <?php
-    }
     ?>
 </body>
 

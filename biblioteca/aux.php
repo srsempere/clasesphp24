@@ -10,12 +10,25 @@ function conectar()
     return new PDO("pgsql:host=localhost;dbname=biblioteca", 'biblioteca', 'biblioteca');
 }
 
+function volver_biblioteca()
+{
+    return header('Location: biblioteca.php');
+}
+
 function añade_error($mensaje)
 {
     if (!isset($_SESSION['errores'])) {
         $_SESSION['errores'] = [];
     }
     $_SESSION['errores'][] = $mensaje;
+}
+
+function añade_exitos($mensaje)
+{
+    if (isset($_SESSION['exitos'])) {
+        $_SESSION['exitos'] = [];
+    }
+    $_SESSION['exitos'][] = $mensaje;
 }
 
 function hay_errores()
@@ -31,7 +44,7 @@ function hh($cadena)
     if ($cadena === null) {
         return null;
     }
-    return htmlspecialchars($cadena,ENT_QUOTES|ENT_SUBSTITUTE);
+    return htmlspecialchars($cadena, ENT_QUOTES | ENT_SUBSTITUTE);
 }
 
 // FUNCIONES DE VALIDACIÓN Y SANEADO
@@ -56,7 +69,7 @@ function comprueba_codigo($codigo)
 
 function comprueba_anyo_publicacion($anyo)
 {
-    if($anyo === null) {
+    if ($anyo === null) {
         añade_error('El tipo de datos del año no es correcto.');
         return;
     }
@@ -68,5 +81,31 @@ function comprueba_anyo_publicacion($anyo)
 
     if (gettype($anyo) != 'boolean' && !ctype_digit($anyo)) {
         añade_error('El campo año debe ser un número entero positivo.');
+    }
+}
+
+function comprobar_id($id, $tabla = null, ?PDO $pdo = null)
+{
+    if ($id === null) {
+        return volver_biblioteca();
+    }
+
+    if ($id === '') {
+        return volver_biblioteca();
+    }
+
+    if ($tabla !== null) {
+        if ($pdo === null) {
+            $pdo = conectar();
+        }
+        $sent = $pdo->prepare('SELECT COUNT(*) FROM :tabla WHERE id= :id');
+        $sent->execute([
+            ':tabla' => $tabla,
+            ':id' => $id
+        ]);
+        $coincidencias = $sent->fetchColumn();
+        if ($coincidencias === '0') {
+            añade_error('No existe ningún departamento que coincida con el seleccionado');
+        }
     }
 }
