@@ -51,15 +51,15 @@
     session_start();
     require_once 'aux.php';
     $pdo = conectar();
-    $codigo = obtener_parametro('codigo', $_GET);
-    $desde = obtener_parametro('desde', $_GET);
-    $hasta = obtener_parametro('hasta', $_GET);
+    $codigo = obtener_parametro('codigo', $_POST);
+    $desde = obtener_parametro('desde', $_POST);
+    $hasta = obtener_parametro('hasta', $_POST);
     $mensaje = obtener_parametro('mensaje', $_GET);
-    $exito_libro = obtener_parametro('exito_libro', $_SESSION);
-    $exito_categoria = obtener_parametro('exito_categoria', $_SESSION);
-    $exito_usuario = obtener_parametro('exito_usuario', $_SESSION);
-    $exito_prestamo = obtener_parametro('exito_prestamo', $_SESSION);
-    $errores = obtener_parametro('errores', $_SESSION);
+    $exito_libro = isset($_SESSION['exito_libro']) ? $_SESSION['exito_libro'] : null;
+    $exito_categoria = isset($_SESSION['exito_categoria']) ? $_SESSION['exito_categoria'] : null;
+    $exito_usuario = isset($_SESSION['exito_usuario']) ? $_SESSION['exito_usuario'] : null;
+    $exito_prestamo = isset($_SESSION['exito_prestamo']) ? $_SESSION['exito_prestamo'] : null;
+
 
     $pdo->beginTransaction();
     $sent = $pdo->query('LOCK TABLE libros IN SHARE MODE');
@@ -67,37 +67,46 @@
     $sql = 'SELECT * FROM libros';
     $parametros = [];
 
-    if ($codigo || $desde || $hasta) {
-        $sql .= ' WHERE ';
-        $condiciones = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        comprueba_codigo($codigo);
+        comprueba_anyo_publicacion($desde);
+        comprueba_anyo_publicacion($hasta);
+        $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : null;
 
-        if ($codigo) {
-            $condiciones[] = 'codigo = :codigo';
-            $parametros[':codigo'] = $codigo;
-        }
+        // Si hay errores en algún campo, se ejecutará una consulta select normal mostrando todos los campos.
+        if (!$errores) {
 
-        if ($desde && $hasta) {
-            $condiciones[] = 'anyo_publicacion BETWEEN :desde AND :hasta';
-            $parametros[':desde'] = $desde;
-            $parametros[':hasta'] = $hasta;
-        } else {
-            if ($desde) {
-                $condiciones[] = 'anyo_publicacion >= :desde';
-                $parametros[':desde'] = $desde;
+            if ($codigo || $desde || $hasta) {
+                $sql .= ' WHERE ';
+                $condiciones = [];
+
+                if ($codigo) {
+                    $condiciones[] = 'codigo = :codigo';
+                    $parametros[':codigo'] = $codigo;
+                }
+
+                if ($desde && $hasta) {
+                    $condiciones[] = 'anyo_publicacion BETWEEN :desde AND :hasta';
+                    $parametros[':desde'] = $desde;
+                    $parametros[':hasta'] = $hasta;
+                } else {
+                    if ($desde) {
+                        $condiciones[] = 'anyo_publicacion >= :desde';
+                        $parametros[':desde'] = $desde;
+                    }
+
+                    if ($hasta) {
+                        $condiciones[] = 'anyo_publicacion <= :hasta';
+                        $parametros[':hasta'] = $hasta;
+                    }
+                }
+
+                $sql .= implode(' AND ', $condiciones);
             }
-
-            if ($hasta) {
-                $condiciones[] = 'anyo_publicacion <= :hasta';
-                $parametros[':hasta'] = $hasta;
-            }
         }
-
-
-        $sql .= implode(' AND ', $condiciones);
-        $sql .= ' ORDER BY codigo';
     }
 
-
+    $sql .= ' ORDER BY codigo';
     $sent = $pdo->prepare($sql);
     $sent->execute($parametros);
     $pdo->commit();
@@ -129,13 +138,13 @@
 
     <h1>Bienvenido a la biblioteca</h1>
 
-    <form action="" method="get">
+    <form action="" method="post">
         <label for="codigo">Introduce el código a buscar</label>
         <input type="text" name="codigo" id="codigo" value="<?= hh($codigo) ?>">
         <button type="submit">Buscar por código</button>
     </form>
     <br>
-    <form action="" method="get">
+    <form action="" method="post">
         <label for="codigo">Introduce el año a buscar</label>
         <input type="text" name="desde" id="desde" placeholder="desde el año..." value="<?= hh($desde) ?>">
         <input type="text" name="hasta" id="hasta" placeholder="hasta el año..." value="<?= hh($hasta) ?>">

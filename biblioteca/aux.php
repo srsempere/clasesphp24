@@ -2,7 +2,7 @@
 
 function obtener_parametro($parametro, $array)
 {
-    return isset($array[$parametro]) ? $array[$parametro] : null;
+    return isset($array[$parametro]) ? $array[$parametro] : false;
 }
 
 function conectar()
@@ -26,151 +26,47 @@ function hay_errores()
     return false;
 }
 
-// FUNCIONES DE SANEADO
-
-function sanea($string)
-{
-    $string = trim($string);
-    $string = stripslashes($string);
-    $string = htmlspecialchars($string);
-    return $string;
-}
-
-function sanea_email($email)
-{
-    return filter_var($email, FILTER_SANITIZE_EMAIL);
-}
-
-// FUNCIONES DE VALIDACIÓN
-
-function valida_entero_positivo(string $num)
-{
-    return ctype_digit($num);
-}
-
-
-function email_existe($email, ?PDO $pdo = null)
-{
-    if ($pdo === null) {
-        $pdo = conectar();
-    }
-    $sent = $pdo->prepare('SELECT 1 FROM usuarios WHERE email = :email');
-    $sent->execute([':email' => $email]);
-    return $sent->fetchColumn() ? true : false;
-}
-
-function valida_texto($string)
-{
-    return !empty($string) && preg_match('/^[\p{L}\s]+$/u', $string);
-}
-
-function valida_longitud(string $cadena, int $longitud)
-{
-    if (!(mb_strlen($cadena) >= 1 && mb_strlen($cadena) <= $longitud)) {
-        return false;
-    }
-    return true;
-}
-
-function es_vacio(string $cadena)
-{
-    return $cadena === '';
-}
-
-function es_nulo(string $cadena)
-{
-    return $cadena === null;
-}
-
-function existe($cadena)
-{
-    return isset($cadena);
-}
-
-function valida_enteros($num)
-{
-    return filter_var($num, FILTER_VALIDATE_INT) !== false;
-}
-
-# para este caso solamente voy a aceptar números de 13 dígigos
-function valida_isbn($isbn)
-{
-    return preg_match('/\d{13}/', $isbn);
-}
-
-function cifra_password($password)
-{
-    return password_hash($password, PASSWORD_BCRYPT);
-}
-
-// VALIDACIONES DE CAMPOS
-
-function valida_nombre(string $nombre)
-{
-    if (es_vacio($nombre)) {
-        añade_error('El campo nombre no puede estar vacío.');
-    }
-
-    if (es_nulo($nombre)) {
-        añade_error('El campo nombre no puede ser nulo.');
-    }
-
-    if (!valida_longitud($nombre, 255)) {
-        añade_error('La longitud del nombre no es correcta.');
-    }
-    return !hay_errores();
-}
-
-function valida_email(string $email)
-{
-    if (es_vacio($email)) {
-        añade_error('El campo email no puede estar vacío.');
-    }
-
-    if (es_nulo($email)) {
-        añade_error('El campo email no puede ser nulo.');
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        añade_error('El formato del email no es válido');
-    }
-
-    if (!valida_longitud($email, 255)) {
-        añade_error('La longitud del email no es correcta.');
-    }
-
-    if (email_existe($email)) {
-        error_log("Email existe: $email");
-        añade_error('El email ya existe');
-    }
-    return !hay_errores();
-}
-
-function valida_password(string $password)
-{
-    if (es_vacio($password)) {
-        añade_error('El campo contraseña no puede estar vacío.');
-    }
-
-    if (es_nulo($password)) {
-        añade_error('El campo contraseña no puede ser nulo.');
-    }
-
-    if (!valida_longitud($password, 255)) {
-        añade_error('La longitud de la contraseña no es correcta.');
-    }
-    return !hay_errores();
-}
-
-function valida_fecha($dia, $mes, $anyo)
-{
-    return checkdate($mes, $dia, $anyo);
-}
-
 function hh($cadena)
 {
     if ($cadena === null) {
         return null;
     }
     return htmlspecialchars($cadena,ENT_QUOTES|ENT_SUBSTITUTE);
+}
+
+// FUNCIONES DE VALIDACIÓN Y SANEADO
+
+
+function comprueba_codigo($codigo)
+{
+    if ($codigo === null) {
+        añade_error('El tipo de dato del campo código no es correcto');
+        return;
+    }
+
+    if ($codigo === '') {
+        añade_error('El codigo no puede estar vacío');
+        return;
+    }
+
+    if (!ctype_digit($codigo)) {
+        añade_error('El codigo debe ser un número entero positivo');
+    }
+}
+
+function comprueba_anyo_publicacion($anyo)
+{
+    if($anyo === null) {
+        añade_error('El tipo de datos del año no es correcto.');
+        return;
+    }
+
+    if ($anyo === '') {
+        añade_error('El campo año no puede estar vacío');
+        return;
+    }
+
+    if (gettype($anyo) != 'boolean' && !ctype_digit($anyo)) {
+        añade_error('El campo año debe ser un número entero positivo.');
+    }
 }
