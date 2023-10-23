@@ -109,3 +109,20 @@ function comprobar_id($id, $tabla = null, ?PDO $pdo = null)
         }
     }
 }
+
+function comprobar_titulo($titulo)
+{
+    if ($titulo === null) {
+        añade_error('El tipo de dato del campo título no es correcto.');
+        return;
+    }
+
+    if ($titulo === '') {
+        añade_error('El campo título no puede estar vacío.');
+        return;
+    }
+
+    if (mb_strlen($titulo) > 255) {
+        añade_error('El título es demasiado largo');
+    }
+}

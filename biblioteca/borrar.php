@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = isset($_POST['id']) ? $_POST['id'] : null;
 
     comprobar_id($id);
+    comprobar_titulo($titulo);
     $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
     if (!$errores) {

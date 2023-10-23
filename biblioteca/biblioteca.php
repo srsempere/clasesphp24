@@ -135,6 +135,7 @@ session_start();
 
     ?>
 
+   <div class="volver"> <a href="/tienda/index.php">Tienda Online</a></div>
     <h1>Bienvenido a la biblioteca</h1>
 
     <form action="" method="post">
