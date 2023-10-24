@@ -79,43 +79,59 @@
             $Total_BI = 0;
             $Total_IVA = 0;
             $Total_pedido = 0;
-        ?>
-        <h2>Carrito de la compra</h2>
+            ?>
+        <h2 class="carrito-titulo">Carrito de la compra</h2>
 
-            <?php foreach($_SESSION['carrito'] as $value): ?>
-                <?php
+        <?php foreach($_SESSION['carrito'] as $value): ?>
+            <?php
                     $titulo = $value['titulo'];
-                    $precio = $value['precio'];
+                    $precio_sin_formato = $value['precio'];
                     if (isset($titulos_carrito[$titulo])) {
                         $titulos_carrito[$titulo][0] ++;
                     } else {
                         $titulos_carrito[$titulo][0] =  1;
-                        $titulos_carrito[$titulo][1] = $precio;
+                        $titulos_carrito[$titulo][1] = $precio_sin_formato;
                     }
                 ?>
             <?php endforeach; ?>
-
-            <table border="1">
-                <thead>
-                    <th>Artículo</th>
-                    <th>Base Imponible</th>
-                    <th>IVA (4%)</th>
-                    <th>Total Artículo</th>
-                </thead>
-                <tbody>
-                    <?php foreach($titulos_carrito as $articulo => $propiedades_libro): ?>
-                    <tr>
-                        <td><?= $articulo ?></td>
-                        <td><?= $Total_BI +=($propiedades_libro[0] * $propiedades_libro[1]) ?></td>
-                        <td><?= $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04 ?></td>
-                            <?php $Total_IVA += $IVA ?>
-                        <td><?= $Total_pedido += ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <h1>Total BI: <?= $Total_BI ?> Total IVA <?= $Total_IVA ?> Total Pedido: <?= $Total_pedido ?></h1>
-
+            <div class="carrito-section">
+                <table border="0">
+                    <thead>
+                        <th>Artículo</th>
+                        <th>Cantidad</th>
+                        <th>Base Imponible</th>
+                        <th>IVA (4%)</th>
+                        <th>Total Artículo</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach($titulos_carrito as $articulo => $propiedades_libro): ?>
+                        <tr>
+                            <td><?= $articulo ?></td>
+                                <?php
+                                    $Cantidad = $titulos_carrito[$articulo][0]
+                                ?>
+                            <th><?= $Cantidad  ?></th>
+                                <?php
+                                    $BI = ($propiedades_libro[0] * $propiedades_libro[1]);
+                                    $Total_BI +=($propiedades_libro[0] * $propiedades_libro[1]);
+                                ?>
+                            <td><?= $fmt->formatCurrency($BI, 'EUR') ?></td>
+                                <?php
+                                    $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04;
+                                    $Total_IVA += $IVA
+                                ?>
+                            <td><?=  $fmt->formatCurrency($IVA, 'EUR') ?></td>
+                                <?php
+                                    $total_articulo = ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
+                                    $Total_pedido += ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
+                                ?>
+                            <td><?=  $fmt->formatCurrency($total_articulo, 'EUR') ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <h1>Total Base Imponible: <?= $fmt->formatCurrency($Total_BI, 'EUR') ?> Total IVA: <?= $fmt->formatCurrency($Total_IVA, 'EUR') ?> Total Pedido: <?= $fmt->formatCurrency($Total_pedido, 'EUR') ?></h1>
+            </div>
     <?php endif; ?>
 </body>
 
