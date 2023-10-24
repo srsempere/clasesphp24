@@ -29,8 +29,8 @@ DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios (
     id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(60) NOT NULL,
     fecha_registro TIMESTAMP DEFAULT now()
 );
 

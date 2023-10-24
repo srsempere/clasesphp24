@@ -25,7 +25,21 @@
         //TODO: Realizar comprobación de que el id existe.
 
         if (isset($id)) {
-            $_SESSION['carrito'][] = $id;
+            // Comprobar si existe ese id  en la base de datos.
+            $sent = $pdo->prepare('SELECT COUNT(*) FROM libros WHERE id= :id');
+            $sent->execute([':id' => $id]);
+            $coincidencias = $sent->fetchColumn();
+            if ($coincidencias === 0) {
+                añade_error('No existen referencias al libro introducido');
+                return volver_biblioteca();
+            }
+            $sent = $pdo->prepare('SELECT * FROM libros WHERE id=: id');
+            $sent->execute([':id' => $id]);
+            foreach ($sent as $key => $value) {
+                $_SESSION['carrito'][] = [
+                    $key => $value
+                ]
+            }
         }
     }
 

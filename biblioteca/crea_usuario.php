@@ -25,7 +25,7 @@
         // Validación
 
         if (valida_nombre($nombre) && valida_email($email) && valida_password($password)) {
-            $password = password_hash($password, PASSWORD_BCRYPT);
+            $password = password_hash($password, PASSWORD_DEFAULT);
             $campos = [
                 ':nombre' => $nombre,
                 ':email' => $email,
