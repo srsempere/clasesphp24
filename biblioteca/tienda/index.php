@@ -33,13 +33,10 @@
                 añade_error('No existen referencias al libro introducido');
                 return volver_biblioteca();
             }
-            $sent = $pdo->prepare('SELECT * FROM libros WHERE id=: id');
+            $sent = $pdo->prepare('SELECT * FROM libros WHERE id= :id');
             $sent->execute([':id' => $id]);
-            foreach ($sent as $key => $value) {
-                $_SESSION['carrito'][] = [
-                    $key => $value
-                ]
-            }
+            $sent->fetch();
+            $_SESSION['carrito'][]  = $sent; //! NO, Lo que guarda es un objeto
         }
     }
 
@@ -79,8 +76,8 @@
     <?php if (!empty($_SESSION['carrito'])): ?>
         <h2>Carrito de la compra</h2>
         <ul>
-            <?php foreach($_SESSION['carrito'] as $key => $value): ?>
-                <li><?= $value ?></li>
+            <?php foreach($sent as $value): ?>
+                <li><?= $value['titulo'] ?></li>
             <?php endforeach; ?>
         </ul>
 
