@@ -36,6 +36,8 @@
             $sent = $pdo->prepare('SELECT * FROM libros WHERE id= :id');
             $sent->execute([':id' => $id]);
             $libro = $sent->fetch();
+            var_dump($libro['titulo']);
+            die();
             $_SESSION['carrito'][]  = $libro;
         }
     }
@@ -73,10 +75,10 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (!empty($_SESSION['carrito'])): ?>
+    <?php if (!empty($_SESSION['carrito'])):?>
         <h2>Carrito de la compra</h2>
         <ul>
-            <?php foreach($libro as $value): ?>
+            <?php foreach($_SESSION['carrito']as $value): ?>
                 <li><?= $value ?></li>
             <?php endforeach; ?>
         </ul>
