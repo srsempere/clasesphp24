@@ -36,8 +36,6 @@
             $sent = $pdo->prepare('SELECT * FROM libros WHERE id= :id');
             $sent->execute([':id' => $id]);
             $libro = $sent->fetch();
-            var_dump($libro['titulo']);
-            die();
             $_SESSION['carrito'][]  = $libro;
         }
     }
@@ -45,14 +43,14 @@
     ?>
     <div class="volver"><a href="../biblioteca.php">Home</a></div>
     <h1>Bienvenidos a la tienda online</h1>
-    <table>
+    <table border="1">
         <thead>
             <th>Código</th>
             <th>Título</th>
             <th>Autor</th>
             <th>Precio</th>
             <th>Cantidad</th>
-            <th>Acciones</th>
+            <th>Total artículo</th>
         </thead>
         <tbody>
             <?php foreach ($libros as $libro) : ?>
@@ -76,12 +74,46 @@
         </tbody>
     </table>
     <?php if (!empty($_SESSION['carrito'])):?>
+        <?php
+            $titulos_carrito = [];
+            $BI = 0;
+            $IVA = 0;
+            $Total_pedido = 0;
+        ?>
         <h2>Carrito de la compra</h2>
-        <ul>
-            <?php foreach($_SESSION['carrito']as $value): ?>
-                <li><?= $value ?></li>
+
+            <?php foreach($_SESSION['carrito'] as $value): ?>
+                <?php
+                    $titulo = $value['titulo'];
+                    $precio = $value['precio'];
+                    if (isset($titulos_carrito[$titulo])) {
+                        $titulos_carrito[$titulo][0] ++;
+                    } else {
+                        $titulos_carrito[$titulo][0] =  1;
+                        $titulos_carrito[$titulo][1] = $precio;
+                    }
+                ?>
             <?php endforeach; ?>
-        </ul>
+
+            <table border="1">
+                <thead>
+                    <th>Artículo</th>
+                    <th>Base Imponible</th>
+                    <th>IVA (4%)</th>
+                    <th>Total Artículo</th>
+                </thead>
+                <tbody>
+                    <?php foreach($titulos_carrito as $articulo => $propiedades_libro): ?>
+                    <tr>
+                        <td><?= $articulo ?></td>
+                        <td><?= ($propiedades_libro[0] * $propiedades_libro[1]) ?></td>
+                        <td><?= $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04 ?></td>
+                        <td><?= ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
 
     <?php endif; ?>
 </body>

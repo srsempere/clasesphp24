@@ -159,7 +159,7 @@ session_start();
             <th>Año de publicación</th>
             <th>ISBN</th>
             <th>Categoría</th>
-            <th>Cantidad</th>
+            <th>Stock</th>
             <th>Precio</th>
             <th>Acciones</th>
         </thead>

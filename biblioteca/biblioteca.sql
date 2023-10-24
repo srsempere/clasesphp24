@@ -9,10 +9,10 @@ CREATE TABLE libros (
     anyo_publicacion INTEGER NOT NULL,
     isbn VARCHAR(255) NOT NULL UNIQUE,
     precio NUMERIC(4,2) NOT NULL,
-    cantidad INTEGER
+    stock INTEGER
 );
 
-INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, precio, cantidad)
+INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, precio, stock)
 VALUES  (10, 'El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '9781234567890', 20.55, 5),
         (20, 'Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 16.67, 3),
         (30, 'Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 9.99, 7),
