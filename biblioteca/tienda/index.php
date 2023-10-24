@@ -35,8 +35,8 @@
             }
             $sent = $pdo->prepare('SELECT * FROM libros WHERE id= :id');
             $sent->execute([':id' => $id]);
-            $sent->fetch();
-            $_SESSION['carrito'][]  = $sent; //! NO, Lo que guarda es un objeto
+            $libro = $sent->fetch();
+            $_SESSION['carrito'][]  = $libro;
         }
     }
 
@@ -76,8 +76,8 @@
     <?php if (!empty($_SESSION['carrito'])): ?>
         <h2>Carrito de la compra</h2>
         <ul>
-            <?php foreach($sent as $value): ?>
-                <li><?= $value['titulo'] ?></li>
+            <?php foreach($libro as $value): ?>
+                <li><?= $value ?></li>
             <?php endforeach; ?>
         </ul>
 
