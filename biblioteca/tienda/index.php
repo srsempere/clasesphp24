@@ -49,7 +49,7 @@
             <th>Título</th>
             <th>Autor</th>
             <th>Precio</th>
-            <th>Cantidad</th>
+            <th>Stock</th>
             <th>Total artículo</th>
         </thead>
         <tbody>
@@ -76,8 +76,8 @@
     <?php if (!empty($_SESSION['carrito'])):?>
         <?php
             $titulos_carrito = [];
-            $BI = 0;
-            $IVA = 0;
+            $Total_BI = 0;
+            $Total_IVA = 0;
             $Total_pedido = 0;
         ?>
         <h2>Carrito de la compra</h2>
@@ -106,14 +106,15 @@
                     <?php foreach($titulos_carrito as $articulo => $propiedades_libro): ?>
                     <tr>
                         <td><?= $articulo ?></td>
-                        <td><?= ($propiedades_libro[0] * $propiedades_libro[1]) ?></td>
+                        <td><?= $Total_BI +=($propiedades_libro[0] * $propiedades_libro[1]) ?></td>
                         <td><?= $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04 ?></td>
-                        <td><?= ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA ?></td>
+                            <?php $Total_IVA += $IVA ?>
+                        <td><?= $Total_pedido += ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
+            <h1>Total BI: <?= $Total_BI ?> Total IVA <?= $Total_IVA ?> Total Pedido: <?= $Total_pedido ?></h1>
 
     <?php endif; ?>
 </body>
