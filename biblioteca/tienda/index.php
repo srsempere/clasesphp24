@@ -53,6 +53,11 @@
             <th>Total artículo</th>
         </thead>
         <tbody>
+            <?php
+                if (!isset($_SESSION['stock'])) {
+                    $_SESSION['stock'] = [];
+                }
+            ?>
             <?php foreach ($libros as $libro) : ?>
                 <tr>
                     <?php
@@ -62,7 +67,20 @@
                     <td><?= hh($libro['titulo']) ?></td>
                     <td><?= hh($libro['autor']) ?></td>
                     <td><?= hh($precio) ?></td>
-                    <td><?= hh($libro['cantidad']) ?></td>
+                        <?php
+                            if (!isset($_SESSION['stock'][$libro['titulo']])) {
+                                $_SESSION['stock'][$libro['titulo']] = $libro['cantidad'];
+                            }
+
+                            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($id)) {
+                                if ($_SESSION['stock'][$libro['titulo']] > 0) {
+                                    $_SESSION['stock'][$libro['titulo']]--; //TODO: Solucionar error de descuento a articulos individuales.
+                                } else {
+                                    $_SESSION['stock'][$libro['titulo']] = 0;
+                                }
+                            }
+                        ?>
+                    <td><?= hh($_SESSION['stock'][$libro['titulo']]) ?></td>
                     <td>
                         <form action="" method="post">
                             <input type="hidden" name="id" value="<?= hh($libro['id']) ?>">
@@ -99,7 +117,7 @@
                     <thead>
                         <th>Artículo</th>
                         <th>Cantidad</th>
-                        <th>Base Imponible</th>
+                        <th>Base Imponible</th> //TODO: Añadir prevención XSS
                         <th>IVA (4%)</th>
                         <th>Total Artículo</th>
                     </thead>
