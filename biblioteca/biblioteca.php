@@ -135,7 +135,7 @@ session_start();
 
     ?>
 
-   <div class="volver"> <a href="/tienda/index.php">Tienda Online</a></div>
+    <div class="volver"> <a href="/tienda/index.php">Tienda Online</a></div>
     <h1>Bienvenido a la biblioteca</h1>
 
     <form action="" method="post">
@@ -160,9 +160,13 @@ session_start();
             <th>ISBN</th>
             <th>Categoría</th>
             <th>Cantidad</th>
+            <th>Precio</th>
             <th>Acciones</th>
         </thead>
         <tbody>
+            <?php
+            $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
+            ?>
             <?php foreach ($sent as $fila) : ?>
                 <tr>
                     <td><?= hh($fila['codigo']) ?></td>
@@ -172,6 +176,10 @@ session_start();
                     <td><?= hh($fila['anyo_publicacion']) ?></td>
                     <td><?= hh($fila['isbn']) ?></td>
                     <td><?= hh($array_categorias_unidimensional[$fila['titulo']]) ?></td>
+                    <?php
+                    $precio = isset($fila['precio']) ? $fmt->formatCurrency($fila['precio'], 'EUR') : '';
+                    ?>
+                    <td> <?= hh($precio) ?> </td>
                     <td><?= hh($fila['cantidad']) ?></td>
                     <th>
                         <a href="borrar.php?id=<?= hh($fila['id']) ?>&titulo=<?= hh($fila['titulo']); ?>">Eliminar</a>

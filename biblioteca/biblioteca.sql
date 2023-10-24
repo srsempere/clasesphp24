@@ -8,20 +8,21 @@ CREATE TABLE libros (
     editorial VARCHAR(255) NOT NULL,
     anyo_publicacion INTEGER NOT NULL,
     isbn VARCHAR(255) NOT NULL UNIQUE,
+    precio NUMERIC(4,2) NOT NULL,
     cantidad INTEGER
 );
 
-INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, cantidad)
-VALUES  (10, 'El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '9781234567890', 5),
-        (20, 'Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 3),
-        (30, 'Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 7),
-        (40, 'La Ciudad de las Estrellas', 'Irene Cielo', 'Galaxia Editorial', 2022, '9781234567893', 10),
-        (50, 'Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2018, '9781234567894', 6),
-        (60, 'El Jardín Secreto', 'Rosa Flores', 'Verde Editorial', 1990, '9781234567895', 4),
-        (70, 'El Laberinto del Minotauro', 'Héctor Historias', 'Mitos Ediciones', 2005, '9781234567896', 8),
-        (80, 'Las Aventuras del Espacio', 'Neil Cosmos', 'Estrellas Editorial', 2021, '9781234567897', 9),
-        (90, 'El Río de los Sueños', 'Ana Noche', 'Luna Llena Ediciones', 2019, '9781234567898', 2),
-        (100, 'Montañas Mágicas', 'Eva Tierra', 'Editorial Roca', 2008, '9781234567899', 5);
+INSERT INTO libros (codigo, titulo, autor, editorial, anyo_publicacion, isbn, precio, cantidad)
+VALUES  (10, 'El Bosque Encantado', 'Luna Martínez', 'Editorial Sol', 2010, '9781234567890', 20.55, 5),
+        (20, 'Viaje al Centro de la Tierra', 'Jules Verne', 'Montañas Ediciones', 1864, '9781234567891', 16.67, 3),
+        (30, 'Los Misterios del Océano', 'Oscar Mar', 'Editorial Ola', 2018, '9781234567892', 9.99, 7),
+        (40, 'La Ciudad de las Estrellas', 'Irene Cielo', 'Galaxia Editorial', 2022, '9781234567893', 33.67, 10),
+        (50, 'Historias de Dragones', 'Pedro Fuego', 'Editorial Cueva', 2018, '9781234567894', 14.99, 6),
+        (60, 'El Jardín Secreto', 'Rosa Flores', 'Verde Editorial', 1990, '9781234567895', 25.00, 4),
+        (70, 'El Laberinto del Minotauro', 'Héctor Historias', 'Mitos Ediciones', 2005, '9781234567896', 11.99, 8),
+        (80, 'Las Aventuras del Espacio', 'Neil Cosmos', 'Estrellas Editorial', 2021, '9781234567897', 27.00, 9),
+        (90, 'El Río de los Sueños', 'Ana Noche', 'Luna Llena Ediciones', 2019, '9781234567898', 45.00, 2),
+        (100, 'Montañas Mágicas', 'Eva Tierra', 'Editorial Roca', 2008, '9781234567899', 17.50, 5);
 
 DROP TABLE IF EXISTS usuarios CASCADE;
 
