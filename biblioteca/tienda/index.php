@@ -45,10 +45,7 @@
     <?php
 
     if (!empty($_SESSION['login'])) {
-        $email = $_SESSION['login'];
-        ?>
-            <?php hh($email) ?> //TODO: Tengo que solucionar para que salga el email en la cabecera.
-        <?php
+        cabecera();
     } else {
         cabecera_login();
     }

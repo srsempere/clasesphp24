@@ -517,7 +517,8 @@ button:hover {
 
 .login-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 10px;
+    margin: 3px;
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
@@ -530,4 +531,23 @@ button:hover {
 
 .login-button:hover {
     background-color: #0056b3;
+}
+
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 10px;
+    margin: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #ff3300;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #b30000;
 }

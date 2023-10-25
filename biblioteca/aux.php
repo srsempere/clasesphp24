@@ -55,6 +55,18 @@ function cabecera_login()
 
 }
 
+function cabecera()
+{
+    $email = $_SESSION['login'];
+    ?>
+        <div class="login">
+            <a href="perfil.php" class='login-button'><?= hh($email) ?></a><br>
+            <a href="pedidos.php" class='login-button'>Pedidos</a>
+            <a href="logout.php" class='logout-button'>Cerrar sesión</a>
+        </div>
+    <?php
+}
+
 // FUNCIONES DE VALIDACIÓN Y SANEADO
 
 
