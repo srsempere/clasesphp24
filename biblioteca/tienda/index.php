@@ -104,7 +104,13 @@
                     <td>
                         <form action="" method="post">
                             <input type="hidden" name="id" value="<?= hh($libro['id']) ?>">
-                            <button type="submit">Añadir</button> //TODO: Añadir botón para restar artículo
+                            //TODO: Controlar el flujo con campos ocultos add y remove ? probar
+                            <button type="submit">Añadir</button>
+                        </form>
+                        <br>
+                        <form action="" method="post">
+                            <input type="hidden" name="id" value="<?= hh($libro['id']) ?>">
+                            <button type="submit" class="vaciar">Quitar</button>
                         </form>
                     </td>
                 </tr>
