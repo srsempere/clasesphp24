@@ -119,7 +119,7 @@
             <?= hh($code_not_found) ?>
         </div>
     <?php endif; ?>
-    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="/js/flowbite/flowbite.min.js"></script>
 </body>
 
 </html>
