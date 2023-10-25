@@ -57,6 +57,14 @@
                 if (!isset($_SESSION['stock'])) {
                     $_SESSION['stock'] = [];
                 }
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($id)) {
+                    if ($_SESSION['stock'][$libro['titulo']] > 0) {
+                        $_SESSION['stock'][$libro['titulo']]--; //TODO: Solucionar error de descuento a articulos individuales.
+                    } else {
+                        $_SESSION['stock'][$libro['titulo']] = 0;
+                    }
+                }
             ?>
             <?php foreach ($libros as $libro) : ?>
                 <tr>
@@ -72,13 +80,6 @@
                                 $_SESSION['stock'][$libro['titulo']] = $libro['cantidad'];
                             }
 
-                            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($id)) {
-                                if ($_SESSION['stock'][$libro['titulo']] > 0) {
-                                    $_SESSION['stock'][$libro['titulo']]--; //TODO: Solucionar error de descuento a articulos individuales.
-                                } else {
-                                    $_SESSION['stock'][$libro['titulo']] = 0;
-                                }
-                            }
                         ?>
                     <td><?= hh($_SESSION['stock'][$libro['titulo']]) ?></td>
                     <td>
