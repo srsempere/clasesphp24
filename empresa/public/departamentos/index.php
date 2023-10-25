@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../dist/output.css">
     <title>Departamentos</title>
 </head>
 
@@ -58,18 +58,27 @@
     ?>
 
     <form action="" method="get">
-        <label for="codigo">Código</label>
-        <input type="text" name="codigo" id="codigo" value="<?= hh($codigo) ?>">
+        <div class="mb-6">
+        <label for="codigo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código</label>
+            <input type="text" name="codigo" id="codigo" value="<?= hh($codigo) ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
         <button type="submit">Buscar</button>
     </form>
 
     <br>
-    <table border="1">
-        <thead>
-            <th>Código</th>
-            <th>Denominación</th>
-            <th>Localidad</th>
-            <th>Acciones</th>
+
+    <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+        <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
+    </div>
+
+
+    <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <th scope="col" class="px-6 py-3">Código</th>
+            <th scope="col" class="px-6 py-3">Denominación</th>
+            <th scope="col" class="px-6 py-3">Localidad</th>
+            <th scope="col" class="px-6 py-3">Acciones</th>
         </thead>
         <tbody>
             <?php foreach ($sent as $fila) : ?>
@@ -85,6 +94,8 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
+
     <br>
     <a href="crear.php">Crear departamento</a><br>
     <a href="/empleados/index.php">Ir a Empleados</a>
@@ -108,6 +119,7 @@
             <?= hh($code_not_found) ?>
         </div>
     <?php endif; ?>
+    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>
