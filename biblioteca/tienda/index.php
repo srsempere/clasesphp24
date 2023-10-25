@@ -12,6 +12,15 @@
     <?php
     session_start();
     require '../aux.php';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $vaciar = isset($_POST['vaciar']) ? $_POST['vaciar'] : false;
+        if ($vaciar) {
+            $_SESSION['carrito'] = [];
+        }
+    }
+
+
     $pdo = conectar();
     $libros = $pdo->query('SELECT * FROM Libros');
     if (!isset($_SESSION['carrito'])) {
@@ -64,17 +73,17 @@
         </thead>
         <tbody>
             <?php
-                if (!isset($_SESSION['stock'])) {
-                    $_SESSION['stock'] = [];
-                }
+            if (!isset($_SESSION['stock'])) {
+                $_SESSION['stock'] = [];
+            }
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($id)) {
-                    if ($_SESSION['stock'][$libro['titulo']] > 0) {
-                        $_SESSION['stock'][$libro['titulo']]--;
-                    } else {
-                        $_SESSION['stock'][$libro['titulo']] = 0;
-                    }
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($id)) {
+                if ($_SESSION['stock'][$libro['titulo']] > 0) {
+                    $_SESSION['stock'][$libro['titulo']]--;
+                } else {
+                    $_SESSION['stock'][$libro['titulo']] = 0;
                 }
+            }
             ?>
             <?php foreach ($libros as $libro) : ?>
                 <tr>
@@ -85,12 +94,12 @@
                     <td><?= hh($libro['titulo']) ?></td>
                     <td><?= hh($libro['autor']) ?></td>
                     <td><?= hh($precio) ?></td>
-                        <?php
-                            if (!isset($_SESSION['stock'][$libro['titulo']])) {
-                                $_SESSION['stock'][$libro['titulo']] = $libro['stock'];
-                            }
+                    <?php
+                    if (!isset($_SESSION['stock'][$libro['titulo']])) {
+                        $_SESSION['stock'][$libro['titulo']] = $libro['stock'];
+                    }
 
-                        ?>
+                    ?>
                     <td><?= hh($_SESSION['stock'][$libro['titulo']]) ?></td>
                     <td>
                         <form action="" method="post">
@@ -102,65 +111,70 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (!empty($_SESSION['carrito'])):?>
+    <?php if (!empty($_SESSION['carrito'])) : ?>
         <?php
-            $titulos_carrito = [];
-            $Total_BI = 0;
-            $Total_IVA = 0;
-            $Total_pedido = 0;
-            ?>
+        $titulos_carrito = [];
+        $Total_BI = 0;
+        $Total_IVA = 0;
+        $Total_pedido = 0;
+        ?>
         <h2 class="carrito-titulo">Carrito de la compra</h2>
 
-        <?php foreach($_SESSION['carrito'] as $value): ?>
+        <?php foreach ($_SESSION['carrito'] as $value) : ?>
             <?php
-                    $titulo = $value['titulo'];
-                    $precio_sin_formato = $value['precio'];
-                    if (isset($titulos_carrito[$titulo])) {
-                        $titulos_carrito[$titulo][0] ++;
-                    } else {
-                        $titulos_carrito[$titulo][0] =  1;
-                        $titulos_carrito[$titulo][1] = $precio_sin_formato;
-                    }
-                ?>
-            <?php endforeach; ?>
-            <div class="carrito-section">
-                <table border="0">
-                    <thead>
-                        <th>Artículo</th>
-                        <th>Cantidad</th>
-                        <th>Base Imponible</th>
-                        <th>IVA (4%)</th>
-                        <th>Total Artículo</th> //TODO: Añadir botón para vaciar carrito.
-                    </thead>
-                    <tbody>
-                        <?php foreach($titulos_carrito as $articulo => $propiedades_libro): ?>
+            $titulo = $value['titulo'];
+            $precio_sin_formato = $value['precio'];
+            if (isset($titulos_carrito[$titulo])) {
+                $titulos_carrito[$titulo][0]++;
+            } else {
+                $titulos_carrito[$titulo][0] =  1;
+                $titulos_carrito[$titulo][1] = $precio_sin_formato;
+            }
+            ?>
+        <?php endforeach; ?>
+        <div class="carrito-section">
+            <table border="0">
+                <thead>
+                    <th>Artículo</th>
+                    <th>Cantidad</th>
+                    <th>Base Imponible</th>
+                    <th>IVA (4%)</th>
+                    <th>Total Artículo</th> //TODO: Añadir botón para vaciar carrito.
+                </thead>
+                <tbody>
+                    <?php foreach ($titulos_carrito as $articulo => $propiedades_libro) : ?>
                         <tr>
                             <td><?= hh($articulo) ?></td>
-                                <?php
-                                    $Cantidad = $titulos_carrito[$articulo][0]
-                                ?>
+                            <?php
+                            $Cantidad = $titulos_carrito[$articulo][0]
+                            ?>
                             <th><?= hh($Cantidad)  ?></th>
-                                <?php
-                                    $BI = ($propiedades_libro[0] * $propiedades_libro[1]);
-                                    $Total_BI +=($propiedades_libro[0] * $propiedades_libro[1]);
-                                ?>
+                            <?php
+                            $BI = ($propiedades_libro[0] * $propiedades_libro[1]);
+                            $Total_BI += ($propiedades_libro[0] * $propiedades_libro[1]);
+                            ?>
                             <td><?= hh($fmt->formatCurrency($BI, 'EUR')) ?></td>
-                                <?php
-                                    $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04;
-                                    $Total_IVA += $IVA
-                                ?>
-                            <td><?=  hh($fmt->formatCurrency($IVA, 'EUR')) ?></td>
-                                <?php
-                                    $total_articulo = ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
-                                    $Total_pedido += ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
-                                ?>
-                            <td><?=  hh($fmt->formatCurrency($total_articulo, 'EUR')) ?></td>
+                            <?php
+                            $IVA = ($propiedades_libro[0] * $propiedades_libro[1]) * 0.04;
+                            $Total_IVA += $IVA
+                            ?>
+                            <td><?= hh($fmt->formatCurrency($IVA, 'EUR')) ?></td>
+                            <?php
+                            $total_articulo = ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
+                            $Total_pedido += ($propiedades_libro[0] * $propiedades_libro[1]) + $IVA;
+                            ?>
+                            <td><?= hh($fmt->formatCurrency($total_articulo, 'EUR')) ?></td>
                         </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <h1>Total Base Imponible: <?= hh($fmt->formatCurrency($Total_BI, 'EUR')) ?> Total IVA: <?= hh($fmt->formatCurrency($Total_IVA, 'EUR')) ?> Total Pedido: <?= hh($fmt->formatCurrency($Total_pedido, 'EUR')) ?></h1>
-            </div>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <h1>Total Base Imponible: <?= hh($fmt->formatCurrency($Total_BI, 'EUR')) ?> Total IVA: <?= hh($fmt->formatCurrency($Total_IVA, 'EUR')) ?> Total Pedido: <?= hh($fmt->formatCurrency($Total_pedido, 'EUR')) ?></h1>
+
+            <form action="" method="post">
+                <input type="hidden" name="vaciar" value="<?= true ?>">
+                <button type="submit" class="vaciar">Vaciar carrito</button>
+            </form>
+        </div>
     <?php endif; ?>
 </body>
 

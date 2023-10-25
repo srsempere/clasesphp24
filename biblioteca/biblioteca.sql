@@ -35,16 +35,16 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (nombre, email, password_hash, fecha_registro)
-VALUES  ('Luisa Fernández', 'luisa.fernandez@email.com', crypt('luisa', gen_salt('bf', 10)), '2023-01-10 14:23:45'),
-        ('Miguel Álvarez', 'miguel.alvarez@email.com', 'hashficticio1234B', '2023-02-15 12:13:14'),
-        ('Carla Rodríguez', 'carla.rodriguez@email.com', 'hashficticio1234C', '2023-03-05 09:08:07'),
-        ('Antonio Morales', 'antonio.morales@email.com', 'hashficticio1234D', '2023-04-20 16:45:30'),
-        ('Sofía Guzmán', 'sofia.guzman@email.com', 'hashficticio1234E', '2023-05-11 11:11:11'),
-        ('Javier Paredes', 'javier.paredes@email.com', 'hashficticio1234F', '2023-06-24 18:34:56'),
-        ('María Luna', 'maria.luna@email.com', 'hashficticio1234G', '2023-07-03 10:20:30'),
-        ('Carlos Sol', 'carlos.sol@email.com', 'hashficticio1234H', '2023-08-15 14:14:14'),
-        ('Daniela Ríos', 'daniela.rios@email.com', 'hashficticio1234I', '2023-09-09 09:09:09'),
-        ('Ernesto Vargas', 'ernesto.vargas@email.com', 'hashficticio1234J', '2023-10-01 20:20:20');
+VALUES  ('Luisa Fernández', 'luisa.fernandez@email.com',  crypt('luisa',   gen_salt('bf', 10)), '2023-01-10 14:23:45'),
+        ('Miguel Álvarez',  'miguel.alvarez@email.com',   crypt('miguel',  gen_salt('bf', 10)), '2023-02-15 12:13:14'),
+        ('Carla Rodríguez', 'carla.rodriguez@email.com',  crypt('carla',   gen_salt('bf', 10)), '2023-03-05 09:08:07'),
+        ('Antonio Morales', 'antonio.morales@email.com',  crypt('antonio', gen_salt('bf', 10)), '2023-04-20 16:45:30'),
+        ('Sofía Guzmán',    'sofia.guzman@email.com',     crypt('sofia',   gen_salt('bf', 10)), '2023-05-11 11:11:11'),
+        ('Javier Paredes',  'javier.paredes@email.com',   crypt('javier',  gen_salt('bf', 10)), '2023-06-24 18:34:56'),
+        ('María Luna',      'maria.luna@email.com',       crypt('maria',   gen_salt('bf', 10)), '2023-07-03 10:20:30'),
+        ('Carlos Sol',      'carlos.sol@email.com',       crypt('carlos',  gen_salt('bf', 10)), '2023-08-15 14:14:14'),
+        ('Daniela Ríos',    'daniela.rios@email.com',     crypt('daniela', gen_salt('bf', 10)), '2023-09-09 09:09:09'),
+        ('Ernesto Vargas',  'ernesto.vargas@email.com',   crypt('ernesto', gen_salt('bf', 10)), '2023-10-01 20:20:20');
 
 DROP TABLE IF EXISTS prestamos CASCADE;
 

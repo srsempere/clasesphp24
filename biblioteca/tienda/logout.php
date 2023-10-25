@@ -1,20 +1,26 @@
 <?php
-
-// Mantener la sesión
+// Iniciando la sesión
 session_start();
-// Eliminar todas las variables de la sesión
+
+// Restableciendo la variable de sesión global a un array vacío, esencialmente vaciando la sesión
 $_SESSION = [];
-// Gestión de la cookie
+
+// Obteniendo los parámetros de la cookie de sesión
 $params = session_get_cookie_params();
+
+// Estableciendo una cookie de sesión vacía para invalidar la sesión en el navegador
 setcookie(
-    session_name(),
-    '',
-    1,
-    $params['path'],
-    $params['domain'],
-    $params['secure'],
-    $params['httponly']
+    session_name(),  // Nombre de la cookie de sesión
+    '',              // Valor vacío
+    1,               // Tiempo de expiración en el pasado
+    $params['path'], // Ruta de la cookie
+    $params['domain'], // Dominio de la cookie
+    $params['secure'], // Si la cookie es segura (HTTPS)
+    $params['httponly'] // Si la cookie es accesible sólo a través de HTTP (no JavaScript)
 );
-//Destruir la sesión
+
+// Destruyendo la sesión en el servidor
 session_destroy();
-header('Location: login.php');
+
+// Redirigiendo al usuario a la página de login
+header('Location: /usuarios/login.php');
