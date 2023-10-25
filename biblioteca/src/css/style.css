@@ -1,14 +1,22 @@
-
 .index h1 {
-    font-family: 'Arial', sans-serif; /* Utiliza una fuente sans-serif */
-    font-size: 2.5em; /* Ajusta el tamaño de la fuente */
-    color: #333; /* Color oscuro para el texto */
-    text-align: center; /* Centra el texto */
-    margin-top: 20px; /* Espacio en la parte superior */
-    margin-bottom: 20px; /* Espacio en la parte inferior */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    letter-spacing: 2px; /* Espaciado entre letras */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para un efecto 3D */
+    font-family: 'Arial', sans-serif;
+    /* Utiliza una fuente sans-serif */
+    font-size: 2.5em;
+    /* Ajusta el tamaño de la fuente */
+    color: #333;
+    /* Color oscuro para el texto */
+    text-align: center;
+    /* Centra el texto */
+    margin-top: 20px;
+    /* Espacio en la parte superior */
+    margin-bottom: 20px;
+    /* Espacio en la parte inferior */
+    text-transform: uppercase;
+    /* Texto en mayúsculas */
+    letter-spacing: 2px;
+    /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil para un efecto 3D */
 }
 
 .title-container {
@@ -17,7 +25,8 @@
     padding: 20px;
     margin: center;
     overflow: hidden;
-    border-radius: 10px; /* Bordes redondeados */
+    border-radius: 10px;
+    /* Bordes redondeados */
 }
 
 .title-container::before {
@@ -27,9 +36,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(169, 169, 169, 0.7); /* Fondo gris semi-transparente */
-    backdrop-filter: blur(10px); /* Efecto difuso */
-    z-index: -1; /* Sitúa el pseudo-elemento detrás del texto */
+    background-color: rgba(169, 169, 169, 0.7);
+    /* Fondo gris semi-transparente */
+    backdrop-filter: blur(10px);
+    /* Efecto difuso */
+    z-index: -1;
+    /* Sitúa el pseudo-elemento detrás del texto */
 }
 
 .index a {
@@ -37,14 +49,18 @@
     padding: 10px 20px;
     font-size: 1.2em;
     color: #fff;
-    background-color: #008CBA; /* Color de fondo azul */
+    background-color: #008CBA;
+    /* Color de fondo azul */
     text-decoration: none;
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s;
+    /* Transición suave */
 }
 
 .index a:hover {
-    background-color: #005f5f; /* Color de fondo más oscuro al pasar el ratón */
+    background-color: #005f5f;
+    /* Color de fondo más oscuro al pasar el ratón */
 }
 
 /* GENERAL */
@@ -448,4 +464,48 @@ button:hover {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* LOGIN.PHP */
+
+.login-formulario {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-formulario input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-formulario button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-formulario button:hover {
+    background-color: #45a049;
 }

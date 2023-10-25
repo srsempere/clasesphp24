@@ -126,3 +126,38 @@ function comprobar_titulo($titulo)
         añade_error('El título es demasiado largo');
     }
 }
+
+function comprobar_password($password)
+{
+    if ($password === null) {
+        añade_error('El tipo de datos de la contraseña no es correcto');
+        return;
+    }
+
+    if ($password === '') {
+        añade_error('El campo contraseña no puede estar vacío');
+        return;
+    }
+
+    if (mb_strlen($password) > 60) {
+        añade_error('La contraseña es demasiado larga');
+    }
+}
+
+function comprobar_email($email)
+{
+    if ($email === null) {
+        añade_error('El tipo de datos del email no es correcto');
+        return;
+    }
+
+    if ($email === '') {
+        añade_error('El campo email no puede estar vacío');
+        return;
+    }
+
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
+        añade_error('El formato del email no es válido');
+    }
+
+}

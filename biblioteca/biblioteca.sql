@@ -35,7 +35,7 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (nombre, email, password_hash, fecha_registro)
-VALUES  ('Luisa Fernández', 'luisa.fernandez@email.com', 'hashficticio1234A', '2023-01-10 14:23:45'),
+VALUES  ('Luisa Fernández', 'luisa.fernandez@email.com', crypt('luisa', gen_salt('bf', 10)), '2023-01-10 14:23:45'),
         ('Miguel Álvarez', 'miguel.alvarez@email.com', 'hashficticio1234B', '2023-02-15 12:13:14'),
         ('Carla Rodríguez', 'carla.rodriguez@email.com', 'hashficticio1234C', '2023-03-05 09:08:07'),
         ('Antonio Morales', 'antonio.morales@email.com', 'hashficticio1234D', '2023-04-20 16:45:30'),
