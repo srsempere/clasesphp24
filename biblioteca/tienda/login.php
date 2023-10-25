@@ -30,17 +30,19 @@
             $sent = $pdo->prepare('SELECT * FROM usuarios WHERE email= :email');
             $sent->execute([':email' => $email]);
             $usuario = $sent->fetch();
-           if ($usuario) {
-               $hash = $usuario['password_hash'];
-               if (password_verify($password, $hash)) {
-                   echo 'ok';
-               }
-           } else {
-            añade_error('No existen esas credenciales en nuestro sistema');
-           }
+            if ($usuario) {
+                $hash = $usuario['password_hash'];
+                if (password_verify($password, $hash)) {
+                    $_SESSION['login'] = $email;
+                   return header('Location: index.php');
+                }
+            } else {
+                añade_error('No existen esas credenciales en nuestro sistema');
+            }
         }
     }
     ?>
+    <div class="volver"><a href="index.php">Tienda</a></div>
     <form action="" method="post" class="login-formulario">
         <label for="email">Email</label><br>
         <input type="text" name="email" id="email">
@@ -50,10 +52,10 @@
     </form>
     <?php
     if (isset($_SESSION['errores'])) {
-        foreach($_SESSION['errores'] as $error) {
-            ?>
+        foreach ($_SESSION['errores'] as $error) {
+    ?>
             <p class="error"><?= $error ?></p>
-            <?php
+    <?php
         }
         unset($_SESSION['errores']);
     }

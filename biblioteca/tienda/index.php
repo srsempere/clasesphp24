@@ -42,6 +42,19 @@
 
     ?>
     <div class="volver"><a href="../biblioteca.php">Home</a></div>
+    <?php
+
+    if (!empty($_SESSION['login'])) {
+        $email = $_SESSION['login'];
+        ?>
+            <?php hh($email) ?> //TODO: Tengo que solucionar para que salga el email en la cabecera.
+        <?php
+    } else {
+        cabecera_login();
+    }
+
+
+    ?>
     <h1>Bienvenidos a la tienda online</h1>
     <table border="1">
         <thead>

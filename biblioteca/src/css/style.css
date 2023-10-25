@@ -509,3 +509,25 @@ button:hover {
 .login-formulario button:hover {
     background-color: #45a049;
 }
+
+.login {
+    text-align: right;
+}
+
+
+.login-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}

@@ -47,6 +47,14 @@ function hh($cadena)
     return htmlspecialchars($cadena, ENT_QUOTES | ENT_SUBSTITUTE);
 }
 
+function cabecera_login()
+{
+    ?>
+    <div class="login"><a href="login.php" class="login-button">Login</a></div>
+    <?php
+
+}
+
 // FUNCIONES DE VALIDACIÓN Y SANEADO
 
 
