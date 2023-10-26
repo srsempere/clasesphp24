@@ -45,9 +45,7 @@
                 } elseif ($remove && $_SESSION['carrito'][$id] > 0) {
                     $_SESSION['carrito'][$id]--;
                 }
-
             }
-
         }
     }
 
@@ -89,11 +87,11 @@
                     <td><?= hh($libro['titulo']) ?></td>
                     <td><?= hh($libro['autor']) ?></td>
                     <td><?= hh($precio) ?></td>
-         <td><?= isset($_SESSION['carrito'][$libro['id']]) ?
+                    <td><?= isset($_SESSION['carrito'][$libro['id']]) ?
 
-                                        (($libro['stock'] - $_SESSION['carrito'][$libro['id']]) > 0 ? $libro['stock'] - $_SESSION['carrito'][$libro['id']] : 0)
+                            (($libro['stock'] - $_SESSION['carrito'][$libro['id']]) > 0 ? $libro['stock'] - $_SESSION['carrito'][$libro['id']] : 0)
 
-                                        : $libro['stock'] ?></td>
+                            : $libro['stock'] ?></td>
 
                     <td>
                         <form action="" method="post">
@@ -112,7 +110,56 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php if (!empty($_SESSION['carrito'])) : ?>
+    <?php
+    $Total_BI = 0;
+    $Total_IVA = 0;
+    $Total_pedido = 0;
+    ?>
 
+    // ! CARRITO DE LA COMPRA
+    <h2 class="carrito-titulo">Carrito de la compra</h2>
+
+    <div class="carrito-section">
+        <table border="0">
+            <thead>
+                <th>Artículo</th>
+                <th>Cantidad</th>
+                <th>Base Imponible</th>
+                <th>IVA (4%)</th>
+                <th>Total Artículo</th>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($_SESSION['carrito'] as $id => $cantidad) :
+                $sent = $pdo->prepare('SELECT * FROM libros WHERE id = :id');
+                $sent->execute([':id' => $id]);
+                $libro = $sent->fetch();
+                $bi = $libro['precio'] * $cantidad;
+                $iva = $bi * 0.04;
+                $total = $bi + $iva;
+                $Total_BI += $bi;
+                $Total_IVA += $iva;
+                $Total_pedido += $total;
+                ?>
+                <tr>
+                    <td><?= hh($libro['titulo']) ?></td>
+                    <td><?= hh($cantidad) ?></td>
+                    <td><?= hh($fmt->formatCurrency($bi, 'EUR')) ?></td>
+                    <td><?= hh($fmt->formatCurrency($iva, 'EUR')) ?></td>
+                    <td><?= hh($fmt->formatCurrency($total, 'EUR')) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <h1>Total Base Imponible: <?= hh($fmt->formatCurrency($Total_BI, 'EUR')) ?> Total IVA: <?= hh($fmt->formatCurrency($Total_IVA, 'EUR')) ?> Total Pedido: <?= hh($fmt->formatCurrency($Total_pedido, 'EUR')) ?></h1>
+
+        <form action="" method="post">
+            <input type="hidden" name="vaciar" value="<?= true ?>">
+            <button type="submit" class="vaciar">Vaciar carrito</button>
+        </form>
+    </div>
+<?php endif; ?>
 </body>
 
 </html>
