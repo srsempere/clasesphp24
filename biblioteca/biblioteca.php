@@ -180,7 +180,7 @@ session_start();
                     $precio = isset($fila['precio']) ? $fmt->formatCurrency($fila['precio'], 'EUR') : '';
                     ?>
                     <td> <?= hh($precio) ?> </td>
-                    <td><?= hh($fila['cantidad']) ?></td>
+                    <td><?= hh($fila['stock']) ?></td>
                     <th>
                         <a href="borrar.php?id=<?= hh($fila['id']) ?>&titulo=<?= hh($fila['titulo']); ?>">Eliminar</a>
                         <a href="modificar.php">Modificar</a>
