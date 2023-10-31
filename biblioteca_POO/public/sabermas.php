@@ -119,24 +119,70 @@
     </nav>
 
 
+    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"> Nuestra Colección</h1>
+    <p class="mb-3 text-gray-500 dark:text-gray-400 first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100">En nuestra biblioteca, nos enorgullece ofrecer una vasta colección de materiales de lectura que abarcan diversos géneros y temas. Nuestro catálogo incluye:</p>
+    <br>
+    <br>
+    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 ml-4">
+        <li>
+            Literatura Clásica y Contemporánea: Desde las obras maestras atemporales hasta las novelas modernas que están dando de qué hablar.
+        </li>
+        <li>
+            Ciencia y Tecnología: Mantente al día con los últimos avances y descubrimientos.
+        </li>
+        <li>
+            Historia y Cultura: Explora el pasado y descubre diferentes culturas.
+        </li>
+        <li>
+            Desarrollo Personal y Profesional: Amplía tus horizontes y habilidades con una selección cuidadosa de libros que fomentan el crecimiento personal y profesional.
+        </li>
+    </ul>
+    <br>
+    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        Plataforma Interactiva
+    </h1>
+    <p class="mb-3 text-gray-500 dark:text-gray-400 first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100">
+        Nuestra biblioteca digital va más allá de ser solo un repositorio de libros. Ofrecemos una plataforma interactiva donde puedes:
 
-    <section class="bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
-        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Bienvenido a tu espacio de lectura</h1>
-            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Descubre un refugio para los amantes de la lectura en nuestra biblioteca digital. Aquí, te abrimos las puertas a un mundo de conocimiento y aventura.</p>
-            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-                    Acceder
-                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </a>
-                <a href="sabermas.php" class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-                    Saber más
-                </a>
-            </div>
+        Reseñar y Calificar Libros: Comparte tus opiniones sobre las lecturas que has disfrutado.
+        Participar en Discusiones: Únete a discusiones enriquecedoras sobre tus libros y autores favoritos.
+        Recomendar Nuevas Adquisiciones: Sugiere nuevos títulos para expandir nuestra colección y enriquecer la comunidad.
+     </p>
+     <br>
+    <br>
+     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+     Comunidad Apasionada
+    </h1>
+    <p class="mb-3 text-gray-500 dark:text-gray-400 first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100">
+    Únete a una comunidad de lectores apasionados que valoran el conocimiento, la discusión abierta y el amor por la lectura. Aquí, encontrarás amigos con los que podrás compartir tu pasión por los libros y la literatura.
+     </p>
+     <br>
+    <br>
+     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+     Únete a Nosotros
+    </h1>
+    <p class="mb-3 text-gray-500 dark:text-gray-400 first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100">
+    Embárcate en una travesía de conocimiento y descubrimiento. Regístrate hoy y comienza a explorar todo lo que nuestra biblioteca digital tiene para ofrecer. Tu espacio de lectura te espera con páginas llenas de aventuras, aprendizaje y camaradería.
+     </p>
+
+
+
+<figure class="max-w-screen-md mx-auto text-center">
+    <svg class="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
+        <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z"/>
+    </svg>
+    <blockquote>
+        <p class="text-2xl italic font-medium text-gray-900 dark:text-white">Para más información, no dudes en contactarnos a través de nuestra página de contacto o a nuestro correo electrónico: info@tuespaciodelectura.com. Estamos aquí para ayudarte en tu viaje literario. ¡Bienvenido a tu nuevo hogar de lectura digital!</p>
+    </blockquote>
+    <figcaption class="flex items-center justify-center mt-6 space-x-3">
+        <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png" alt="profile picture">
+        <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+            <cite class="pr-3 font-medium text-gray-900 dark:text-white">Micheal Gough</cite>
+            <cite class="pl-3 text-sm text-gray-500 dark:text-gray-400">CEO at Biblioteca</cite>
         </div>
-    </section>
+    </figcaption>
+</figure>
+
 
 
     <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
