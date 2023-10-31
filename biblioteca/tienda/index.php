@@ -45,6 +45,12 @@
                 } elseif ($remove && $_SESSION['carrito'][$id] > 0) {
                     $_SESSION['carrito'][$id]--;
                 }
+
+                // Si la cantidad es 0, eliminar el artículo del carritgit o
+                if ($_SESSION['carrito'][$id] === 0) {
+                    unset($_SESSION['carrito'][$id]);
+                }
+
             }
         }
     }
