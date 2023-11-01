@@ -19,8 +19,6 @@
     $pdo = conectar();
     $libros = Libro::todos([], [], $pdo);
 
-    var_dump($_SESSION['login']);
-
     ?>
 
 
