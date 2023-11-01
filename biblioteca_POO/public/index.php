@@ -10,7 +10,11 @@
 
 <body>
 
-    <?php require '../src/_cabecera.php' ?>
+    <?php
+        require '../vendor/autoload.php';
+        require '../src/_cabecera.php'
+
+    ?>
 
 
     <section class="bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">

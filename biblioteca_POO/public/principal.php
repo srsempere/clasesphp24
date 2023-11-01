@@ -11,11 +11,12 @@
 <body>
 
     <?php
-    require '../src/aux.php';
+    use App\Tablas\Libro;
+    require '../vendor/autoload.php';
     require '../src/_cabecera.php';
 
     $pdo = conectar();
-    $sent = $pdo->query('SELECT * FROM libros');
+    $libros = Libro::todos([], [], $pdo);
 
     ?>
 
@@ -47,25 +48,25 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($sent as $libro) : ?>
+                <?php foreach ($libros as $libro) : ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <?= $libro['codigo'] ?>
+                            <?= $libro->getCodigo() ?>
                         </th>
                         <td class="px-6 py-4">
-                            <?= $libro['titulo'] ?>
+                            <?= $libro->getTitulo() ?>
                         </td>
                         <td class="px-6 py-4">
-                            <?= $libro['descripcion'] ?>
+                            <?= $libro->getDescripcion() ?>
                         </td>
                         <td class="px-6 py-4">
-                            <?= $libro['autor'] ?>
+                            <?= $libro->getAutor() ?>
                         </td>
                         <td class="px-6 py-4">
-                            <?= $libro['precio'] ?>
+                            <?= $libro->getPrecio() ?>
                         </td>
                         <td class="px-6 py-4">
-                            <?= $libro['stock'] ?>
+                            <?= $libro->getStock() ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

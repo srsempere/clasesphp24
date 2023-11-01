@@ -9,7 +9,10 @@
 </head>
 
 <body>
-    <?php require '../src/_cabecera.php' ?>
+    <?php
+        require '../vendor/autoload.php';
+        require '../src/_cabecera.php'
+    ?>
     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"> Nuestra Colección</h1>
     <p class="mb-3 text-gray-500 dark:text-gray-400 first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100">En nuestra biblioteca, nos enorgullece ofrecer una vasta colección de materiales de lectura que abarcan diversos géneros y temas. Nuestro catálogo incluye:</p>
     <br>
