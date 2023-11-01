@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+
 use App\Tablas\Libro;
 use App\Tablas\Usuario;
 
@@ -82,6 +83,10 @@ use App\Tablas\Usuario;
                             <?= $libro->getStock() ?>
                         </td>
                         <td class="px-6 py-4">
+                            <form action="modificar.php" method="post">
+                                <input type="hidden" name="id" value="<?= $libro->id ?>">
+                                <button type="submit">Modificar</button>
+                            </form>
                             <form action="borrar.php" method="post">
                                 <input type="hidden" name="id" value="<?= $libro->id ?>">
                                 <button type="submit">Borrar</button>
