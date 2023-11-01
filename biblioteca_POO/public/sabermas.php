@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -79,7 +80,7 @@
 
 
     <?php require '../src/_footer.php' ?>
-    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="js/flowbite/flowbite.min.js"></script>
 </body>
 
 </html>

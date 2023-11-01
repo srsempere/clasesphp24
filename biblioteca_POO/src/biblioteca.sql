@@ -56,4 +56,5 @@ INSERT INTO libros (codigo, titulo, descripcion, autor, precio, stock) VALUES
 
 INSERT INTO usuarios (usuario, password, validado)
     VALUES ('admin', crypt('admin', gen_salt('bf', 10)), true),
+           ('maria', crypt('maria', gen_salt('bf', 10)), true),
            ('pepe', crypt('pepe', gen_salt('bf', 10)), false);

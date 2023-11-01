@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,6 +18,8 @@
 
     $pdo = conectar();
     $libros = Libro::todos([], [], $pdo);
+
+    var_dump($_SESSION['login']);
 
     ?>
 
@@ -76,7 +79,7 @@
 
 
     <?php require '../src/_footer.php' ?>
-    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="js/flowbite/flowbite.min.js"></script>
 </body>
 
 </html>

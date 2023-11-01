@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,14 +11,16 @@
 
 <body>
     <?php
-    require '../vendor/autoload.php';
-    require '../src/_cabecera.php';
+    require '../../vendor/autoload.php';
+    require '../../src/_cabecera.php';
+
+    var_dump($_SESSION['login']);
     ?>
 
+    INDEX DE ADMIN
 
-
-    <?php require '../src/_footer.php' ?>
-    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <?php require '../../src/_footer.php' ?>
+    <script src="js/flowbite/flowbite.min.js"></script>
 </body>
 
 </html>
