@@ -11,6 +11,11 @@ function obtener_post($campo)
     return isset($_POST[$campo]) ? $_POST[$campo] : null;
 }
 
+function obtener_get($campo)
+{
+    return isset($_GET[$campo]) ? $_GET[$campo] : null;
+}
+
 function volver_principal()
 {
     return header('Location: principal.php');
