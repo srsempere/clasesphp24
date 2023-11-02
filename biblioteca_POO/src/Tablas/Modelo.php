@@ -14,7 +14,8 @@ class Modelo
         $tabla = static::$tabla;
         $sent = $pdo->prepare("SELECT *
                                 FROM $tabla
-                                WHERE id= :id");
+                                WHERE id= :id
+                                ORDER BY codigo");
         $sent->execute([':id' => $id]);
         $fila = $sent->fetch(PDO::FETCH_ASSOC);
 
