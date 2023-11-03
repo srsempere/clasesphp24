@@ -1,6 +1,8 @@
 <?php
-
 session_start();
+
+use App\Tablas\Libro;
+
 require '../../vendor/autoload.php';
 
 $id = obtener_post('id');
@@ -10,9 +12,11 @@ if (!isset($id)) {
 }
 
 $pdo = conectar();
-$sent = $pdo->prepare('DELETE FROM libros WHERE id= :id');
-$sent->execute([':id' => $id]);
 
-$_SESSION['exito'] = 'El libro se ha borrado correctamente';
+$libro = Libro::obtener($id);
+
+if (isset($libro)) {
+    $libro->borrar($pdo);
+}
 
 return volver_admin();

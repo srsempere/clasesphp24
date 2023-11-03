@@ -8,7 +8,7 @@ class Libro extends Modelo
 {
     protected static string $tabla = 'libros';
 
-    public $id;
+    private $id;
     private $codigo;
     private $titulo;
     private $descripcion;
@@ -30,6 +30,11 @@ class Libro extends Modelo
     public function existe(int $id, ?PDO $pdo = null): bool
     {
         return static::obtener($id, $pdo) !== null;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getCodigo()
@@ -60,5 +65,20 @@ class Libro extends Modelo
     public function getStock()
     {
         return $this->stock;
+    }
+
+    public function borrar(?PDO $pdo = null)
+    {
+        if (!isset($pdo)) {
+            $pdo = conectar();
+        }
+        $sent = $pdo->prepare('DELETE FROM libros WHERE id= :id');
+        $sent->execute([':id' => $this->id]);
+        if ($sent->rowCount() === 0) {
+            $_SESSION['error'] = 'No se ha encontrado el libro indicado en la base de datos';
+            return false;
+        }
+        $_SESSION['exito'] = 'El libro se ha borrado correctamente';
+        return true;
     }
 }

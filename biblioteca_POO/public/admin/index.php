@@ -84,11 +84,11 @@ use App\Tablas\Usuario;
                         </td>
                         <td class="px-6 py-4">
                             <form action="modificar.php" method="get">
-                                <input type="hidden" name="id" value="<?= $libro->id ?>">
+                                <input type="hidden" name="id" value="<?= $libro->getId() ?>">
                                 <button type="submit">Modificar</button>
                             </form>
                             <form action="borrar.php" method="post">
-                                <input type="hidden" name="id" value="<?= $libro->id ?>">
+                                <input type="hidden" name="id" value="<?= $libro->getId() ?>">
                                 <button type="submit">Borrar</button>
                             </form>
                         </td>

@@ -54,7 +54,7 @@ use App\Tablas\Usuario;
                                     SET codigo = :codigo, titulo = :titulo, descripcion = :descripcion, autor = :autor, precio = :precio, stock = :stock
                                     WHERE id = :id');
             $sent->execute([
-                ':id' => $libro->id,
+                ':id' => $libro->getId(),
                 ':codigo' => $codigo,
                 ':titulo' => $titulo,
                 ':descripcion' => $descripcion,
