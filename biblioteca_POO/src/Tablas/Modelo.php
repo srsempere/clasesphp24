@@ -8,7 +8,7 @@ class Modelo
 {
     protected static string $tabla;
 
-    public static function obtener(int $id, ?PDO $pdo = null): ?static
+    public static function obtener(int $id = 0, ?PDO $pdo = null): ?static
     {
         $pdo = $pdo ?? conectar();
         $tabla = static::$tabla;

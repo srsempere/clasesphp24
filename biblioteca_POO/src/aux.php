@@ -30,3 +30,11 @@ function volver_index_inicio()
 {
     return header('Location: index.php');
 }
+
+function add_success($par)
+{
+    if (!isset($_SESSION['exito'])) {
+        $_SESSION['exito'] = [];
+    }
+    $_SESSION['exito'] = $par;
+}

@@ -13,7 +13,7 @@ use App\Tablas\Usuario;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/output.css" rel="stylesheet">
-    <title>Principal de administrador</title>
+    <title>Modificar</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@ use App\Tablas\Usuario;
     }
 
     $id = obtener_get('id');
-
+    $_SESSION['id'] = $id;
     if (!isset($id)) {
         return volver_admin();
     }
@@ -40,28 +40,22 @@ use App\Tablas\Usuario;
     $errores = isset($_SESSION['errores']) ? $_SESSION['errores'] : false;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_SESSION['id'];
         $codigo = obtener_post('codigo');
         $titulo = obtener_post('titulo');
         $descripcion = obtener_post('descripcion');
         $autor = obtener_post('autor');
         $precio = obtener_post('precio');
         $stock = obtener_post('stock');
+
+        $campos = compact('id', 'codigo', 'titulo', 'descripcion', 'autor', 'precio', 'stock');
         //TODO: Realizar comprobaciones
 
         if (!$errores) {
             # code... //TODO: Realizar actualización/modificación.
-            $sent = $pdo->prepare('UPDATE libros
-                                    SET codigo = :codigo, titulo = :titulo, descripcion = :descripcion, autor = :autor, precio = :precio, stock = :stock
-                                    WHERE id = :id');
-            $sent->execute([
-                ':id' => $libro->getId(),
-                ':codigo' => $codigo,
-                ':titulo' => $titulo,
-                ':descripcion' => $descripcion,
-                ':autor' => $autor,
-                ':precio' => $precio,
-                ':stock' => $stock
-            ]);
+            $libro = new Libro($campos);
+            $libro->guardar();
+
             $_SESSION['exito'] = 'El libro se ha modificado/actualizado correctamente';
             return volver_index_inicio();
         }
