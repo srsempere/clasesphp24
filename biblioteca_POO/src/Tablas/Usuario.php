@@ -8,14 +8,16 @@ class Usuario extends Modelo
 {
     protected static string $tabla = 'usuarios';
 
-    public $id;
-    public $usuario;
-    public $validado;
+    private $id;
+    private $usuario;
+    private $must_reset_password;
+    private $validado;
 
     public function __construct(array $campos)
     {
         $this->id = $campos['id'];
         $this->usuario = $campos['usuario'];
+        $this->must_reset_password = $campos['must_reset_password'];
         $this->validado = $campos['validado'];
     }
 
@@ -71,5 +73,25 @@ class Usuario extends Modelo
             ':login' => $login,
             ':password' => password_hash($password, PASSWORD_DEFAULT),
         ]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getNombre()
+    {
+        return $this->usuario;
+    }
+
+    public function getValidado()
+    {
+        return $this->validado;
+    }
+
+    public function getMustReset()
+    {
+        return $this->must_reset_password;
     }
 }

@@ -13,10 +13,11 @@ CREATE TABLE libros(
 DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios (
-    id       BIGSERIAL    PRIMARY KEY,
-    usuario  VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    validado bool         NOT NULL
+    id                  BIGSERIAL    PRIMARY KEY,
+    usuario             VARCHAR(255) NOT NULL UNIQUE,
+    password            VARCHAR(255) NOT NULL,
+    must_reset_password bool         NOT NULL,
+    validado            bool         NOT NULL
 );
 
 
@@ -54,7 +55,7 @@ INSERT INTO libros (codigo, titulo, descripcion, autor, precio, stock) VALUES
     (1010, 'Los Hombres que no Amaban a las Mujeres', 'Un misterio oscuro.', 'Stieg Larsson', 23.99, 50);
 
 
-INSERT INTO usuarios (usuario, password, validado)
-    VALUES ('admin', crypt('admin', gen_salt('bf', 10)), true),
-           ('maria', crypt('maria', gen_salt('bf', 10)), true),
-           ('pepe', crypt('pepe', gen_salt('bf', 10)), false);
+INSERT INTO usuarios (usuario, password, must_reset_password, validado)
+    VALUES ('admin', crypt('admin', gen_salt('bf', 10)), false, true),
+           ('maria', crypt('maria', gen_salt('bf', 10)), false, true),
+           ('pepe', crypt('pepe', gen_salt('bf', 10)), false, false);

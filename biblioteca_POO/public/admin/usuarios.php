@@ -29,7 +29,7 @@ use App\Tablas\Usuario;
         }
     }
 
-
+    $usuarios = Usuario::todos();
 
     ?>
 
@@ -43,51 +43,55 @@ use App\Tablas\Usuario;
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        Name
+                        Nombre
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Status
+                        Estado
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Action
+                        Validado
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Debe reestablecer contraseña
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Acciones
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="../images/admin.png" alt="Foto de admin">
-                        <div class="pl-3">
-                            <div class="text-base font-semibold">Admin</div>
-                            <div class="font-normal text-gray-500">admin@admin.com</div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="../images/pepe.png" alt="Foto de Pepe">
-                        <div class="pl-3">
-                            <div class="text-base font-semibold">Pepe</div>
-                            <div class="font-normal text-gray-500">bonnie@flowbite.com</div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
-                    </td>
-                </tr>
+                <?php foreach ($usuarios as $usuario_iter) : ?>
+                    <?php
+                    $url_foto = "../images/{$usuario_iter->getNombre()}.png";
+                    $url_perfil = "usuarios/{$usuario_iter->getNombre()}.php";
+                    ?>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                            <img class="w-10 h-10 rounded-full" src="<?= $url_foto ?>" alt="Foto de usuario">
+                            <div class="pl-3">
+                                <div class="text-base font-semibold"><?= $usuario_iter->getNombre() ?></div>
+                            </div>
+                        </th>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <?php if ($usuario->getNombre() === $usuario_iter->getNombre()) : ?>
+                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
+                                <?php else : ?>
+                                    <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> Offline
+                                <?php endif; ?>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <?= $usuario_iter->getValidado() ? "Sí" : "No" ?>
+                        </td>
+                        <td class="px-6 py-4">
+                            <?= $usuario_iter->getMustReset() ? "Sí" : "No" ?>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="<?= $url_perfil ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar usuario</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
